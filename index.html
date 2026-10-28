@@ -79,7 +79,7 @@
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
     }
 
     nav.navbar a:active, nav.navbar a.active {
@@ -188,7 +188,7 @@
       background: #FFF;
       border: 2px solid var(--border-color);
       border-radius: 10px;
-      padding: 3px 10px;
+      padding: 4px 10px;
       font-size: 0.78rem;
       font-weight: bold;
       text-decoration: none;
@@ -454,7 +454,7 @@
     .shop-item {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       padding: 12px 0;
       border-bottom: 1.5px dashed #DDD;
     }
@@ -681,7 +681,7 @@
 </head>
 <body>
 
-  <!-- 頂端固定選單 (含合掌屋 Icon) -->
+  <!-- 頂端固定選單 (修正合掌屋小 Icon，不重疊) -->
   <nav class="navbar">
     <a href="#hero" class="active">
       <svg style="width:16px; height:16px; vertical-align:middle;" viewBox="0 0 100 100"><defs><style>.a{fill:#a8d3e6;}.b{fill:none;stroke:#3e3a39;stroke-linecap:round;stroke-linejoin:round;stroke-width:6px;}.c,.d,.e{fill:#ffffff;fill-opacity:0.9;}</style></defs><rect class="a" x="22" y="20" width="56" height="64" rx="8"/><rect class="b" x="22" y="20" width="56" height="64" rx="8"/><path class="c" d="M50,30L26,72h48L50,30Z"/><path class="d" d="M50,30L26,72l18-8,12,8,18,8L50,30Z"/><path class="b" d="M50,30L26,72h48L50,30Z"/><path class="e" d="M42,72H58V60H42V72Z"/><path class="b" d="M42,72H58V60H42V72Z"/></svg>首頁
@@ -1042,9 +1042,9 @@
       </div>
     </section>
 
-    <!-- 獨立區塊：預約餐廳總整理 (全部帶有 Tabelog / Google map 快捷連結) -->
+    <!-- 獨立區塊：預約餐廳總整理 (全部補齊 Tabelog + Google Maps 雙按鈕) -->
     <section id="dining" class="storybook-card">
-      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理 (附 Tabelog / Google Map)</h2>
+      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理</h2>
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
@@ -1055,8 +1055,8 @@
           • <b>預算：</b> ¥6,000 – ¥8,000 / 人<br>
           • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 必須線上預約</span>
         </div>
-        <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Oysterbar+and+Wine+BELON+Sakae" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 Tabelog 預約/頁面</a>
+        <a href="https://maps.google.com/?q=Oysterbar+and+Wine+BELON+Sakae" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1066,11 +1066,11 @@
         </div>
         <div class="restaurant-meta">
           • <b>預算：</b> ¥1,800 – ¥4,000 / 人<br>
-          • <b>預約狀態：</b> 矢場免預約；鳥開建議預約
+          • <b>預約狀態：</b> 矢場免預約排隊；鳥開建議預約
         </div>
         <a href="https://tabelog.com/aichi/A2301/A230103/23000305/" target="_blank" class="link-btn">🔗 矢場豬排 Tabelog</a>
         <a href="https://tabelog.com/aichi/A2301/A230103/23005118/" target="_blank" class="link-btn">🔗 鳥開總本家 Tabelog</a>
-        <a href="https://maps.google.com/?q=Yabaton+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Yabaton+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1080,10 +1080,10 @@
         </div>
         <div class="restaurant-meta">
           • <b>預算：</b> ¥6,000 – ¥9,000 / 人<br>
-          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 16:30 現場抽號</span>
+          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 16:30 必須現場抽號</span>
         </div>
         <a href="https://tabelog.com/gifu/A2104/A210401/21000624/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Ajikuratenkoku+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Ajikuratenkoku+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1096,12 +1096,12 @@
           • <b>預約狀態：</b> 現場排隊
         </div>
         <a href="https://tabelog.com/gifu/A2104/A210404/21000637/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Hakusuien+Shirakawago" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Hakusuien+Shirakawago" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
-          <span class="restaurant-name">🍲 丸明 高山店 (飛驒牛專門)</span>
+          <span class="restaurant-name">🍲 丸明 高山店 (飛驒牛壽喜燒)</span>
           <span class="restaurant-day-badge">Day 4 晚餐</span>
         </div>
         <div class="restaurant-meta">
@@ -1109,7 +1109,7 @@
           • <b>預約狀態：</b> 現場抽號排隊
         </div>
         <a href="https://tabelog.com/gifu/A2104/A210401/21000030/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Maruaki+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Maruaki+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1122,7 +1122,7 @@
           • <b>預約狀態：</b> 免預約，現場排隊
         </div>
         <a href="https://tabelog.com/aichi/A2301/A230101/23000142/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Yamamotoyahonten+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Yamamotoyahonten+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1135,11 +1135,11 @@
           • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 11:00 前現場領號</span>
         </div>
         <a href="https://tabelog.com/aichi/A2301/A230105/23000036/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
-        <a href="https://maps.google.com/?q=Atsuta+Horaiken+Matsuzakaya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+        <a href="https://maps.google.com/?q=Atsuta+Horaiken+Matsuzakaya" target="_blank" class="link-btn">🗺️ Google 地圖導航</a>
       </div>
     </section>
 
-    <!-- 🛍️ 購物清單模組 (含刪除按鈕 & 自選商店 Label) -->
+    <!-- 🛍️ 購物與格價清單模組 (含有刪除按鈕 & 自選商店 Label) -->
     <section id="shopping" class="storybook-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
         <h2 style="font-size: 1.2rem;">🛍️ 購物與格價清單</h2>
@@ -1152,7 +1152,7 @@
       <!-- 新增購物項目按鈕與表單 -->
       <div style="text-align:center; margin-top:16px;">
         <button onclick="toggleAddForm()" class="link-btn" style="padding:8px 16px; font-size:0.9rem; background:var(--yellow);">
-          ➕ 新增心水物品 / 上載 Cap 圖
+          ➕ 新增購物項目 / 上載 Cap 圖
         </button>
       </div>
 
@@ -1181,7 +1181,7 @@
         </div>
 
         <div class="form-group">
-          <label>📍 購買地點 / 專門店 Label (如: 榮松坂屋, Bic Camera)</label>
+          <label>📍 購買地點 / 專門店 Label (例如: 榮松坂屋, Bic Camera)</label>
           <input type="text" id="input-store" class="form-input" placeholder="例如: 榮松坂屋專櫃">
         </div>
 
@@ -1194,7 +1194,7 @@
 
         <div class="form-group">
           <label>備註 (選填)</label>
-          <input type="text" id="input-desc" class="form-input" placeholder="例如: 滿稅額可退稅">
+          <input type="text" id="input-desc" class="form-input" placeholder="例如: 滿額可退稅">
         </div>
 
         <div style="display:flex; gap:8px; margin-top:12px;">
@@ -1220,7 +1220,7 @@
 
       <div class="trans-card-item">
         <div class="trans-card-title">🏔️ 奧飛驒/新穗高纜車巴士套票</div>
-        <div class="trans-card-desc">建議購買「奧飛驒 2 日巴士套票 + 新穗高纜車往返券」，於高山巴士總站購買更划算。</div>
+        <div class="trans-card-desc">建議購買「奧飛驒 2 日巴士套票 + 新穗高纜車往返券」，於高山巴士總站購買更劃算。</div>
       </div>
 
       <div class="trans-card-item">
