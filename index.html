@@ -60,7 +60,7 @@
       padding: 0 16px;
     }
 
-    /* 頂端固定選單 (改為橫向捲軸 Scrollable Navbar) */
+    /* 頂端固定選單 (橫向捲軸 Scrollable Navbar) */
     nav.navbar {
       position: fixed;
       top: 0;
@@ -81,7 +81,7 @@
     }
 
     nav.navbar::-webkit-scrollbar {
-      display: none; /* 隱藏捲軸保持美觀 */
+      display: none;
     }
 
     nav.navbar a {
@@ -498,6 +498,16 @@
       top: -3px;
     }
 
+    .shop-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      border: 2px solid var(--border-color);
+      object-fit: cover;
+      background: #EEE;
+      flex-shrink: 0;
+    }
+
     .shop-item-content {
       flex: 1;
     }
@@ -594,7 +604,7 @@
       margin-top: 4px;
     }
 
-    /* 可打勾待辦清單 (支援上下移動) */
+    /* 可打勾待辦清單 */
     .todo-list {
       list-style: none;
     }
@@ -680,7 +690,7 @@
     }
   </style>
 </head>
-<body>
+<body onpaste="handleGlobalPaste(event)">
 
   <!-- 頂端固定選單 (橫向捲軸 Navbar) -->
   <nav class="navbar">
@@ -878,7 +888,7 @@
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
-          <span class="restaurant-name">🍱 あつた蓬萊軒 (鰻魚飯三吃)</span>
+          <span class="restaurant-name">あつた蓬萊軒 (鰻魚飯三吃)</span>
           <span class="restaurant-day-badge">Day 6 午餐</span>
         </div>
         <div class="restaurant-meta">• <b>狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 11:00 前現場領號碼牌</span></div>
@@ -887,18 +897,23 @@
       </div>
     </section>
 
-    <!-- 🛍️ 購物清單 -->
+    <!-- 🛍️ 購物清單 (升級：支援直接貼上相片、上載相片、Edit 編輯) -->
     <section id="shopping" class="storybook-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
         <h2 style="font-size: 1.2rem;">🛍️ 購物與格價清單</h2>
-        <span style="font-size:0.75rem; color:#007AFF; font-weight:bold;">🟢 實時儲存</span>
+        <span style="font-size:0.75rem; color:#007AFF; font-weight:bold;">🟢 實時儲存 (支援貼上相片)</span>
       </div>
       <div id="shopping-container"></div>
       <div style="text-align:center; margin-top:16px;">
-        <button onclick="toggleAddForm()" class="link-btn" style="padding:8px 16px; background:var(--yellow);">➕ 新增購物項目</button>
+        <button onclick="openAddForm()" class="link-btn" style="padding:8px 16px; background:var(--yellow);">➕ 新增購物項目</button>
       </div>
+
+      <!-- 新增 / 編輯共用表單 Modal -->
       <div id="add-form-box" class="add-form-box" style="display:none;">
-        <h3 style="font-size:0.95rem; margin-bottom:10px;">🛍️ 新增商品</h3>
+        <h3 id="form-title" style="font-size:0.95rem; margin-bottom:10px;">🛍️ 新增商品</h3>
+        <input type="hidden" id="edit-item-index" value="-1">
+        <input type="hidden" id="edit-group-index" value="-1">
+
         <div class="form-group"><label>品牌</label><input type="text" id="input-brand" class="form-input" placeholder="Cartier"></div>
         <div class="form-group"><label>名稱</label><input type="text" id="input-title" class="form-input" placeholder="鋼錶"></div>
         <div style="display:flex; gap:8px;">
@@ -906,10 +921,18 @@
           <div class="form-group" style="flex:1;"><label>香港價 ($)</label><input type="number" id="input-hk-price" class="form-input"></div>
         </div>
         <div class="form-group"><label>📍 購買地點</label><input type="text" id="input-store" class="form-input" placeholder="榮松坂屋"></div>
+        
+        <div class="form-group">
+          <label>📷 相片 (支援直接在畫面按 ⌘V / 長按貼上相片)</label>
+          <input type="file" id="input-img-file" class="form-input" accept="image/*" onchange="previewImageFile(this)">
+          <input type="hidden" id="input-img-base64">
+          <img id="img-preview" style="max-width:100px; display:none; margin-top:6px; border-radius:8px; border:2px solid var(--border-color);">
+        </div>
+
         <div class="form-group"><label>備註</label><input type="text" id="input-desc" class="form-input"></div>
         <div style="display:flex; gap:8px; margin-top:10px;">
-          <button onclick="saveNewShoppingItem()" class="link-btn" style="flex:1; justify-content:center; background:var(--green);">💾 儲存</button>
-          <button onclick="toggleAddForm()" class="link-btn" style="justify-content:center; background:#FFF;">取消</button>
+          <button onclick="saveShoppingItem()" class="link-btn" style="flex:1; justify-content:center; background:var(--green);">💾 儲存</button>
+          <button onclick="closeAddForm()" class="link-btn" style="justify-content:center; background:#FFF;">取消</button>
         </div>
       </div>
     </section>
@@ -1057,7 +1080,7 @@
 
     renderTodoList();
 
-    // --- 🛍️ 購物清單邏輯 ---
+    // --- 🛍️ 購物清單邏輯 (支援剪貼簿貼上相片、編輯、刪除) ---
     const defaultShoppingData = [
       {
         id: 'brand-cartier', brand: 'Cartier', avatar: 'Ca',
@@ -1098,6 +1121,7 @@
             ${group.items.map((item, itemIdx) => `
               <div class="shop-item">
                 <input type="checkbox" class="shop-checkbox" ${item.checked ? 'checked' : ''} onclick="toggleShopItemCheck(${groupIdx}, ${itemIdx})">
+                ${item.img ? `<img src="${item.img}" class="shop-item-img">` : ''}
                 <div class="shop-item-content">
                   <div class="shop-item-title" style="${item.checked ? 'text-decoration:line-through; color:#888;' : ''}">${item.title}</div>
                   <div class="shop-price-tags">
@@ -1106,7 +1130,8 @@
                   </div>
                   ${item.desc ? `<div class="shop-item-desc">📝 ${item.desc}</div>` : ''}
                 </div>
-                <button onclick="deleteShopItem(${groupIdx}, ${itemIdx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:8px; width:26px; height:26px; color:#D9534F; font-weight:bold; cursor:pointer; flex-shrink:0;">✕</button>
+                <button onclick="openEditForm(${groupIdx}, ${itemIdx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:8px; width:26px; height:26px; color:#007AFF; font-weight:bold; cursor:pointer; flex-shrink:0;" title="編輯">✎</button>
+                <button onclick="deleteShopItem(${groupIdx}, ${itemIdx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:8px; width:26px; height:26px; color:#D9534F; font-weight:bold; cursor:pointer; flex-shrink:0;" title="刪除">✕</button>
               </div>
             `).join('')}
           </div>
@@ -1136,37 +1161,127 @@
       }
     }
 
-    function toggleAddForm() {
-      const box = document.getElementById('add-form-box');
-      box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function saveNewShoppingItem() {
-      const brand = document.getElementById('input-brand').value.trim() || '其他';
-      const title = document.getElementById('input-title').value.trim();
-      const jpPrice = parseInt(document.getElementById('input-jp-price').value) || 0;
-      const hkPrice = parseInt(document.getElementById('input-hk-price').value) || 0;
-      const store = document.getElementById('input-store').value.trim();
-      const desc = document.getElementById('input-desc').value.trim();
-
-      if (!title) { alert('請輸入商品名稱！'); return; }
-
-      const data = getShoppingData();
-      let group = data.find(b => b.brand.toLowerCase() === brand.toLowerCase());
-      if (!group) {
-        group = { id: 'brand-' + Date.now(), brand: brand, avatar: brand.substring(0,2), items: [] };
-        data.push(group);
-      }
-      group.items.push({ id: 'item-' + Date.now(), title, jpPrice, hkPrice, store, checked: false, desc, img: '' });
-      saveShoppingData(data);
-
+    function openAddForm() {
+      document.getElementById('form-title').innerText = '🛍️ 新增商品';
+      document.getElementById('edit-group-index').value = '-1';
+      document.getElementById('edit-item-index').value = '-1';
       document.getElementById('input-brand').value = '';
       document.getElementById('input-title').value = '';
       document.getElementById('input-jp-price').value = '';
       document.getElementById('input-hk-price').value = '';
       document.getElementById('input-store').value = '';
       document.getElementById('input-desc').value = '';
-      toggleAddForm();
+      document.getElementById('input-img-base64').value = '';
+      document.getElementById('img-preview').style.display = 'none';
+      document.getElementById('add-form-box').style.display = 'block';
+    }
+
+    function openEditForm(g, i) {
+      const data = getShoppingData();
+      const group = data[g];
+      const item = group.items[i];
+
+      document.getElementById('form-title').innerText = '✏️ 編輯商品';
+      document.getElementById('edit-group-index').value = g;
+      document.getElementById('edit-item-index').value = i;
+      document.getElementById('input-brand').value = group.brand;
+      document.getElementById('input-title').value = item.title;
+      document.getElementById('input-jp-price').value = item.jpPrice || '';
+      document.getElementById('input-hk-price').value = item.hkPrice || '';
+      document.getElementById('input-store').value = item.store || '';
+      document.getElementById('input-desc').value = item.desc || '';
+      
+      const imgBase64 = item.img || '';
+      document.getElementById('input-img-base64').value = imgBase64;
+      const preview = document.getElementById('img-preview');
+      if (imgBase64) {
+        preview.src = imgBase64;
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+
+      document.getElementById('add-form-box').style.display = 'block';
+    }
+
+    function closeAddForm() {
+      document.getElementById('add-form-box').style.display = 'none';
+    }
+
+    function previewImageFile(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('input-img-base64').value = e.target.result;
+          const preview = document.getElementById('img-preview');
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // 支援全域貼上圖片功能 (Ctrl+V / Command+V / 手機貼上)
+    function handleGlobalPaste(e) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (let index in items) {
+        let item = items[index];
+        if (item.kind === 'file' && item.type.includes('image')) {
+          let blob = item.getAsFile();
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById('input-img-base64').value = event.target.result;
+            const preview = document.getElementById('img-preview');
+            preview.src = event.target.result;
+            preview.style.display = 'block';
+            // 自動開啟表單讓用戶看到已貼上的相片
+            document.getElementById('add-form-box').style.display = 'block';
+            alert('成功貼上相片！請填寫商品資料並儲存。');
+          };
+          reader.readAsDataURL(blob);
+        }
+      }
+    }
+
+    function saveShoppingItem() {
+      const brand = document.getElementById('input-brand').value.trim() || '其他';
+      const title = document.getElementById('input-title').value.trim();
+      const jpPrice = parseInt(document.getElementById('input-jp-price').value) || 0;
+      const hkPrice = parseInt(document.getElementById('input-hk-price').value) || 0;
+      const store = document.getElementById('input-store').value.trim();
+      const desc = document.getElementById('input-desc').value.trim();
+      const img = document.getElementById('input-img-base64').value;
+
+      if (!title) { alert('請輸入商品名稱！'); return; }
+
+      const gIdx = parseInt(document.getElementById('edit-group-index').value);
+      const iIdx = parseInt(document.getElementById('edit-item-index').value);
+      const data = getShoppingData();
+
+      if (gIdx >= 0 && iIdx >= 0) {
+        // 編輯模式：更新現有商品
+        const oldGroup = data[gIdx];
+        oldGroup.items.splice(iIdx, 1);
+        if (oldGroup.items.length === 0) data.splice(gIdx, 1);
+
+        let newGroup = data.find(b => b.brand.toLowerCase() === brand.toLowerCase());
+        if (!newGroup) {
+          newGroup = { id: 'brand-' + Date.now(), brand: brand, avatar: brand.substring(0,2), items: [] };
+          data.push(newGroup);
+        }
+        newGroup.items.push({ id: 'item-' + Date.now(), title, jpPrice, hkPrice, store, checked: false, desc, img });
+      } else {
+        // 新增模式
+        let group = data.find(b => b.brand.toLowerCase() === brand.toLowerCase());
+        if (!group) {
+          group = { id: 'brand-' + Date.now(), brand: brand, avatar: brand.substring(0,2), items: [] };
+          data.push(group);
+        }
+        group.items.push({ id: 'item-' + Date.now(), title, jpPrice, hkPrice, store, checked: false, desc, img });
+      }
+
+      saveShoppingData(data);
+      closeAddForm();
     }
 
     renderShoppingList();
