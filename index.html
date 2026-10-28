@@ -342,16 +342,6 @@
       margin-top: 4px;
     }
 
-    .tips-box {
-      background: #FFF9EE;
-      border: 2px dashed var(--border-color);
-      border-radius: 10px;
-      padding: 8px 12px;
-      margin-top: 6px;
-      font-size: 0.82rem;
-      color: #555;
-    }
-
     /* 獨立餐廳卡片樣式 */
     .restaurant-card-item {
       background: #FFF9EE;
@@ -497,16 +487,6 @@
       top: -3px;
     }
 
-    .shop-item-img {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-      border: 2px solid var(--border-color);
-      object-fit: cover;
-      background: #EEE;
-      flex-shrink: 0;
-    }
-
     .shop-item-content {
       flex: 1;
     }
@@ -527,15 +507,6 @@
 
     .price-tag-jp {
       background: var(--yellow);
-      border: 1.5px solid var(--border-color);
-      padding: 1px 8px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-
-    .price-tag-hk {
-      background: var(--green);
       border: 1.5px solid var(--border-color);
       padding: 1px 8px;
       border-radius: 8px;
@@ -612,15 +583,15 @@
       margin-top: 4px;
     }
 
-    /* 可打勾待辦清單 */
+    /* 可打勾待辦清單 (支援上下移動) */
     .todo-list {
       list-style: none;
     }
 
     .todo-item {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      align-items: center;
+      gap: 8px;
       padding: 10px 0;
       border-bottom: 2px dashed #E0E0E0;
     }
@@ -639,7 +610,6 @@
       cursor: pointer;
       position: relative;
       background: #FFF;
-      margin-top: 2px;
       flex-shrink: 0;
     }
 
@@ -665,6 +635,24 @@
     .todo-text {
       flex: 1;
       font-size: 0.9rem;
+    }
+
+    .order-btn {
+      background: #FFF;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .order-btn:active {
+      background: var(--gray-bg);
     }
 
     /* 住宿卡片 */
@@ -775,21 +763,86 @@
       <div id="day-7" class="timeline-container"><div class="timeline"><div class="timeline-item"><div class="timeline-time">13:00 - 14:45</div><div class="timeline-title">JAL 貴賓室 & CX539 返港</div><div class="timeline-desc">享用貴賓室鰻魚飯，商務艙舒適返港。</div></div></div></div>
     </section>
 
-    <!-- 餐廳總整理 -->
+    <!-- 🍽️ 預約餐廳總整理 (包齊要Book同唔駛Book) -->
     <section id="dining" class="storybook-card">
-      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理</h2>
+      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 餐廳總整理 (預約與現場排隊清單)</h2>
+
       <div class="restaurant-card-item">
-        <div class="restaurant-header"><span class="restaurant-name">🦪 Oysterbar & Wine BELON 榮店</span><span class="restaurant-day-badge">Day 1</span></div>
+        <div class="restaurant-header">
+          <span class="restaurant-name">🦪 Oysterbar & Wine BELON 榮店</span>
+          <span class="restaurant-day-badge">Day 1 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 必須提前預約</span></div>
         <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 Tabelog</a>
         <a href="https://maps.google.com/?q=Oysterbar+and+Wine+BELON+Sakae" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
+
       <div class="restaurant-card-item">
-        <div class="restaurant-header"><span class="restaurant-name">🥩 味藏天國 (A5 飛驒牛)</span><span class="restaurant-day-badge">Day 3</span></div>
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍱 矢場味增豬排 (矢場とん)</span>
+          <span class="restaurant-day-badge">Day 2 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> 免預約，現場排隊</div>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23000305/" target="_blank" class="link-btn">🔗 Tabelog</a>
+        <a href="https://maps.google.com/?q=Yabaton+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+      </div>
+
+      <div class="restaurant-card-item">
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍱 鳥開總本家 (地雞親子丼/手羽先)</span>
+          <span class="restaurant-day-badge">Day 2 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> 建議預約 / 現場排隊</div>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23005118/" target="_blank" class="link-btn">🔗 Tabelog</a>
+        <a href="https://maps.google.com/?q=Torikai+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+      </div>
+
+      <div class="restaurant-card-item">
+        <div class="restaurant-header">
+          <span class="restaurant-name">🥩 味藏天國 (A5 飛驒牛燒肉)</span>
+          <span class="restaurant-day-badge">Day 3 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 16:30 必須現場抽號碼牌</span></div>
         <a href="https://tabelog.com/gifu/A2104/A210401/21000624/" target="_blank" class="link-btn">🔗 Tabelog</a>
         <a href="https://maps.google.com/?q=Ajikuratenkoku+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
+
       <div class="restaurant-card-item">
-        <div class="restaurant-header"><span class="restaurant-name">🍱 あつた蓬萊軒 (鰻魚飯)</span><span class="restaurant-day-badge">Day 6</span></div>
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍱 白水園 (合掌造朴葉味噌燒)</span>
+          <span class="restaurant-day-badge">Day 4 午餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> 白川鄉現場排隊</div>
+        <a href="https://tabelog.com/gifu/A2104/A210404/21000637/" target="_blank" class="link-btn">🔗 Tabelog</a>
+        <a href="https://maps.google.com/?q=Hakusuien+Shirakawago" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+      </div>
+
+      <div class="restaurant-card-item">
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍲 丸明 高山店 (飛驒牛專門)</span>
+          <span class="restaurant-day-badge">Day 4 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> 現場排隊 / 飯店代訂</div>
+        <a href="https://tabelog.com/gifu/A2104/A210401/21000030/" target="_blank" class="link-btn">🔗 Tabelog</a>
+        <a href="https://maps.google.com/?q=Maruaki+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+      </div>
+
+      <div class="restaurant-card-item">
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍜 山本屋本店 (味噌鍋燒烏龍)</span>
+          <span class="restaurant-day-badge">Day 5 晚餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> 免預約，現場排隊</div>
+        <a href="https://tabelog.com/aichi/A2301/A230101/23000142/" target="_blank" class="link-btn">🔗 Tabelog</a>
+        <a href="https://maps.google.com/?q=Yamamotoyahonten+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
+      </div>
+
+      <div class="restaurant-card-item">
+        <div class="restaurant-header">
+          <span class="restaurant-name">🍱 あつた蓬萊軒 (鰻魚飯三吃)</span>
+          <span class="restaurant-day-badge">Day 6 午餐</span>
+        </div>
+        <div class="restaurant-meta">• <b>狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 11:00 前現場領號碼牌</span></div>
         <a href="https://tabelog.com/aichi/A2301/A230105/23000036/" target="_blank" class="link-btn">🔗 Tabelog</a>
         <a href="https://maps.google.com/?q=Atsuta+Horaiken+Matsuzakaya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
@@ -822,7 +875,7 @@
       </div>
     </section>
 
-    <!-- 交通指南 (整理出 3 套必須車票) -->
+    <!-- 交通指南 -->
     <section id="transport" class="storybook-card">
       <h2 style="font-size: 1.2rem; margin-bottom: 12px;">🚌 交通買飛策略指南</h2>
       <div class="trans-card-item" style="background:#FFF3CD;">
@@ -843,14 +896,14 @@
       <div><span class="hotel-badge" style="background:var(--yellow);">高山 2 晚</span><h3 style="font-size:1rem;">高山櫻庵 Takayama Ouan (溫泉+夜鳴拉麵)</h3></div>
     </section>
 
-    <!-- 待辦與搶票清單 (升級：支援新增與刪除) -->
+    <!-- 待辦與搶票清單 (升級：支援上下移動次序、新增與刪除) -->
     <section id="todo" class="storybook-card">
       <h2 style="font-size: 1.2rem; margin-bottom: 12px;">☑️ 備忘與搶票清單</h2>
       <ul id="todo-container" class="todo-list"></ul>
       
       <div style="margin-top: 14px; display: flex; gap: 8px;">
         <input type="text" id="input-new-todo" class="form-input" placeholder="輸入新的待辦事項...">
-        <button onclick="addNewTodo()" class="link-btn" style="background: var(--yellow); flex-shrink: 0;">➕ 新增</button>
+        <button onclick="addNewTodo()" class="link-btn" style="background: var(--yellow); flex-shrink: 0;">➕ 新語備忘</button>
       </div>
     </section>
 
@@ -878,7 +931,7 @@
       document.getElementById(`day-${dayNum}`).classList.add('active');
     }
 
-    // --- 📌 待辦清單邏輯 (支援儲存、新增、刪除) ---
+    // --- 📌 待辦清單邏輯 (支援上下移動、儲存、新增、刪除) ---
     const defaultTodoList = [
       { id: 't1', text: '10/31 前：送出白川鄉點燈住宿抽選 Email', completed: false },
       { id: 't2', text: '11/10 13:00：搶吉卜力公園 Premium 門票（海外通道）', completed: false },
@@ -910,7 +963,11 @@
         li.innerHTML = `
           <input type="checkbox" class="todo-checkbox" ${item.completed ? 'checked' : ''} onclick="toggleTodoCheck(${idx})">
           <span class="todo-text">${item.text}</span>
-          <button onclick="deleteTodoItem(${idx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:6px; width:24px; height:24px; color:#D9534F; font-weight:bold; cursor:pointer;" title="刪除">✕</button>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button class="order-btn" onclick="moveTodo(${idx}, -1)" ${idx === 0 ? 'disabled style="opacity:0.3;"' : ''} title="上移">⬆</button>
+            <button class="order-btn" onclick="moveTodo(${idx}, 1)" ${idx === list.length - 1 ? 'disabled style="opacity:0.3;"' : ''} title="下移">⬇</button>
+            <button onclick="deleteTodoItem(${idx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:6px; width:26px; height:26px; color:#D9534F; font-weight:bold; cursor:pointer;" title="刪除">✕</button>
+          </div>
         `;
         container.appendChild(li);
       });
@@ -919,6 +976,16 @@
     function toggleTodoCheck(idx) {
       const list = getTodoList();
       list[idx].completed = !list[idx].completed;
+      saveTodoList(list);
+    }
+
+    function moveTodo(idx, direction) {
+      const list = getTodoList();
+      const targetIdx = idx + direction;
+      if (targetIdx < 0 || targetIdx >= list.length) return;
+      const temp = list[idx];
+      list[idx] = list[targetIdx];
+      list[targetIdx] = temp;
       saveTodoList(list);
     }
 
@@ -966,7 +1033,6 @@
       const data = getShoppingData();
       const container = document.getElementById('shopping-container');
       container.innerHTML = '';
-      const JPY_RATE = 0.052;
 
       data.forEach((group, groupIdx) => {
         const total = group.items.length;
