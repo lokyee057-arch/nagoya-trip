@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>名古屋・飛驒高山・白川鄉・新穗高 7天6夜冬日手帳</title>
+  
+  <!-- iOS 主畫面專屬 App 圖標與全螢幕設定 -->
+  <link rel="apple-touch-icon" href="https://image.api.weibo.com/20241028/n-71959b862b6622b34a142b781b238384.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="名古屋冬日手帳">
+
   <!-- Google Font: 粉圓 (Huninn) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -681,7 +688,7 @@
 </head>
 <body>
 
-  <!-- 頂端固定選單 (修正合掌屋小 Icon，不重疊) -->
+  <!-- 頂端固定選單 -->
   <nav class="navbar">
     <a href="#hero" class="active">
       <svg style="width:16px; height:16px; vertical-align:middle;" viewBox="0 0 100 100"><defs><style>.a{fill:#a8d3e6;}.b{fill:none;stroke:#3e3a39;stroke-linecap:round;stroke-linejoin:round;stroke-width:6px;}.c,.d,.e{fill:#ffffff;fill-opacity:0.9;}</style></defs><rect class="a" x="22" y="20" width="56" height="64" rx="8"/><rect class="b" x="22" y="20" width="56" height="64" rx="8"/><path class="c" d="M50,30L26,72h48L50,30Z"/><path class="d" d="M50,30L26,72l18-8,12,8,18,8L50,30Z"/><path class="b" d="M50,30L26,72h48L50,30Z"/><path class="e" d="M42,72H58V60H42V72Z"/><path class="b" d="M42,72H58V60H42V72Z"/></svg>首頁
@@ -1042,7 +1049,7 @@
       </div>
     </section>
 
-    <!-- 獨立區塊：預約餐廳總整理 (全部補齊 Tabelog + Google Maps 雙按鈕) -->
+    <!-- 獨立區塊：預約餐廳總整理 -->
     <section id="dining" class="storybook-card">
       <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理</h2>
 
@@ -1139,7 +1146,7 @@
       </div>
     </section>
 
-    <!-- 🛍️ 購物與格價清單模組 (含有刪除按鈕 & 自選商店 Label) -->
+    <!-- 🛍️ 購物與格價清單模組 -->
     <section id="shopping" class="storybook-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
         <h2 style="font-size: 1.2rem;">🛍️ 購物與格價清單</h2>
@@ -1204,28 +1211,37 @@
       </div>
     </section>
 
-    <!-- 交通實用資訊 -->
+    <!-- 交通實用指南 (新增最划算買飛策略) -->
     <section id="transport" class="storybook-card">
-      <h2 style="font-size: 1.2rem; margin-bottom: 12px;">🚌 交通實用指南</h2>
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px;">🚌 交通買飛策略指南</h2>
       
+      <div class="trans-card-item" style="background:#FFF3CD;">
+        <div class="trans-card-title">💡 7 天最佳買飛策略：不用買大 Pass！</div>
+        <div class="trans-card-desc">
+          經過計算，跨區大 Pass (如 JR 高山北陸周遊券) 限制多且不划算。<b>全行程「點對點單買」最平最彈性！</b>
+        </div>
+      </div>
+
       <div class="trans-card-item">
         <div class="trans-card-title">🚄 JR 飛驒特急 (Hida)</div>
-        <div class="trans-card-desc">名古屋 ↔ 高山（單程約 2小時20分）。設有全景車廂，沿途飛驒川雪景極美，建議提前預劃座位。</div>
+        <div class="trans-card-desc">名古屋 ↔ 高山（單程約 ¥5,610）。設有全景車廂，建議出發前預先網上/現場單買劃位指定席。</div>
       </div>
 
       <div class="trans-card-item">
         <div class="trans-card-title">🚌 濃飛巴士（高山 ↔ 白川鄉）</div>
-        <div class="trans-card-desc">車程約 50 分鐘。<b>全車指定席</b>，需於出發前 1 個月在濃飛巴士官網搶訂預約。</div>
+        <div class="trans-card-desc">單程 ¥2,800。<b>全車指定席</b>，出發前 1 個月必須在濃飛巴士官網搶訂座位。</div>
       </div>
 
       <div class="trans-card-item">
-        <div class="trans-card-title">🏔️ 奧飛驒/新穗高纜車巴士套票</div>
-        <div class="trans-card-desc">建議購買「奧飛驒 2 日巴士套票 + 新穗高纜車往返券」，於高山巴士總站購買更劃算。</div>
+        <div class="trans-card-title">🏔️ 奧飛驒/新穗高纜車 2 日套票</div>
+        <div class="trans-card-desc">建議於高山巴士總站現場購買「奧飛驒 2 日巴士套票 + 新穗高纜車往返券」（約 ¥7,000），比單買便宜很多。</div>
       </div>
 
       <div class="trans-card-item">
-        <div class="trans-card-title">🚃 名鐵電車（機場 / 犬山 / 常滑）</div>
-        <div class="trans-card-desc">機場 ↔ 名古屋站（名鐵 µ-SKY 特急約 28 分鐘）；常滑離機場僅 5 分鐘車程，非常適合先去機場託運後空手回常滑。</div>
+        <div class="trans-card-title">🐧 Apple Wallet Suica 企鵝卡指引</div>
+        <div class="trans-card-desc">
+          <b>建議出發前入定 ¥15,000 日圓</b>。可用於：名古屋地下鐵、名鐵（機場/犬山線）、便利店買飲品/小食、自動售賣機。全期無須找零錢！
+        </div>
       </div>
     </section>
 
