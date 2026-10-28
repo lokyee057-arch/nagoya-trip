@@ -72,11 +72,14 @@
     nav.navbar a {
       text-decoration: none;
       font-weight: bold;
-      font-size: 0.78rem;
-      padding: 5px 6px;
+      font-size: 0.75rem;
+      padding: 5px 4px;
       border-radius: 12px;
       border: 2px solid transparent;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 2px;
     }
 
     nav.navbar a:active, nav.navbar a.active {
@@ -512,6 +515,7 @@
       flex-wrap: wrap;
       gap: 6px;
       margin-bottom: 4px;
+      align-items: center;
     }
 
     .price-tag-jp {
@@ -530,6 +534,16 @@
       border-radius: 8px;
       font-size: 0.75rem;
       font-weight: bold;
+    }
+
+    .price-tag-store {
+      background: #E8F4F8;
+      border: 1.5px solid var(--border-color);
+      padding: 1px 8px;
+      border-radius: 8px;
+      font-size: 0.73rem;
+      font-weight: bold;
+      color: #006699;
     }
 
     .shop-item-desc {
@@ -667,10 +681,11 @@
 </head>
 <body>
 
-  <!-- 頂端固定選單 -->
+  <!-- 頂端固定選單 (含合掌屋 Icon) -->
   <nav class="navbar">
-    <a href="#hero" class="active"><svg class="floating-svg" width="24" height="24" viewBox="0 0 100 100"><defs><style>.a{fill:#a8d3e6;}.b,.s{fill:none;stroke:#3e3a39;stroke-linecap:round;stroke-linejoin:round;stroke-width:5px;}.c,.d,.e{fill:#ffffff;fill-opacity:0.9;}.a{feather:url(#a);}.s{fill:#3e3a39;fill-opacity:0.1;}.c{-css-feather-blur:a}</style></defs><g id="Icon2"><rect class="a" x="22" y="20" width="56" height="64" rx="true"/><rect class="b" x="22" y="20" width="56" height="64" rx="true"/><path class="c" d="M50,30L26,72h48L50,30Z"/><path class="d" d="M50,30L26,72l18-8,12,8,18,8L50,30Z"/><path class="b" d="M50,30L26,72h48L50,30Z"/><path class="e" d="M42,72H58V60H42V72Z"/><path class="b" d="M42,72H58V60H42V72Z"/><circle class="s" cx="35" cy="32" r="3"/><circle class="b" cx="35" cy="32" r="3"/></g></svg>
-🏠 首頁</a>
+    <a href="#hero" class="active">
+      <svg style="width:16px; height:16px; vertical-align:middle;" viewBox="0 0 100 100"><defs><style>.a{fill:#a8d3e6;}.b{fill:none;stroke:#3e3a39;stroke-linecap:round;stroke-linejoin:round;stroke-width:6px;}.c,.d,.e{fill:#ffffff;fill-opacity:0.9;}</style></defs><rect class="a" x="22" y="20" width="56" height="64" rx="8"/><rect class="b" x="22" y="20" width="56" height="64" rx="8"/><path class="c" d="M50,30L26,72h48L50,30Z"/><path class="d" d="M50,30L26,72l18-8,12,8,18,8L50,30Z"/><path class="b" d="M50,30L26,72h48L50,30Z"/><path class="e" d="M42,72H58V60H42V72Z"/><path class="b" d="M42,72H58V60H42V72Z"/></svg>首頁
+    </a>
     <a href="#flights">✈️ 航班</a>
     <a href="#itinerary">📅 行程</a>
     <a href="#dining">🍽️ 餐廳</a>
@@ -805,7 +820,7 @@
               💰 <b>預估消費：</b> 人均約 ¥6,000 – ¥8,000 日圓。<br>
               ⚠️ <b>預約提醒：</b> 熱門極易滿座，建議提前 1-2 個月線上訂位。
             </div>
-            <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 BELON 榮店 Tabelog 預約</a>
+            <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 BELON Tabelog</a>
           </div>
         </div>
       </div>
@@ -1027,9 +1042,9 @@
       </div>
     </section>
 
-    <!-- 獨立區塊：預約餐廳總整理 -->
+    <!-- 獨立區塊：預約餐廳總整理 (全部帶有 Tabelog / Google map 快捷連結) -->
     <section id="dining" class="storybook-card">
-      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理</h2>
+      <h2 style="font-size: 1.2rem; margin-bottom: 14px;">🍽️ 預約餐廳總整理 (附 Tabelog / Google Map)</h2>
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
@@ -1037,11 +1052,11 @@
           <span class="restaurant-day-badge">Day 1 晚餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 生蠔海鮮專門店 (榮商圈)<br>
           • <b>預算：</b> ¥6,000 – ¥8,000 / 人<br>
-          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 必須線上預約</span>（提前 1-2 個月）
+          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 必須線上預約</span>
         </div>
-        <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 Tabelog 預約連結</a>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23046755/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Oysterbar+and+Wine+BELON+Sakae" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1050,12 +1065,12 @@
           <span class="restaurant-day-badge">Day 2 晚餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 名古屋地雞親子丼 / 味增鐵板豬排<br>
           • <b>預算：</b> ¥1,800 – ¥4,000 / 人<br>
-          • <b>預約狀態：</b> 矢場豬排免預約排隊；鳥開總本家建議預約。
+          • <b>預約狀態：</b> 矢場免預約；鳥開建議預約
         </div>
-        <a href="https://www.yabaton.com/" target="_blank" class="link-btn">🔗 矢場豬排官網</a>
-        <a href="https://www.torikai.co.jp/" target="_blank" class="link-btn">🔗 鳥開總本家官網</a>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23000305/" target="_blank" class="link-btn">🔗 矢場豬排 Tabelog</a>
+        <a href="https://tabelog.com/aichi/A2301/A230103/23005118/" target="_blank" class="link-btn">🔗 鳥開總本家 Tabelog</a>
+        <a href="https://maps.google.com/?q=Yabaton+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1064,10 +1079,11 @@
           <span class="restaurant-day-badge">Day 3 晚餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 高山站旁 JA 直營 A5 飛驒牛燒肉<br>
           • <b>預算：</b> ¥6,000 – ¥9,000 / 人<br>
-          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 不設網上預約</span>（16:30 必須到現場抽整理券機號碼牌）
+          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 16:30 現場抽號</span>
         </div>
+        <a href="https://tabelog.com/gifu/A2104/A210401/21000624/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Ajikuratenkoku+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1076,34 +1092,37 @@
           <span class="restaurant-day-badge">Day 4 午餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 白川鄉合掌造古民家地道料理<br>
           • <b>預算：</b> ¥2,000 – ¥3,000 / 人<br>
-          • <b>預約狀態：</b> 現場排隊 / 可提前詢問電話預約。
+          • <b>預約狀態：</b> 現場排隊
         </div>
+        <a href="https://tabelog.com/gifu/A2104/A210404/21000637/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Hakusuien+Shirakawago" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
-          <span class="restaurant-name">🍲 丸明 高山店 (飛驒牛朴葉燒 / 壽喜燒)</span>
+          <span class="restaurant-name">🍲 丸明 高山店 (飛驒牛專門)</span>
           <span class="restaurant-day-badge">Day 4 晚餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 高山超人氣飛驒牛精肉直營名店<br>
           • <b>預算：</b> ¥5,000 – ¥8,000 / 人<br>
-          • <b>預約狀態：</b> 現場抽號排隊 / 亦可請旅館協助電話預約。
+          • <b>預約狀態：</b> 現場抽號排隊
         </div>
+        <a href="https://tabelog.com/gifu/A2104/A210401/21000030/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Maruaki+Takayama" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
         <div class="restaurant-header">
-          <span class="restaurant-name">🍜 山本屋本店 (味增鍋燒烏龍麵)</span>
+          <span class="restaurant-name">🍜 山本屋本店 (味增鍋燒烏龍)</span>
           <span class="restaurant-day-badge">Day 5 晚餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 名古屋傳統熱騰騰味增鍋燒烏龍麵<br>
           • <b>預算：</b> ¥1,800 – ¥2,800 / 人<br>
-          • <b>預約狀態：</b> 免預約，現場排隊。
+          • <b>預約狀態：</b> 免預約，現場排隊
         </div>
+        <a href="https://tabelog.com/aichi/A2301/A230101/23000142/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Yamamotoyahonten+Nagoya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
 
       <div class="restaurant-card-item">
@@ -1112,15 +1131,15 @@
           <span class="restaurant-day-badge">Day 6 午餐</span>
         </div>
         <div class="restaurant-meta">
-          • <b>類別：</b> 名古屋最傳奇百年鰻魚飯名店<br>
           • <b>預算：</b> ¥4,500 – ¥6,500 / 人<br>
-          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 不接受事前網上預約</span>（11:00 前需親臨現場領取時間號碼牌）
+          • <b>預約狀態：</b> <span style="color:#D9534F; font-weight:bold;">⚠️ 11:00 前現場領號</span>
         </div>
-        <a href="https://www.houraiken.com/" target="_blank" class="link-btn">🔗 蓬萊軒官方網站</a>
+        <a href="https://tabelog.com/aichi/A2301/A230105/23000036/" target="_blank" class="link-btn">🔗 Tabelog 頁面</a>
+        <a href="https://maps.google.com/?q=Atsuta+Horaiken+Matsuzakaya" target="_blank" class="link-btn">🗺️ Google 地圖</a>
       </div>
     </section>
 
-    <!-- 🛍️ 全新購物清單模組 (可上載/拍照 Cap 圖) -->
+    <!-- 🛍️ 購物清單模組 (含刪除按鈕 & 自選商店 Label) -->
     <section id="shopping" class="storybook-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
         <h2 style="font-size: 1.2rem;">🛍️ 購物與格價清單</h2>
@@ -1133,7 +1152,7 @@
       <!-- 新增購物項目按鈕與表單 -->
       <div style="text-align:center; margin-top:16px;">
         <button onclick="toggleAddForm()" class="link-btn" style="padding:8px 16px; font-size:0.9rem; background:var(--yellow);">
-          ➕ 新增購物項目 / 上載 Cap 圖
+          ➕ 新增心水物品 / 上載 Cap 圖
         </button>
       </div>
 
@@ -1141,7 +1160,7 @@
         <h3 style="font-size:0.95rem; margin-bottom:10px;">🛍️ 新增心水商品</h3>
         
         <div class="form-group">
-          <label>品牌 / 類別 (如: Cezanne, Cartier, 藥妝)</label>
+          <label>品牌 / 類別 (如: Cartier, Cezanne, 藥妝)</label>
           <input type="text" id="input-brand" class="form-input" placeholder="例如: Cartier">
         </div>
 
@@ -1162,6 +1181,11 @@
         </div>
 
         <div class="form-group">
+          <label>📍 購買地點 / 專門店 Label (如: 榮松坂屋, Bic Camera)</label>
+          <input type="text" id="input-store" class="form-input" placeholder="例如: 榮松坂屋專櫃">
+        </div>
+
+        <div class="form-group">
           <label>📷 上載 / 拍照 Cap 圖</label>
           <input type="file" id="input-img-file" class="form-input" accept="image/*" onchange="previewImageFile(this)">
           <input type="hidden" id="input-img-base64">
@@ -1169,8 +1193,8 @@
         </div>
 
         <div class="form-group">
-          <label>備註 (如: 榮松坂屋專櫃, 滿稅額扣稅等)</label>
-          <input type="text" id="input-desc" class="form-input" placeholder="選填備註">
+          <label>備註 (選填)</label>
+          <input type="text" id="input-desc" class="form-input" placeholder="例如: 滿稅額可退稅">
         </div>
 
         <div style="display:flex; gap:8px; margin-top:12px;">
@@ -1186,11 +1210,11 @@
       
       <div class="trans-card-item">
         <div class="trans-card-title">🚄 JR 飛驒特急 (Hida)</div>
-        <div class="trans-card-desc">名古屋 ↔️ 高山（單程約 2小時20分）。設有全景車廂，沿途飛驒川雪景極美，建議提前預劃座位。</div>
+        <div class="trans-card-desc">名古屋 ↔ 高山（單程約 2小時20分）。設有全景車廂，沿途飛驒川雪景極美，建議提前預劃座位。</div>
       </div>
 
       <div class="trans-card-item">
-        <div class="trans-card-title">🚌 濃飛巴士（高山 ↔️ 白川鄉）</div>
+        <div class="trans-card-title">🚌 濃飛巴士（高山 ↔ 白川鄉）</div>
         <div class="trans-card-desc">車程約 50 分鐘。<b>全車指定席</b>，需於出發前 1 個月在濃飛巴士官網搶訂預約。</div>
       </div>
 
@@ -1201,7 +1225,7 @@
 
       <div class="trans-card-item">
         <div class="trans-card-title">🚃 名鐵電車（機場 / 犬山 / 常滑）</div>
-        <div class="trans-card-desc">機場 ↔️ 名古屋站（名鐵 µ-SKY 特急約 28 分鐘）；常滑離機場僅 5 分鐘車程，非常適合先去機場託運後空手回常滑。</div>
+        <div class="trans-card-desc">機場 ↔ 名古屋站（名鐵 µ-SKY 特急約 28 分鐘）；常滑離機場僅 5 分鐘車程，非常適合先去機場託運後空手回常滑。</div>
       </div>
     </section>
 
@@ -1236,7 +1260,7 @@
         </li>
         <li class="todo-item">
           <input type="checkbox" id="t3" onclick="toggleTodo(this)">
-          <label for="t3">出發前 1 個月：預約濃飛巴士（高山 ↔️ 白川鄉）</label>
+          <label for="t3">出發前 1 個月：預約濃飛巴士（高山 ↔ 白川鄉）</label>
         </li>
         <li class="todo-item">
           <input type="checkbox" id="t4" onclick="toggleTodo(this)">
@@ -1308,14 +1332,14 @@
       }
     }
 
-    // --- 🛍️ 購物清單 JS 邏輯 (localStorage 儲存 + Cap 圖處理) ---
+    // --- 🛍️ 購物清單 JS 邏輯 (支援刪除、商店標籤、Cap 圖) ---
     const defaultShoppingData = [
       {
         id: 'brand-cartier',
         brand: 'Cartier',
         avatar: 'Ca',
         items: [
-          { id: 'item-1', title: 'Panthère de Cartier Small WSPN0006 鋼錶', jpPrice: 715000, hkPrice: 39500, checked: false, desc: '榮松坂屋專櫃試戴格價', img: '' }
+          { id: 'item-1', title: 'Panthère de Cartier Small WSPN0006 鋼錶', jpPrice: 715000, hkPrice: 39500, store: '榮松坂屋專櫃', checked: false, desc: '試戴格價', img: '' }
         ]
       },
       {
@@ -1323,7 +1347,7 @@
         brand: 'Cezanne',
         avatar: 'Ce',
         items: [
-          { id: 'item-2', title: '超細芯抗水眉筆', jpPrice: 550, hkPrice: 48, checked: false, desc: '藥妝店必買', img: '' }
+          { id: 'item-2', title: '超細芯抗水眉筆', jpPrice: 550, hkPrice: 48, store: '日本藥妝店 (松本清)', checked: false, desc: '囤貨', img: '' }
         ]
       },
       {
@@ -1331,7 +1355,7 @@
         brand: '飛驒手信',
         avatar: '飛',
         items: [
-          { id: 'item-3', title: '飛驒牛煎餅 & 宮川朝市木雕', jpPrice: 1200, hkPrice: 98, checked: false, desc: '送禮必備', img: '' }
+          { id: 'item-3', title: '飛驒牛煎餅 & 宮川朝市木雕', jpPrice: 1200, hkPrice: 98, store: '高山三町老街', checked: false, desc: '手信', img: '' }
         ]
       }
     ];
@@ -1354,7 +1378,7 @@
       const container = document.getElementById('shopping-container');
       container.innerHTML = '';
 
-      const JPY_RATE = 0.052; // JPY 轉 HKD 估算匯率
+      const JPY_RATE = 0.052; // 估算匯率
 
       data.forEach((group, groupIdx) => {
         const totalItems = group.items.length;
@@ -1387,11 +1411,12 @@
                     <div class="shop-price-tags">
                       ${item.jpPrice ? `<span class="price-tag-jp">日本 ¥${item.jpPrice.toLocaleString()} (約HK$${estHkFromJp})</span>` : ''}
                       ${item.hkPrice ? `<span class="price-tag-hk">香港 HK$${item.hkPrice.toLocaleString()}</span>` : ''}
+                      ${item.store ? `<span class="price-tag-store">📍 ${item.store}</span>` : ''}
                       ${savedHk > 0 ? `<span style="font-size:0.7rem; background:#FFD1D1; border:1px solid var(--border-color); padding:1px 6px; border-radius:6px; font-weight:bold;">慳 HK$${savedHk}</span>` : ''}
                     </div>
                     ${item.desc ? `<div class="shop-item-desc">📝 ${item.desc}</div>` : ''}
                   </div>
-                  <button onclick="deleteShopItem(${groupIdx}, ${itemIdx})" style="background:none; border:none; color:#AAA; font-size:1.1rem; cursor:pointer;">✕</button>
+                  <button onclick="deleteShopItem(${groupIdx}, ${itemIdx})" style="background:#FFF; border:2px solid var(--border-color); border-radius:8px; width:26px; height:26px; color:#D9534F; font-weight:bold; cursor:pointer; flex-shrink:0;" title="刪除此項">✕</button>
                 </div>
               `;
             }).join('')}
@@ -1418,12 +1443,14 @@
     }
 
     function deleteShopItem(groupIdx, itemIdx) {
-      const data = getShoppingData();
-      data[groupIdx].items.splice(itemIdx, 1);
-      if (data[groupIdx].items.length === 0) {
-        data.splice(groupIdx, 1);
+      if (confirm('確定要刪除呢個心水物品嗎？')) {
+        const data = getShoppingData();
+        data[groupIdx].items.splice(itemIdx, 1);
+        if (data[groupIdx].items.length === 0) {
+          data.splice(groupIdx, 1);
+        }
+        saveShoppingData(data);
       }
-      saveShoppingData(data);
     }
 
     function toggleAddForm() {
@@ -1449,6 +1476,7 @@
       const title = document.getElementById('input-title').value.trim();
       const jpPrice = parseInt(document.getElementById('input-jp-price').value) || 0;
       const hkPrice = parseInt(document.getElementById('input-hk-price').value) || 0;
+      const store = document.getElementById('input-store').value.trim();
       const desc = document.getElementById('input-desc').value.trim();
       const img = document.getElementById('input-img-base64').value;
 
@@ -1475,6 +1503,7 @@
         title: title,
         jpPrice: jpPrice,
         hkPrice: hkPrice,
+        store: store,
         checked: false,
         desc: desc,
         img: img
@@ -1482,11 +1511,12 @@
 
       saveShoppingData(data);
 
-      // 清空表單
+      // 清空表單欄位
       document.getElementById('input-brand').value = '';
       document.getElementById('input-title').value = '';
       document.getElementById('input-jp-price').value = '';
       document.getElementById('input-hk-price').value = '';
+      document.getElementById('input-store').value = '';
       document.getElementById('input-desc').value = '';
       document.getElementById('input-img-base64').value = '';
       document.getElementById('img-preview').style.display = 'none';
