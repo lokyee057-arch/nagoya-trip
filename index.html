@@ -42,10 +42,10 @@
       max-width: 580px;
       z-index: 1000;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       justify-content: center;
       background: rgba(251, 249, 244, 0.95);
-      padding: 10px 14px;
+      padding: 10px 12px;
       border: 2.5px solid var(--border-color);
       border-radius: 25px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 3px 0px var(--border-color);
@@ -56,8 +56,8 @@
       background: var(--card-bg);
       border: 2px solid var(--border-color);
       border-radius: 16px;
-      padding: 8px 12px;
-      font-size: 13px;
+      padding: 8px 10px;
+      font-size: 12px;
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
@@ -136,17 +136,6 @@
     .item-box { background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; position: relative; }
     .item-box-title { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
     .item-box-sub { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; }
-
-    .sub-info-box {
-      background: #F4F3EF;
-      border: 1.5px solid #D5D0C5;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      font-size: 13px;
-      color: #4A4A4A;
-      line-height: 1.6;
-    }
 
     .food-inline-card {
       background: #FFFBF0;
@@ -228,7 +217,6 @@
     .timeline-title { font-size: 16px; font-weight: 900; }
     .timeline-desc { font-size: 14px; color: var(--text-main); line-height: 1.65; }
 
-    /* 預約倒數極簡風標籤 */
     .mini-countdown {
       font-size: 11px;
       color: #666;
@@ -241,7 +229,6 @@
       display: inline-block;
     }
 
-    /* 記帳表格與表單 */
     .expense-input-group {
       display: flex;
       flex-direction: column;
@@ -276,10 +263,8 @@
 </head>
 <body>
 
-  <!-- 頂部頁籤切換 -->
+  <!-- 主頁面容器 -->
   <div id="page-main">
-
-    <!-- 首頁與倒數卡片 -->
     <div id="sec-home" class="card header-card">
       <div style="font-size: 38px; margin-bottom: 5px;">🏔️⛺</div>
       <div class="trip-title">Nagoya & Hokuriku Winter Loop 2027</div>
@@ -322,7 +307,7 @@
       </div>
     </div>
 
-    <!-- 📅 7 天 Timeline 詳細行程 -->
+    <!-- 📅 7 天行程 -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-itinerary', 'pill-itinerary')">
         <div class="card-title">📅 每日行程與攻略</div>
@@ -339,7 +324,6 @@
           <button class="day-tab" id="tab-7" onclick="showDay(7)">Day 7 (2/2 Tue)</button>
         </div>
 
-        <!-- Day 1 -->
         <div id="day-content-1" class="day-details">
           <div class="timeline">
             <div class="timeline-item">
@@ -354,65 +338,79 @@
               <div class="timeline-head"><span class="timeline-title">搭乘國泰航空 CX536 ➔ 名古屋 (NGO)</span><span class="tag tag-green">特選經濟客艙</span></div>
               <div class="timeline-desc">航班起飛，享受特選經濟舒適空間與機上餐飲，於 14:10 降落名古屋中部國際機場。</div>
             </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">14:10 - 15:15</div>
-              <div class="timeline-head"><span class="timeline-title">降落與出關手續</span><span class="tag tag-purple">快速通關</span></div>
-              <div class="timeline-desc">特選經濟客艙優先下機，快速辦理入境與託運行李提取手續（約 65 分鐘）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">15:15 - 16:15 🚗 交通時間 60mins</div>
-              <div class="timeline-head"><span class="timeline-title">機場 ➔ 名古屋站飯店 [Check-in]</span><span class="tag tag-purple">名鐵 μ-SKY (28mins)</span></div>
-              <div class="timeline-desc">
-                • 15:15-15:35 步行前往機場交通廣場月台（20 分鐘）<br>
-                • 15:37-16:05 搭乘名鐵特急 μ-SKY 直達名鐵名古屋站（車程 28 分鐘）<br>
-                • 16:05-16:15 步行前往 **Via Inn Nagoya Shinkansenguchi** 辦理 Check-in 寄放行李。<br>
-                • 💡 **順路提醒**：今晚回飯店前記得先去 **Seven-Eleven 買定明天 (Day 2) 嘅簡單早餐**！
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">16:30 - 18:30</div>
-              <div class="timeline-head"><span class="timeline-title">名古屋站商圈散策</span><span class="tag tag-yellow">高島屋 / JR Towers</span></div>
-              <div class="timeline-desc">兩手空空逛 JR Central Towers，並至名鐵百貨巴士總站熟悉 Day 4 上車位置。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">18:30 🚗 交通時間 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：とんかつジョニー (首選)</span><span class="tag tag-red">厚切炸豬排專門</span></div>
-              <div class="timeline-desc">
-                由商圈散步 10-15 分鐘至餐廳。
-                <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🥩 とんかつジョニー (Tonkatsu Johnny) [首選]</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：人氣在地厚切炸豬排專門店 (馬喰一代作為後備)</div>
-                  <div class="link-btns">
-                    <a href="https://tabelog.com/aichi/A2301/A230103/23075253/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=とんかつジョニー+名古屋" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(1)"><span>📝 Day 1 隨身備註與修改</span><span id="memo-arrow-1">▼</span></div>
-            <div class="memo-content" id="memo-body-1"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-1" oninput="saveMemo(1)"></textarea></div>
           </div>
           <div class="day-nav-footer"><div></div><button class="day-nav-btn" onclick="showDay(2)">後一日 (Day 2) ▶</button></div>
         </div>
 
-        <!-- Day 2 至 7 精簡保留相同邏輯（省略重複描述以維持簡潔） -->
-        <div id="day-content-2" class="day-details" style="display: none;"><p style="padding:10px;">Day 2 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(1)">◀ 前一日 (Day 1)</button><button class="day-nav-btn" onclick="showDay(3)">後一日 (Day 3) ▶</button></div></div>
-        <div id="day-content-3" class="day-details" style="display: none;"><p style="padding:10px;">Day 3 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(2)">◀ 前一日 (Day 2)</button><button class="day-nav-btn" onclick="showDay(4)">後一日 (Day 4) ▶</button></div></div>
-        <div id="day-content-4" class="day-details" style="display: none;"><p style="padding:10px;">Day 4 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(3)">◀ 前一日 (Day 3)</button><button class="day-nav-btn" onclick="showDay(5)">後一日 (Day 5) ▶</button></div></div>
-        <div id="day-content-5" class="day-details" style="display: none;"><p style="padding:10px;">Day 5 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(4)">◀ 前一日 (Day 4)</button><button class="day-nav-btn" onclick="showDay(6)">後一日 (Day 6) ▶</button></div></div>
-        <div id="day-content-6" class="day-details" style="display: none;"><p style="padding:10px;">Day 6 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(5)">◀ 前一日 (Day 5)</button><button class="day-nav-btn" onclick="showDay(7)">後一日 (Day 7) ▶</button></div></div>
-        <div id="day-content-7" class="day-details" style="display: none;"><p style="padding:10px;">Day 7 詳細內容已載入...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(6)">◀ 前一日 (Day 6)</button><div></div></div></div>
+        <div id="day-content-2" class="day-details" style="display: none;"><p style="padding:10px;">Day 2 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(1)">◀ 前一日</button><button class="day-nav-btn" onclick="showDay(3)">後一日 ▶</button></div></div>
+        <div id="day-content-3" class="day-details" style="display: none;"><p style="padding:10px;">Day 3 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(2)">◀ 前一日</button><button class="day-nav-btn" onclick="showDay(4)">後一日 ▶</button></div></div>
+        <div id="day-content-4" class="day-details" style="display: none;"><p style="padding:10px;">Day 4 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(3)">◀ 前一日</button><button class="day-nav-btn" onclick="showDay(5)">後一日 ▶</button></div></div>
+        <div id="day-content-5" class="day-details" style="display: none;"><p style="padding:10px;">Day 5 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(4)">◀ 前一日</button><button class="day-nav-btn" onclick="showDay(6)">後一日 ▶</button></div></div>
+        <div id="day-content-6" class="day-details" style="display: none;"><p style="padding:10px;">Day 6 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(5)">◀ 前一日</button><button class="day-nav-btn" onclick="showDay(7)">後一日 ▶</button></div></div>
+        <div id="day-content-7" class="day-details" style="display: none;"><p style="padding:10px;">Day 7 詳細內容...</p><div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(6)">◀ 前一日</button><div></div></div></div>
+      </div>
+    </div>
+
+    <!-- 🏨 住宿安排與地圖 -->
+    <div class="card">
+      <div class="card-header-toggle" onclick="toggleCard('body-hotel', 'pill-hotel')">
+        <div class="card-title">🏨 住宿安排與地圖</div>
+        <div class="toggle-pill" id="pill-hotel">▼</div>
+      </div>
+      <div class="card-body" id="body-hotel" style="display: none;">
+        
+        <div class="item-box">
+          <span class="tag tag-yellow">Day 1 & Day 2 (1/27 - 1/29) · 2晚</span>
+          <div class="item-box-title" style="margin-top: 5px;">Via Inn Nagoya Shinkansenguchi</div>
+          <div class="item-box-sub">
+            • 雙人房-禁煙 (已確認入住 1/27 - 1/29)<br>
+            • 位於名古屋站新幹線口，方便 Day 3 直接搭乘 Hida 3號前往高山。
+          </div>
+          <div class="link-btns">
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Inn+Nagoya+Shinkansenguchi" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a>
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-green">Day 3 & Day 4 (1/29 - 1/31) · 2晚</span>
+          <div class="item-box-title" style="margin-top: 5px;">高山櫻庵 Takayama Ouan</div>
+          <div class="item-box-sub">
+            • 已確定 2 晚連住<br>
+            • JR 高山站步行 3 分鐘，頂樓露天雪見溫泉，每日 21:30 - 23:00 免費夜鳴醬油拉麵。
+          </div>
+          <div class="link-btns">
+            <a href="https://www.google.com/maps/search/?api=1&query=高山櫻庵" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a>
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-yellow">Day 5 (1/31 - 2/1) · 1晚</span>
+          <div class="item-box-title" style="margin-top: 5px;">Kaname Inn Tatemachi (金澤)</div>
+          <div class="item-box-sub">
+            • 入住 1/31 - 2/1 (下午 3:00 後 Check-in / 上午 11:00 前 Check-out)<br>
+            • 位於金澤堅町 (41 Tatemachi)，距離 21世紀美術館與市區景點極近。
+          </div>
+          <div class="link-btns">
+            <a href="https://www.google.com/maps/search/?api=1&query=Kaname+Inn+Tatemachi" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a>
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-yellow">Day 6 (2/1 - 2/2) · 1晚</span>
+          <div class="item-box-title" style="margin-top: 5px;">Meitetsu Inn Nagoyaeki Shinkansenguchi</div>
+          <div class="item-box-sub">
+            • 標準雙人房-禁煙 (入住 2/1 - 2/2)<br>
+            • 名古屋站新幹線口，方便次日退房後搭乘名鐵前往常滑與機場。
+          </div>
+          <div class="link-btns">
+            <a href="https://www.google.com/maps/search/?api=1&query=Meitetsu+Inn+Nagoyaeki+Shinkansenguchi" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a>
+          </div>
+        </div>
 
       </div>
     </div>
 
-    <!-- 🎟️ 必搶預約項目清單 (自動判斷摺疊與動態倒數) -->
+    <!-- 🎟️ 必搶預約項目清單 -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
         <div class="card-title">🎟️ 必搶預約項目清單</div>
@@ -420,7 +418,6 @@
       </div>
       <div class="card-body" id="body-booking-list" style="display: none;">
         
-        <!-- 1. 吉卜力公園 -->
         <div class="item-box booking-box" data-date="2026-11-10T13:00:00+08:00">
           <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
             <span class="tag tag-red">1. 吉卜力公園 · 11月10日 13:00 (HKT)</span>
@@ -428,16 +425,11 @@
             <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
           </div>
           <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 2 (1/28 Thu)<br>
-              • 👤 <b>帳號登記</b>：LAWSON TICKET 國際版帳號。<br>
-              • 💡 <b>重點提醒</b>：全預約制無現場票，搶「大散步券 Premium」。
-            </div>
+            <div class="item-box-sub">• <b>適用行程</b>：Day 2 (1/28 Thu)<br>• 💡 搶「大散步券 Premium」。</div>
             <div class="link-btns"><a href="https://l-tike.com/ghibli-park/" target="_blank" class="btn-sm">🔗 LAWSON 搶票</a></div>
           </div>
         </div>
 
-        <!-- 2. JR 5日 Pass 購買與劃位 -->
         <div class="item-box booking-box" data-date="2026-12-29T09:00:00+08:00">
           <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
             <span class="tag tag-green">2. JR Pass 購買 & 劃位 · 12月29日 09:00 (HKT)</span>
@@ -445,16 +437,11 @@
             <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
           </div>
           <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 3 至 Day 7 (1/29 - 2/2)<br>
-              • 👤 <b>帳號登記</b>：WESTER 會員帳號。<br>
-              • 💡 <b>重點提醒</b>：於 12/29 早上 09:00 購買同時免費劃位 1/29 Hida 3號 指定席！
-            </div>
+            <div class="item-box-sub">• <b>適用行程</b>：Day 3 至 Day 7<br>• 💡 12/29 早上 09:00 同時免費劃位 Hida 3號[cite: 5]。</div>
             <div class="link-btns"><a href="https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/" target="_blank" class="btn-sm">🔗 JR 西日本 Portal</a></div>
           </div>
         </div>
 
-        <!-- 3. 濃飛巴士白川鄉 -->
         <div class="item-box booking-box" data-date="2026-12-30T09:00:00+08:00">
           <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
             <span class="tag tag-purple">3. 濃飛高速巴士 · 12月30日 09:00 (HKT)</span>
@@ -462,67 +449,71 @@
             <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
           </div>
           <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 4 (1/30 Sat) 高山 ↔ 白川鄉<br>
-              • 👤 <b>帳號登記</b>：Japan Bus Online 會員。<br>
-              • 💡 <b>重點提醒</b>：JR Pass 包車資但不包預約，12/30 必須上網搶位！
-            </div>
+            <div class="item-box-sub">• <b>適用行程</b>：Day 4 白川鄉來回<br>• 💡 12/30 必須上網搶預約位[cite: 5]。</div>
             <div class="link-btns"><a href="https://www.japanexpressbus.com/zh-tw/" target="_blank" class="btn-sm">🔗 Japan Bus Online 預約</a></div>
           </div>
         </div>
 
       </div>
     </div>
-
-    <!-- 🧾 單據記帳 (Google Sheets 雲端同步) -->
-    <div id="page-expenses" class="card" style="display:none;">
-      <div class="card-title" style="margin-bottom:12px;">🧾 單據記帳 (雲端同步)</div>
-      
-      <div class="expense-input-group">
-        <input type="text" id="exp-item" class="expense-input" placeholder="項目名稱 (例如: 飛驒牛燒肉)">
-        <div style="display:flex; gap:8px;">
-          <input type="number" id="exp-amount" class="expense-input" placeholder="金額 (日圓)" style="flex:1;">
-          <select id="exp-payer" class="expense-input" style="flex:1;">
-            <option value="公費">公費</option>
-            <option value="阿樂">阿樂</option>
-            <option value="同行人">同行人</option>
-          </select>
-        </div>
-        <button class="day-nav-btn" style="background:var(--tag-yellow);" onclick="addExpense()">➕ 新增記帳</button>
-      </div>
-
-      <div id="expense-loading" style="text-align:center; padding:10px; font-size:12px; color:#888;">☁️ 正在與 Google Sheets 同步中...</div>
-      <div id="expense-list"></div>
-    </div>
-
   </div>
 
-  <!-- 底部固定導航欄 -->
+  <!-- 🛍️ 購物清單頁面 (LocalStorage 獨立運作) -->
+  <div id="page-shopping" class="card" style="display:none;">
+    <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
+    <div class="expense-input-group">
+      <input type="text" id="shop-item" class="expense-input" placeholder="輸入想買的物品...">
+      <button class="day-nav-btn" style="background:var(--tag-yellow);" onclick="addShoppingItem()">➕ 新增購物項目</button>
+    </div>
+    <div id="shopping-list"></div>
+  </div>
+
+  <!-- 🧾 單據記帳頁面 (Google Sheets 雲端同步) -->
+  <div id="page-expenses" class="card" style="display:none;">
+    <div class="card-title" style="margin-bottom:12px;">🧾 單據記帳 (雲端同步)</div>
+    
+    <div class="expense-input-group">
+      <input type="text" id="exp-item" class="expense-input" placeholder="項目名稱 (例如: 飛驒牛燒肉)">
+      <div style="display:flex; gap:8px;">
+        <input type="number" id="exp-amount" class="expense-input" placeholder="金額 (日圓)" style="flex:1;">
+        <select id="exp-payer" class="expense-input" style="flex:1;">
+          <option value="公費">公費</option>
+          <option value="阿樂">阿樂</option>
+          <option value="同行人">同行人</option>
+        </select>
+      </div>
+      <button class="day-nav-btn" style="background:var(--tag-yellow);" onclick="addExpense()">➕ 新增記帳</button>
+    </div>
+
+    <div id="expense-loading" style="text-align:center; padding:10px; font-size:12px; color:#888;">☁️ 正在與 Google Sheets 同步中...</div>
+    <div id="expense-list"></div>
+  </div>
+
+  <!-- 底部固定導航欄 (包含購物清單) -->
   <div class="nav-bar">
-    <button class="nav-btn active" onclick="switchPage('main')">🏠 行程總覽</button>
-    <button class="nav-btn" onclick="switchPage('expenses')">🧾 單據記帳</button>
+    <button class="nav-btn active" onclick="switchPage('main', this)">🏠 行程總覽</button>
+    <button class="nav-btn" onclick="switchPage('shopping', this)">🛍️ 購物清單</button>
+    <button class="nav-btn" onclick="switchPage('expenses', this)">🧾 單據記帳</button>
   </div>
 
   <script>
-    // ⚠️ 請填入你部署好的 Google Apps Script Web App URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+    // ✅ 已自動填入你的 Google Apps Script Web App URL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbvT_VNLyDnmMUPAicGlgr1jz01mrnEuMA24glmfaYrlqKidifSdV8nLDecZ6UT6wggad4Q/exec";
 
     // 1. 頁面切換
-    function switchPage(page) {
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      if (page === 'main') {
-        document.getElementById('page-main').style.display = 'block';
-        document.getElementById('page-expenses').style.display = 'none';
-        event.target.classList.add('active');
-      } else if (page === 'expenses') {
-        document.getElementById('page-main').style.display = 'none';
-        document.getElementById('page-expenses').style.display = 'block';
-        event.target.classList.add('active');
-        fetchExpenses();
-      }
+    function switchPage(page, btn) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('page-main').style.display = (page === 'main') ? 'block' : 'none';
+      document.getElementById('page-shopping').style.display = (page === 'shopping') ? 'block' : 'none';
+      document.getElementById('page-expenses').style.display = (page === 'expenses') ? 'block' : 'none';
+
+      if (page === 'shopping') renderShopping();
+      if (page === 'expenses') fetchExpenses();
     }
 
-    // 2. 必搶預約自動摺疊 & 動態倒數邏輯
+    // 2. 必搶預約自動摺疊 & 動態倒數
     function initBookingItems() {
       const now = new Date();
       const boxes = document.querySelectorAll('.booking-box');
@@ -534,13 +525,11 @@
         const targetDate = new Date(dateStr);
         const diffDays = (now - targetDate) / (1000 * 60 * 60 * 24);
 
-        // 如果預約日期過咗 1 天或以上，自動縮到最細 (摺疊)
         if (diffDays >= 1) {
           box.querySelector('.booking-body').style.display = 'none';
           box.querySelector('.toggle-arrow').innerText = '▼';
         }
 
-        // 尋找未來最近的預約
         const timeDiff = targetDate - now;
         if (timeDiff > 0 && timeDiff < minDiff) {
           minDiff = timeDiff;
@@ -548,7 +537,6 @@
         }
       });
 
-      // 喺未來最接近嘅一格加入極簡倒數
       if (nextBox) {
         const countdownEl = nextBox.box.querySelector('.mini-countdown');
         function updateMiniTimer() {
@@ -579,10 +567,46 @@
       }
     }
 
-    // 3. Google Sheets 記帳連線 (GET & POST)
+    // 3. 購物清單 (LocalStorage)
+    function addShoppingItem() {
+      const input = document.getElementById('shop-item');
+      if (!input.value) return;
+      let list = JSON.parse(localStorage.getItem('trip_shopping') || '[]');
+      list.push({ id: Date.now(), text: input.value });
+      localStorage.setItem('trip_shopping', JSON.stringify(list));
+      input.value = '';
+      renderShopping();
+    }
+
+    function deleteShoppingItem(id) {
+      let list = JSON.parse(localStorage.getItem('trip_shopping') || '[]');
+      list = list.filter(i => i.id !== id);
+      localStorage.setItem('trip_shopping', JSON.stringify(list));
+      renderShopping();
+    }
+
+    function renderShopping() {
+      const container = document.getElementById('shopping-list');
+      container.innerHTML = '';
+      let list = JSON.parse(localStorage.getItem('trip_shopping') || '[]');
+      if (list.length === 0) {
+        container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無購物項目</div>';
+        return;
+      }
+      list.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'expense-row';
+        row.innerHTML = `
+          <div style="font-weight:700; font-size:14px;">🛍️ ${item.text}</div>
+          <button class="expense-del-btn" onclick="deleteShoppingItem(${item.id})">刪除</button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // 4. Google Sheets 記帳連線 (GET & POST)
     function fetchExpenses() {
       const loading = document.getElementById('expense-loading');
-      const list = document.getElementById('expense-list');
       loading.style.display = 'block';
 
       fetch(APPS_SCRIPT_URL)
@@ -594,7 +618,7 @@
           }
         })
         .catch(err => {
-          loading.innerText = '❌ 讀取失敗，請確認網絡或 API 設定';
+          loading.innerText = '❌ 讀取失敗，請確認 API 網址是否正確';
         });
     }
 
@@ -674,7 +698,7 @@
       .then(res => fetchExpenses());
     }
 
-    // 4. 通用 Card 展開/摺疊
+    // 5. 通用工具
     function toggleCard(bodyId, pillId) {
       const body = document.getElementById(bodyId);
       const pill = document.getElementById(pillId);
