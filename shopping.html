@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nagoya & Hokuriku Winter Loop - 購物清單</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #FBF9F4;
+      --card-bg: #FFFFFF;
+      --border-color: #2B2B2B;
+      --tag-red: #E88282;
+      --tag-green: #74B9BE;
+      --tag-yellow: #F3CD7B;
+      --tag-purple: #B39DDB;
+      --text-main: #2B2B2B;
+      --text-sub: #555555;
+      --shadow: 0 5px 0px #2B2B2B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Zen Maru Gothic', sans-serif; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding-bottom: 90px;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 580px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      background: rgba(251, 249, 244, 0.95);
+      padding: 8px 12px;
+      border: 2.5px solid var(--border-color);
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 3px 0px var(--border-color);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-btn {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 2px 0px var(--border-color);
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .nav-btn.active {
+      background: var(--tag-yellow);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 2.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-label {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--bg-color);
+      outline: none;
+    }
+
+    .paste-dropzone {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      background: var(--bg-color);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-top: 6px;
+    }
+    .paste-dropzone:hover {
+      background: #F4F1EA;
+    }
+
+    .btn-action {
+      background: var(--tag-green);
+      color: white;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      width: 100%;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 3px 0px var(--border-color);
+      margin-top: 5px;
+    }
+    .btn-action:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0px var(--border-color);
+    }
+
+    .category-section {
+      margin-bottom: 15px;
+    }
+    .category-title {
+      background: var(--tag-yellow);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      display: inline-block;
+      box-shadow: 0 2px 0px var(--border-color);
+    }
+
+    .item-card {
+      background: var(--bg-color);
+      border: 2px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      position: relative;
+    }
+    .item-img {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      object-fit: cover;
+      background: #E0E0E0;
+      flex-shrink: 0;
+    }
+    .item-info {
+      flex-grow: 1;
+    }
+    .item-name {
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .item-meta {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      font-weight: 700;
+    }
+    .item-btns {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .btn-xs {
+      background: white;
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 1px 0px var(--border-color);
+    }
+    .btn-delete {
+      background: var(--tag-red);
+      color: white;
+    }
+
+    /* Modal 編輯彈窗 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #FFF;
+      border: 3px solid var(--border-color);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 450px;
+      padding: 20px;
+      box-shadow: 0 6px 0px var(--border-color);
+    }
+  </style>
+</head>
+<body onpaste="handleGlobalPaste(event)">
+
+  <div class="card" style="text-align: center; padding: 18px;">
+    <div style="font-size: 26px; font-weight: 900;">🛍️ 購物與價格清單</div>
+    <div style="font-size: 13px; color: var(--text-sub); margin-top: 4px;">支援上傳相片、直接貼上剪貼簿圖片、編輯與管理戰利品！</div>
+  </div>
+
+  <!-- 新增商品卡片 -->
+  <div class="card">
+    <div class="card-title">➕ 新增購物項目</div>
+    <div class="form-group">
+      <label class="form-label">選擇購物類別</label>
+      <select id="itemCategory" class="form-select">
+        <option value="💎 奢侈品精品">💎 奢侈品精品</option>
+        <option value="🧥 禦寒服飾裝備">🧥 禦寒服飾裝備</option>
+        <option value="🎁 手信與伴手禮">🎁 手信與伴手禮</option>
+        <option value="💊 藥妝與日用品">💊 藥妝與日用品</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">商品名稱 / 品牌</label>
+      <input type="text" id="itemName" class="form-input" placeholder="例如：Panthère 錶 / 白戀人餅乾">
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <div class="form-group" style="flex: 1;">
+        <label class="form-label">預算金額 (日圓 ¥)</label>
+        <input type="number" id="itemPriceJpy" class="form-input" placeholder="例: 540000">
+      </div>
+      <div class="form-group" style="flex: 1;">
+        <label class="form-label">預算金額 (港幣 HK$)</label>
+        <input type="number" id="itemPriceHkd" class="form-input" placeholder="例: 28000">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📷 商品相片 (可上傳檔案，或在此區域直接長按貼上截圖)</label>
+      <input type="file" id="itemImageFile" class="form-input" accept="image/*" style="padding: 6px;" onchange="previewNewImage(this)">
+      <div class="paste-dropzone" id="newImagePreviewBox" contenteditable="true" style="outline: none;">
+        📋 點擊此處並按「貼上 (Paste)」可直接貼上圖片
+      </div>
+    </div>
+    <button class="btn-action" onclick="addItem()">＋ 放入購物清單</button>
+  </div>
+
+  <!-- 我的選購清單展示區 -->
+  <div class="card">
+    <div class="card-title">📋 我的選購清單</div>
+    <div id="shoppingListContainer">
+      <!-- 動態載入項目 -->
+    </div>
+  </div>
+
+  <!-- 編輯商品 Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-card">
+      <div style="font-size: 18px; font-weight: 900; margin-bottom: 12px;">✏️ 編輯購物項目</div>
+      <input type="hidden" id="editIndex">
+      <div class="form-group">
+        <label class="form-label">選擇購物類別</label>
+        <select id="editCategory" class="form-select">
+          <option value="💎 奢侈品精品">💎 奢侈品精品</option>
+          <option value="🧥 禦寒服飾裝備">🧥 禦寒服飾裝備</option>
+          <option value="🎁 手信與伴手禮">🎁 手信與伴手禮</option>
+          <option value="💊 藥妝與日用品">💊 藥妝與日用品</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">商品名稱 / 品牌</label>
+        <input type="text" id="editName" class="form-input">
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label">日圓 (¥)</label>
+          <input type="number" id="editJpy" class="form-input">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label">港幣 (HK$)</label>
+          <input type="number" id="editHkd" class="form-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📷 更換商品相片 (可檔案上傳或直接貼上)</label>
+        <input type="file" id="editImageFile" class="form-input" accept="image/*" style="padding: 6px;" onchange="previewEditImage(this)">
+        <div class="paste-dropzone" id="editImagePreviewBox" contenteditable="true" style="outline: none;">
+          📋 點擊此處並按「貼上 (Paste)」可直接貼上圖片
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <button class="btn-action" style="background: #E0E0E0; color: #2B2B2B;" onclick="closeEditModal()">取消</button>
+        <button class="btn-action" onclick="saveEditedItem()">儲存修改</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部導航欄 -->
+  <div class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 行程總覽</a>
+    <a class="nav-btn active" href="shopping.html">🛍️ 購物清單</a>
+    <a class="nav-btn" href="receipts.html">🧾 單據記帳</a>
+  </div>
+
+  <script>
+    let shoppingItems = JSON.parse(localStorage.getItem('my_shopping_list')) || [
+      {
+        category: "💎 奢侈品精品",
+        name: "Cartier Panthère 錶 (鋼款 Small WSPN0006)",
+        jpy: 540000,
+        hkd: 28000,
+        image: ""
+      }
+    ];
+
+    let newImageBase64 = "";
+    let editImageBase64 = "";
+
+    // 處理檔案上傳預覽 (新增)
+    function previewNewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          newImageBase64 = e.target.result;
+          document.getElementById('newImagePreviewBox').innerHTML = `<span style="color:var(--tag-green); font-weight:900;">✅ 已成功載入圖片！</span>`;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // 處理檔案上傳預覽 (編輯)
+    function previewEditImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          editImageBase64 = e.target.result;
+          document.getElementById('editImagePreviewBox').innerHTML = `<span style="color:var(--tag-green); font-weight:900;">✅ 已成功更換圖片！</span>`;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // 支援貼上圖片功能 (Clipboard Paste)
+    document.getElementById('newImagePreviewBox').addEventListener('paste', function(e) {
+      handlePasteEvent(e, (base64) => {
+        newImageBase64 = base64;
+        document.getElementById('newImagePreviewBox').innerHTML = `<span style="color:var(--tag-green); font-weight:900;">✅ 已成功貼上剪貼簿圖片！</span>`;
+      });
+    });
+
+    document.getElementById('editImagePreviewBox').addEventListener('paste', function(e) {
+      handlePasteEvent(e, (base64) => {
+        editImageBase64 = base64;
+        document.getElementById('editImagePreviewBox').innerHTML = `<span style="color:var(--tag-green); font-weight:900;">✅ 已成功貼上剪貼簿圖片！</span>`;
+      });
+    });
+
+    function handlePasteEvent(e, callback) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const blob = items[i].getAsFile();
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            callback(event.target.result);
+          };
+          reader.readAsDataURL(blob);
+          e.preventDefault();
+          break;
+        }
+      }
+    }
+
+    function saveAndRender() {
+      localStorage.setItem('my_shopping_list', JSON.stringify(shoppingItems));
+      renderList();
+    }
+
+    function addItem() {
+      const category = document.getElementById('itemCategory').value;
+      const name = document.getElementById('itemName').value.trim();
+      const jpy = document.getElementById('itemPriceJpy').value;
+      const hkd = document.getElementById('itemPriceHkd').value;
+
+      if (!name) {
+        alert('請輸入商品名稱 / 品牌！');
+        return;
+      }
+
+      shoppingItems.push({ 
+        category, 
+        name, 
+        jpy, 
+        hkd, 
+        image: newImageBase64 
+      });
+      
+      saveAndRender();
+      clearForm();
+    }
+
+    function clearForm() {
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemPriceJpy').value = '';
+      document.getElementById('itemPriceHkd').value = '';
+      document.getElementById('itemImageFile').value = '';
+      document.getElementById('newImagePreviewBox').innerHTML = `📋 點擊此處並按「貼上 (Paste)」可直接貼上圖片`;
+      newImageBase64 = "";
+    }
+
+    function deleteItem(index) {
+      if (confirm('確定要刪除這個購物項目嗎？')) {
+        shoppingItems.splice(index, 1);
+        saveAndRender();
+      }
+    }
+
+    function openEditModal(index) {
+      const item = shoppingItems[index];
+      document.getElementById('editIndex').value = index;
+      document.getElementById('editCategory').value = item.category;
+      document.getElementById('editName').value = item.name;
+      document.getElementById('editJpy').value = item.jpy;
+      document.getElementById('editHkd').value = item.hkd;
+      document.getElementById('editImageFile').value = '';
+      document.getElementById('editImagePreviewBox').innerHTML = item.image ? `<span style="color:var(--tag-green); font-weight:900;">✅ 目前已有圖片 (可直接貼上新圖覆蓋)</span>` : `📋 點擊此處並按「貼上 (Paste)」可直接貼上圖片`;
+      editImageBase64 = item.image; // 預設保留原圖
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    function saveEditedItem() {
+      const index = document.getElementById('editIndex').value;
+      const category = document.getElementById('editCategory').value;
+      const name = document.getElementById('editName').value.trim();
+      const jpy = document.getElementById('editJpy').value;
+      const hkd = document.getElementById('editHkd').value;
+
+      if (!name) {
+        alert('商品名稱不能為空！');
+        return;
+      }
+
+      shoppingItems[index] = {
+        category,
+        name,
+        jpy,
+        hkd,
+        image: editImageBase64
+      };
+      
+      saveAndRender();
+      closeEditModal();
+    }
+
+    function renderList() {
+      const container = document.getElementById('shoppingListContainer');
+      container.innerHTML = '';
+
+      if (shoppingItems.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: var(--text-sub); padding: 20px; font-size: 14px;">目前購物清單係空的，快啲加入第一件戰利品啦！🛍️</div>';
+        return;
+      }
+
+      const categories = [...new Set(shoppingItems.map(item => item.category))];
+
+      categories.forEach(cat => {
+        const catSection = document.createElement('div');
+        catSection.className = 'category-section';
+
+        const catTitle = document.createElement('div');
+        catTitle.className = 'category-title';
+        catTitle.innerText = cat;
+        catSection.appendChild(catTitle);
+
+        shoppingItems.forEach((item, index) => {
+          if (item.category === cat) {
+            const itemBox = document.createElement('div');
+            itemBox.className = 'item-card';
+
+            const imgTag = item.image ? `<img src="${item.image}" class="item-img">` : `<div class="item-img" style="display:flex; align-items:center; justify-content:center; font-size:20px;">📦</div>`;
+            
+            let priceText = '';
+            if (item.jpy) priceText += `預算: ¥ ${Number(item.jpy).toLocaleString()} `;
+            if (item.hkd) priceText += `(HK$ ${Number(item.hkd).toLocaleString()})`;
+
+            itemBox.innerHTML = `
+              ${imgTag}
+              <div class="item-info">
+                <div class="item-name">${item.name}</div>
+                <div class="item-meta">${priceText}</div>
+                <div class="item-btns">
+                  <button class="btn-xs" onclick="openEditModal(${index})">✏️ 編輯</button>
+                  <button class="btn-xs btn-delete" onclick="deleteItem(${index})">🗑️ 刪除</button>
+                </div>
+              </div>
+            `;
+            catSection.appendChild(itemBox);
+          }
+        });
+
+        container.appendChild(catSection);
+      });
+    }
+
+    renderList();
+  </script>
+</body>
+</html>
