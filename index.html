@@ -845,7 +845,7 @@
       </div>
     </div>
 
-    <!-- 🎟️ 必搶預約項目清單 -->
+    <!-- 🎟️ 必搶預約項目清單 (連倒數計時) -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
         <div class="card-title">🎟️ 必搶預約項目清單 (帳號+佔位完整版)</div>
@@ -980,7 +980,7 @@
           <div class="booking-body" style="margin-top:8px;">
             <div class="item-box-sub">
               • <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐<br>
-              • 👤 <b>預約方式</b>：建議透過 Tabelog 線上預訂（或利用 LINE 快捷訂位）<br>
+              • 👤 <b>預約專線/方式</b>：建議透過 Tabelog 線上預訂（或利用 LINE 快捷訂位）<br>
               • 💡 <b>重點提醒</b>：名古屋市區人氣鰻魚飯，提早預訂免排隊！
             </div>
             <div class="link-btns"><a href="https://tabelog.com/aichi/A2301/A230103/23070440/" target="_blank" class="btn-sm">🔗 Tabelog 登河 預約</a></div>
@@ -1143,7 +1143,68 @@
       if (page === 'expenses') renderExpensesAdvanced();
     }
 
-    // 3. 購物清單邏輯 (支援圖片與雙幣預算)
+    // 3. 必搶預約自動摺疊 & 動態倒數
+    function initBookingItems() {
+      const now = new Date();
+      const boxes = document.querySelectorAll('.booking-box');
+      let nextBox = null;
+      let minDiff = Infinity;
+
+      boxes.forEach(box => {
+        const dateStr = box.getAttribute('data-date');
+        const targetDate = new Date(dateStr);
+        const diffDays = (now - targetDate) / (1000 * 60 * 60 * 24);
+
+        if (diffDays >= 1) {
+          const body = box.querySelector('.booking-body');
+          const arrow = box.querySelector('.toggle-arrow');
+          if(body) body.style.display = 'none';
+          if(arrow) arrow.innerText = '▼';
+        }
+
+        const timeDiff = targetDate - now;
+        if (timeDiff > 0 && timeDiff < minDiff) {
+          minDiff = timeDiff;
+          nextBox = { box, targetDate };
+        }
+      });
+
+      // 為每個預約項目動態更新各自的倒數
+      boxes.forEach(box => {
+        const dateStr = box.getAttribute('data-date');
+        const targetDate = new Date(dateStr);
+        const countdownEl = box.querySelector('.mini-countdown');
+        if (countdownEl) {
+          function updateItemTimer() {
+            const tDiff = targetDate - new Date();
+            if (tDiff > 0) {
+              const d = Math.floor(tDiff / (1000 * 60 * 60 * 24));
+              const h = Math.floor((tDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const m = Math.floor((tDiff % (1000 * 60 * 60)) / (1000 * 60));
+              countdownEl.innerText = `⏳ 倒數 ${d}天${h}時${m}分`;
+            } else {
+              countdownEl.innerText = '⏳ 預約已開始/過期';
+            }
+          }
+          setInterval(updateItemTimer, 60000);
+          updateItemTimer();
+        }
+      });
+    }
+
+    function toggleBookingItem(header) {
+      const body = header.nextElementSibling;
+      const arrow = header.querySelector('.toggle-arrow');
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        arrow.innerText = '▲';
+      } else {
+        body.style.display = 'none';
+        arrow.innerText = '▼';
+      }
+    }
+
+    // 4. 購物清單邏輯 (支援圖片與雙幣預算)
     let tempImgBase64 = "";
     function previewShopImage(event) {
       const file = event.target.files[0];
@@ -1180,7 +1241,6 @@
 
       localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
       
-      // 清空輸入
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
       document.getElementById('shop-hkd').value = '';
@@ -1229,7 +1289,7 @@
       });
     }
 
-    // 4. 記帳邏輯 (CW vs Me 代墊與結算)
+    // 5. 記帳邏輯 (CW vs Me 代墊與結算)
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
 
@@ -1321,14 +1381,13 @@
         container.appendChild(div);
       });
 
-      // 更新統計
       document.getElementById('stat-cw-yen').innerText = `¥${cwTotalYen.toLocaleString()}`;
       document.getElementById('stat-cw-hkd').innerText = `HK$ ${Math.round(cwTotalYen / 20).toLocaleString()}`;
       document.getElementById('stat-me-yen').innerText = `¥${meTotalYen.toLocaleString()}`;
       document.getElementById('stat-me-hkd').innerText = `HK$ ${Math.round(meTotalYen / 20).toLocaleString()}`;
     }
 
-    // 5. 備忘錄
+    // 6. 備忘錄
     function saveMemo(dayNum) {
       const text = document.getElementById('memo-text-' + dayNum).value;
       localStorage.setItem('trip_memo_' + dayNum, text);
@@ -1346,7 +1405,7 @@
       }
     }
 
-    // 6. 通用工具
+    // 7. 通用工具
     function toggleCard(bodyId, pillId) {
       const body = document.getElementById(bodyId);
       const pill = document.getElementById(pillId);
@@ -1371,6 +1430,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      initBookingItems();
       renderShoppingAdvanced();
       renderExpensesAdvanced();
 
