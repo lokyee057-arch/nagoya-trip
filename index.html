@@ -1000,6 +1000,7 @@
 
     function renderShopping() {
       const container = document.getElementById('shopping-list');
+      if (!container) return;
       container.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_shopping') || '[]');
       if (list.length === 0) {
@@ -1053,6 +1054,7 @@
 
     function renderExpensesLocally() {
       const listContainer = document.getElementById('expense-list');
+      if (!listContainer) return;
       listContainer.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_expenses') || '[]');
       let total = 0;
@@ -1080,12 +1082,30 @@
       });
 
       const totalEl = document.createElement('div');
-      totalEl.style.cssText = 'text-align:right; font-weight:900; font-size:16px; margin-top:12px; padding-top:8px; border-top:2px solid #2B2B2B;';
+      totalEl.style.cssText = 'text-align:right; font-weight:900; font-size:16px; margin-top:12px; padding-top:8px; border-top:2.5px solid #2B2B2B;';
       totalEl.innerText = `總計: ¥${total.toLocaleString()}`;
       listContainer.appendChild(totalEl);
     }
 
-    // 6. 通用工具
+    // 6. 備忘錄 (LocalStorage)
+    function saveMemo(dayNum) {
+      const text = document.getElementById('memo-text-' + dayNum).value;
+      localStorage.setItem('trip_memo_' + dayNum, text);
+    }
+
+    function toggleMemo(dayNum) {
+      const body = document.getElementById('memo-body-' + dayNum);
+      const arrow = document.getElementById('memo-arrow-' + dayNum);
+      if (body.style.display === 'block') {
+        body.style.display = 'none';
+        arrow.innerText = '▼';
+      } else {
+        body.style.display = 'block';
+        arrow.innerText = '▲';
+      }
+    }
+
+    // 7. 通用工具
     function toggleCard(bodyId, pillId) {
       const body = document.getElementById(bodyId);
       const pill = document.getElementById(pillId);
@@ -1111,6 +1131,17 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initBookingItems();
+      renderShopping();
+      renderExpensesLocally();
+
+      // 載入備忘錄
+      for (let i = 1; i <= 7; i++) {
+        const savedMemo = localStorage.getItem('trip_memo_' + i);
+        if (savedMemo) {
+          const textarea = document.getElementById('memo-text-' + i);
+          if (textarea) textarea.value = savedMemo;
+        }
+      }
     });
   </script>
 </body>
