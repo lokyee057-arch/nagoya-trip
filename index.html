@@ -138,6 +138,18 @@
     .item-box-title { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
     .item-box-sub { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; }
 
+    /* 不突出淡雅小框框 */
+    .sub-info-box {
+      background: #F4F3EF;
+      border: 1.5px solid #D5D0C5;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #4A4A4A;
+      line-height: 1.6;
+    }
+
     .food-inline-card {
       background: #FFFBF0;
       border: 2px solid var(--border-color);
@@ -235,13 +247,13 @@
     </div>
   </div>
 
-  <!-- ✈️ 航班資訊 -->
+  <!-- ✈️ 航班資訊 (Default 縮細) -->
   <div class="card">
     <div class="card-header-toggle" onclick="toggleCard('body-flights', 'pill-flights')">
       <div class="card-title">✈️ 航班資訊</div>
-      <div class="toggle-pill" id="pill-flights">▲</div>
+      <div class="toggle-pill" id="pill-flights">▼</div>
     </div>
-    <div class="card-body" id="body-flights">
+    <div class="card-body" id="body-flights" style="display: none;">
       <div class="item-box">
         <span class="tag tag-red">去程 · 1月27日 (Wed)</span>
         <span style="float: right; font-size: 12px; font-weight: 700;">國泰 CX536 (特選經濟)</span>
@@ -264,7 +276,7 @@
     </div>
   </div>
 
-  <!-- 📅 7 天 Timeline 詳細行程 -->
+  <!-- 📅 7 天 Timeline 詳細行程 (預設展開) -->
   <div class="card">
     <div class="card-header-toggle" onclick="toggleCard('body-itinerary', 'pill-itinerary')">
       <div class="card-title">📅 每日行程與攻略</div>
@@ -592,10 +604,15 @@
             <div class="timeline-time">14:30 - 15:15 🚗 巴士 10mins + 徒步 5mins</div>
             <div class="timeline-head"><span class="timeline-title">金澤站 ➔ Kaname Inn Tatemachi 放行李</span><span class="tag tag-yellow">飯店 Check-in</span></div>
             <div class="timeline-desc">
-              • <b>乘車地點</b>：金澤站東口（兼六園口）巴士總站。<br>
-              • <b>推薦班次 (拍 Suica/ICOCA)</b>：<b>7號月台「城下町金澤周遊巴士」(左回線)</b>，直達可直接感應 Suica/ICOCA！[cite: 4]<br>
-              • <b>備選班次 (付現金 210 日圓)</b>：3, 7, 8, 9, 10, 11 號月台紅白色「北鐵巴士」[cite: 4]。⚠️ <i>注意：紅白色北鐵巴士不支援 Suica/ICOCA感應[cite: 4]！需後門抽取整理券，下車投現金 210 日圓[cite: 4]。</i><br>
-              • <b>落車站點</b>：於「香林坊」或「片町」站落車（車程約 10 分鐘），徒步 5-6 分鐘至竪町商店街飯店 [Check-in]。
+              抵達金澤站後搭乘巴士前往飯店。
+              
+              <!-- 柔和不突出小框框 -->
+              <div class="sub-info-box">
+                <b>📍 乘車地點</b>：金澤站東口（兼六園口）巴士總站。<br>
+                <b>🟢 推薦班次 (可刷 Suica/ICOCA)</b>：<b>7號月台「城下町金澤周遊巴士」(左回線)</b>，直達可直接感應交通卡[cite: 4]！<br>
+                <b>🔴 備選班次 (付現金 210 日圓)</b>：3, 7, 8, 9, 10, 11 號月台「紅白色北鐵巴士」[cite: 4]。<i>(⚠️ 不支援 Suica/ICOCA，需抽整理券投現金 210 日圓[cite: 4])</i><br>
+                <b>🚏 落車站點</b>：在「香林坊」或「片町」站落車（車程約 10 分鐘），徒步 5-6 分鐘即達飯店。
+              </div>
             </div>
           </div>
           <div class="timeline-item">
@@ -772,13 +789,13 @@
     </div>
   </div>
 
-  <!-- 🚌 交通買飛策略指南 (JR 5日周遊券專用版) -->
+  <!-- 🚌 交通買飛策略指南 (Default 縮細) -->
   <div class="card">
     <div class="card-header-toggle" onclick="toggleCard('body-transport', 'pill-transport')">
       <div class="card-title">🚌 交通買飛策略指南 (JR 周遊券專用)</div>
-      <div class="toggle-pill" id="pill-transport">▲</div>
+      <div class="toggle-pill" id="pill-transport">▼</div>
     </div>
-    <div class="card-body" id="body-transport">
+    <div class="card-body" id="body-transport" style="display: none;">
       <div class="item-box" style="background: var(--tag-yellow); color: var(--text-main);">
         <div style="font-weight: 900; margin-bottom: 8px; font-size: 15px;">🎫 確定採用：「JR 高山・北陸地區周遊券 (5日券)」</div>
         <div style="font-size: 13.5px; line-height: 1.8;">
@@ -802,13 +819,13 @@
     </div>
   </div>
 
-  <!-- 🏨 住宿安排卡片 (包含地圖連結) -->
+  <!-- 🏨 住宿安排卡片 (Default 縮細) -->
   <div class="card">
     <div class="card-header-toggle" onclick="toggleCard('body-hotel', 'pill-hotel')">
       <div class="card-title">🏨 住宿安排與地圖</div>
-      <div class="toggle-pill" id="pill-hotel">▲</div>
+      <div class="toggle-pill" id="pill-hotel">▼</div>
     </div>
-    <div class="card-body" id="body-hotel">
+    <div class="card-body" id="body-hotel" style="display: none;">
       
       <div class="item-box">
         <span class="tag tag-yellow">Day 1 & Day 2 (1/27 - 1/29) · 2晚</span>
@@ -861,13 +878,13 @@
     </div>
   </div>
 
-  <!-- 🎟️ 必搶預約項目清單 (包含帳號登記、外國人卡清單與盲點提示) -->
+  <!-- 🎟️ 必搶預約項目清單 (Default 縮細) -->
   <div class="card">
     <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
       <div class="card-title">🎟️ 必搶預約項目清單 (帳號+盲點完整版)</div>
-      <div class="toggle-pill" id="pill-booking-list">▲</div>
+      <div class="toggle-pill" id="pill-booking-list">▼</div>
     </div>
-    <div class="card-body" id="body-booking-list">
+    <div class="card-body" id="body-booking-list" style="display: none;">
       
       <!-- 1. 吉卜力公園 -->
       <div class="item-box">
