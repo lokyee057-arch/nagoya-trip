@@ -260,6 +260,8 @@
       color: var(--text-sub);
       cursor: pointer;
       font-weight: 700;
+      user-select: text;
+      -webkit-user-select: text;
     }
 
     .pill-options { display: flex; gap: 6px; flex-wrap: wrap; width: 100%; }
@@ -798,7 +800,7 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-time">18:00 之後 🚗 交通時間 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">榮商圈衝刺 ➔ 晚餐：鰻魚飯三吃</span><span class="tag tag-red">登河 / 鰻木屋 / しら河</span></div>
+              <div class="timeline-head"><span class="timeline-title">榮商圈衝刺 ➔ 鰻魚飯三吃</span><span class="tag tag-red">登河 / 鰻木屋 / しら河</span></div>
               <div class="timeline-desc">
                 入住 **Meitetsu Inn Nagoyaeki Shinkansenguchi** 後前往榮商圈購物，晚上享用正宗炭燒鰻魚飯三吃。
                 <div class="food-inline-card">
@@ -908,7 +910,7 @@
     </div>
   </div>
 
-  <!-- 🛍️ 購物清單頁面 (支援直接貼上截圖與檔案選擇) -->
+  <!-- 🛍️ 購物清單頁面 (手機長撳貼上) -->
   <div id="page-shopping" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
     
@@ -939,10 +941,10 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">📷 商品相片 (支援直接貼上截圖 Ctrl+V / 點擊上傳)</label>
+      <label class="form-label">📷 商品相片 (長撳方框可直接貼上cap圖)</label>
       <input type="file" id="shop-file" class="form-input" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
-      <div class="upload-box" id="shop-drop-zone" onclick="document.getElementById('shop-file').click();" onpaste="handlePaste(event)" tabindex="0">
-        <span id="shop-file-label">📥 點擊此處選擇相片，或直接在此處按 Ctrl+V / 貼上截圖</span>
+      <div class="upload-box" id="shop-drop-zone" onclick="document.getElementById('shop-file').click();" onpaste="handlePaste(event)">
+        <span id="shop-file-label">📥 點擊選相，或【長撳此處】貼上電話cap圖</span>
       </div>
     </div>
 
@@ -985,10 +987,10 @@
     <div style="font-weight:900; font-size:15px; margin-bottom:8px;">+ 智能單據記帳</div>
 
     <div class="form-group">
-      <label class="form-label">📷 上傳/拍攝收據相片 (支援直接貼上截圖)</label>
+      <label class="form-label">📷 上傳/拍攝收據相片 (長撳方框可貼上cap圖)</label>
       <input type="file" id="exp-file" class="form-input" accept="image/*" style="display:none;" onchange="handleExpFileSelect(event)">
-      <div class="upload-box" id="exp-drop-zone" onclick="document.getElementById('exp-file').click();" onpaste="handleExpPaste(event)" tabindex="0">
-        <span id="exp-file-label">📥 點擊此處上傳收據，或在此處按 Ctrl+V 貼上截圖</span>
+      <div class="upload-box" id="exp-drop-zone" onclick="document.getElementById('exp-file').click();" onpaste="handleExpPaste(event)">
+        <span id="exp-file-label">📥 點擊選相，或【長撳此處】貼上收據cap圖</span>
       </div>
     </div>
 
@@ -1234,7 +1236,7 @@
       }
     }
 
-    // 4. 購物清單邏輯 (支援點擊檔案上傳 + 剪貼簿貼上截圖)
+    // 4. 購物清單邏輯 (手機長撳貼上支援)
     let tempShopImgBase64 = "";
 
     function handleFileSelect(event) {
@@ -1261,10 +1263,10 @@
       reader.onload = function(e) {
         if (type === 'shop') {
           tempShopImgBase64 = e.target.result;
-          document.getElementById('shop-file-label').innerText = "✅ 已成功載入商品相片 / 截圖";
+          document.getElementById('shop-file-label').innerText = "✅ 已成功載入商品相片 / 貼上圖片";
         } else if (type === 'exp') {
           tempExpImgBase64 = e.target.result;
-          document.getElementById('exp-file-label').innerText = "✅ 已成功載入收據相片 / 截圖";
+          document.getElementById('exp-file-label').innerText = "✅ 已成功載入收據相片 / 貼上圖片";
         }
       };
       reader.readAsDataURL(file);
@@ -1293,7 +1295,7 @@
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
       document.getElementById('shop-hkd').value = '';
-      document.getElementById('shop-file-label').innerText = '📥 點擊此處選擇相片，或直接在此處按 Ctrl+V / 貼上截圖';
+      document.getElementById('shop-file-label').innerText = '📥 點擊選相，或【長撳此處】貼上電話cap圖';
       tempShopImgBase64 = "";
 
       renderShoppingAdvanced();
@@ -1338,7 +1340,7 @@
       });
     }
 
-    // 5. 記帳邏輯 (支援收據相片預覽、點擊放大燈箱、Ctrl+V貼上截圖)
+    // 5. 記帳邏輯 (手機長撳貼上支援)
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
     let tempExpImgBase64 = "";
@@ -1398,7 +1400,7 @@
       
       document.getElementById('exp-name').value = '';
       document.getElementById('exp-amount').value = '';
-      document.getElementById('exp-file-label').innerText = '📥 點擊此處上傳收據，或在此處按 Ctrl+V 貼上截圖';
+      document.getElementById('exp-file-label').innerText = '📥 點擊選相，或【長撳此處】貼上收據cap圖';
       tempExpImgBase64 = "";
 
       renderExpensesAdvanced();
