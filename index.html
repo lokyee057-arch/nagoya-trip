@@ -539,7 +539,7 @@
           <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(1)">◀ 前一日 (Day 1)</button><button class="day-nav-btn" onclick="showDay(3)">後一日 (Day 3) ▶</button></div>
         </div>
 
-        <!-- Day 3 -->
+        <!-- Day 3 (已依要求將老街與纜車行程對調，並更新纜車細節) -->
         <div id="day-content-3" class="day-details" style="display: none;">
           <div class="timeline">
             <div class="timeline-item">
@@ -552,23 +552,23 @@
               <div class="timeline-dot"></div>
               <div class="timeline-time">11:18 - 11:40 🚶 徒步 3mins</div>
               <div class="timeline-head"><span class="timeline-title">高山櫻庵 ➔ [行李寄存]</span><span class="tag tag-green">站旁3分鐘</span></div>
-              <div class="timeline-desc">出高山站步行 3 分鐘至高山櫻庵寄存大行李箱，隨後展開輕鬆的高山老街散策與午餐。</div>
+              <div class="timeline-desc">出高山站步行 3 分鐘至高山櫻庵寄存大行李箱，隨後準備前往新穗高。</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
-              <div class="timeline-time">11:40 - 13:40 🚶 漫步老街與午餐</div>
-              <div class="timeline-head"><span class="timeline-title">宮川朝市/老街 / 日枝神社 / 松阪酒造店</span><span class="tag tag-yellow">品嚐飛驒牛握壽司與地酒</span></div>
-              <div class="timeline-desc">在老街悠閒行街、食午餐、品嚐飛驒牛握壽司，參拜雪中日枝神社，順便去酒造店品嚐地酒。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">14:00 - 17:00 🚗 交通+新穗高纜車</div>
-              <div class="timeline-head"><span class="timeline-title">下午：新穗高雙層纜車 🚡❄️</span><span class="tag tag-purple">🎫 買奧飛驒套票 ¥7,700</span></div>
+              <div class="timeline-time">11:40 - 15:30 🚗 交通+新穗高纜車 🚡❄️</div>
+              <div class="timeline-head"><span class="timeline-title">下午：新穗高雙層纜車 (建議停留 3-4 小時)</span><span class="tag tag-purple">🎫 買奧飛驒套票 ¥7,700</span></div>
               <div class="timeline-desc">
-                • 14:00 於高山濃飛總站出示憑證兌換「奧飛驒 2 日 Pass（含纜車往返＋路線巴士）」<br>
-                • 💡 <b>排隊盲點提醒</b>：高山往新穗高巴士不設預約座位，建議 13:40 提前至濃飛總站月台排隊，避免寒風中站立 1.5 小時。<br>
-                • 搭乘雙層纜車登上西穗高口展望台俯瞰雪山連峰，下午 17:00 左右返回高山市區。
+                • 11:40 於高山濃飛總站出示憑證兌換「奧飛驒 2 日 Pass（含纜車往返＋路線巴士）」<br>
+                • 💡 <b>排隊盲點提醒</b>：高山往新穗高巴士不設預約座位，建議提早至濃飛總站月台排隊。<br>
+                • **晨早視野最佳、風勢較小**。建議停留 3 至 4 小時漫步賞雪（⚠️ **注意尾班纜車為 16:15**）。
               </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">15:30 - 17:30 🚶 返回高山市區 & 老街漫步</div>
+              <div class="timeline-head"><span class="timeline-title">宮川朝市/老街 / 日枝神社 / 松阪酒造店</span><span class="tag tag-yellow">品嚐飛驒牛握壽司與地酒</span></div>
+              <div class="timeline-desc">乘搭巴士返回高山市區，在老街悠閒行街、品嚐飛驒牛握壽司，順便去酒造店品嚐地酒。</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
@@ -860,10 +860,10 @@
       </div>
     </div>
 
-    <!-- 🎟️ 必搶預約項目清單 -->
+    <!-- 🎟️ 必搶預約項目清單 (已依搶票日期排序、刪除標題贅字、統一格式與更新連結) -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
-        <div class="card-title">🎟️ 必搶預約項目清單 (帳號+佔位完整版)</div>
+        <div class="card-title">🎟️ 必搶預約項目清單</div>
         <div class="toggle-pill" id="pill-booking-list">▼</div>
       </div>
       <div class="card-body" id="body-booking-list" style="display: none;">
@@ -905,8 +905,8 @@
     <div class="form-group">
       <label class="form-label">📷 商品相片 (可上傳檔案)</label>
       <input type="file" id="shop-file" class="form-input" accept="image/*" onchange="previewShopImage(event)">
-      <div class="upload-box">
-        <span id="shop-file-label">📥 點擊在此處或上傳圖片檔案</span>
+      <div class="upload-box" onclick="document.getElementById('shop-file').click();">
+        <span id="shop-file-label">📥 點擊此處或上傳圖片檔案</span>
       </div>
     </div>
 
@@ -919,19 +919,19 @@
     </div>
   </div>
 
-  <!-- 🧾 單據記帳頁面 -->
+  <!-- 🧾 單據記帳頁面 (已改為：應付對方 + 個人總支出) -->
   <div id="page-expenses" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🧾 消費記帳與結算</div>
     
     <!-- 統計卡片 -->
     <div class="stats-container">
       <div class="stat-box">
-        <div class="stat-title">CW 累積代墊</div>
+        <div class="stat-title" id="stat-title-cw">CW 應付對方</div>
         <div class="stat-val" id="stat-cw-yen">¥0</div>
         <div style="font-size:10px; color:var(--text-sub);" id="stat-cw-hkd">HK$ 0</div>
       </div>
       <div class="stat-box">
-        <div class="stat-title">Me 累積代墊</div>
+        <div class="stat-title" id="stat-title-me">Me 個人總支出</div>
         <div class="stat-val" id="stat-me-yen">¥0</div>
         <div style="font-size:10px; color:var(--text-sub);" id="stat-me-hkd">HK$ 0</div>
       </div>
@@ -1024,42 +1024,42 @@
       if (page === 'expenses') renderExpensesAdvanced();
     }
 
-    // 3. 必搶預約自動排序 & 僅顯示最接近嘅單個項目倒數
+    // 3. 必搶預約項目清單 (已按照「搶票日期」嚴格排序，統一格式：開放預約時間 > 適用行程 > 重點提醒)
     const bookingData = [
       {
         id: 1,
         date: "2026-11-10T13:00:00+08:00",
         tagClass: "tag-red",
-        tagText: "1. 吉卜力公園 · 11月10日 13:00 (HKT)",
-        subHtml: "• <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>• <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>• 👤 <b>帳號登記</b>：需提前註冊 LAWSON TICKET 國際版帳號<br>• 💳 <b>信用卡支援</b>：支援海外信用卡，結帳需 SMS 3D 驗證。<br>• 💡 <b>重點提醒</b>：全預約制無現場票，優先搶「大散步券 Premium」或「Standard」。",
-        link: "https://l-tike.com/ghibli-park/",
-        linkText: "🔗 LAWSON 搶票"
+        tagText: "1. 吉卜力公園",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>• <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>• 💡 <b>重點提醒</b>：全預約制無現場票，需以全英文填寫護照姓名、Email、香港電話、Country & City (Hong Kong) 及護照號碼，優先搶「大散步券 Premium」或「Standard」。",
+        link: "https://l-tike.com/st1/ghibli-en-2/Tt/Ttg010agreement/index",
+        linkText: "🔗 LAWSON 吉卜力英文預約"
       },
       {
         id: 2,
         date: "2026-11-29T09:00:00+08:00",
         tagClass: "tag-purple",
-        tagText: "7. 奧飛驒 Value Pass 2日券 (奧飛驒套票)",
-        subHtml: "• <b>適用行程</b>：Day 3 (1/29 Fri) 新穗高纜車套票<br>• 👤 <b>購票方式</b>：透過 Klook 或 Rakuten Travel 體驗預訂，取得 Email 電子憑證。<br>• 💡 <b>重點提醒</b>：高山往新穗高巴士不設預約，建議 13:40 提早到濃飛總站月台排隊。",
-        link: "https://www.klook.com/zh-HK/",
+        tagText: "7. 奧飛驒巴士票套 (新穗高纜車套票)",
+        subHtml: "• <b>開放預約時間</b>：隨時可預訂<br>• <b>適用行程</b>：Day 3 (1/29 Fri) 新穗高纜車套票<br>• 💡 <b>重點提醒</b>：巴士不需去櫃檯，手機 App 即車票，直接去 5 號月台排隊上車並讓司機點選螢幕啟用；纜車則需去 2 樓售票窗口出示 App QR Code 換正式纜車票。",
+        link: "https://www.klook.com/zh-HK/activity/21617-okuhida-kamikochi-bus-tickets-shinhotaka-ropeway-nagoya/",
         linkText: "🔗 Klook 奧飛驒套票預訂"
       },
       {
         id: 3,
         date: "2026-12-29T09:00:00+08:00",
         tagClass: "tag-green",
-        tagText: "2. JR Pass 購買 & 北陸/地區周遊券 (5日券) 購買",
-        subHtml: "• <b>適用行程</b>：Day 3 至 Day 7 (1/29 - 2/2)<br>• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>• 👤 <b>帳號登記</b>：需提前註冊「WESTER 會員」帳號<br>• 💳 <b>信用卡支援</b>：需海外信用卡扣款，取票時須出示同一張實體信用卡及護照。",
-        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
-        linkText: "🔗 JR 西日本 Pass 官網"
+        tagText: "2. JR 高山北陸 Pass 5日券 購買",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>• <b>適用行程</b>：Day 3 至 Day 7 (1/29 - 2/2)<br>• 💡 <b>重點提醒</b>：需提前註冊 WESTER 會員及海外信用卡購買。可參考<a href='https://touristpass.jp/zh-tw/takayama_hokuriku/' target='_blank'>官方詳情</a>及<a href='https://www.westjr.co.jp/global/tc/howto/train-reservation/receive/' target='_blank'>領取方法</a>。",
+        link: "https://www.westjr.co.jp/global/tc/ticket/pass/reservation_form/index.php?p=takayama-hokuriku-areapass",
+        linkText: "🔗 JR 西日本 Pass 官網預約"
       },
       {
         id: 4,
         date: "2026-12-29T09:00:00+08:00",
         tagClass: "tag-yellow",
         tagText: "3. JR 特急 Hida 3號 (08:58 名古屋 ➔ 高山) 劃位",
-        subHtml: "• <b>適用行程</b>：Day 3 (1/29 Fri) 08:58 發車<br>• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b><br>• 👤 <b>帳號登記</b>：需預先註冊 e5489 會員（JR西日本線上預約系統）",
-        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b><br>• <b>適用行程</b>：Day 3 (1/29 Fri) 08:58 發車<br>• 💡 <b>重點提醒</b>：透過 e5489 系統免費劃指定席，熱門時段需搶頭香！",
+        link: "https://www.westjr.co.jp/global/tc/",
         linkText: "🔗 e5489 劃位 Portal"
       },
       {
@@ -1067,8 +1067,8 @@
         date: "2026-12-30T09:00:00+08:00",
         tagClass: "tag-purple",
         tagText: "4. 濃飛高速巴士 (高山 ➔ 白川鄉預約班次)",
-        subHtml: "• <b>適用行程</b>：Day 4 (1/30 Sat) 去程 11:50 / 回程 16:45<br>• <b>開放預約時間</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b><br>• 👤 <b>帳號登記</b>：需提前註冊 Japan Bus Online 會員帳號",
-        link: "https://www.japanexpressbus.com/zh-tw/",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b>（乘車前一個月內）<br>• <b>適用行程</b>：Day 4 (1/30 Sat) 去程 11:50 / 回程 16:45<br>• 💡 <b>重點提醒</b>：旺季全車指定席，需於網上預約並憑 JR Pass 現場取票。",
+        link: "https://japanbusonline.com/zh-tw/CourseSearch/11900040002",
         linkText: "🔗 Japan Bus Online 預約"
       },
       {
@@ -1076,8 +1076,8 @@
         date: "2026-12-31T09:00:00+08:00",
         tagClass: "tag-yellow",
         tagText: "5. JR 特急 Hida 7號 (11:19 高山 ➔ 富山) 劃位",
-        subHtml: "• <b>適用行程</b>：Day 5 (1/31 Sun) 11:19 發車<br>• <b>開放預約時間</b>：<b>2026 年 12 月 31 日 (三) 09:00 (HKT)</b><br>• 💡 <b>盲點提醒</b>：使用 Pass 免費劃指定席；富山站 36 分鐘轉車可順便買鱒魚壽司便當！",
-        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 31 日 (三) 09:00 (HKT)</b><br>• <b>適用行程</b>：Day 5 (1/31 Sun) 11:19 發車<br>• 💡 <b>重點提醒</b>：使用 e5489 系統免費劃指定席，富山站 36 分鐘轉車可買鱒魚壽司便當。",
+        link: "https://www.westjr.co.jp/global/tc/",
         linkText: "🔗 e5489 劃位 Portal"
       },
       {
@@ -1085,8 +1085,8 @@
         date: "2027-01-01T09:00:00+08:00",
         tagClass: "tag-green",
         tagText: "6. JR 特急 Shirasagi 12號 (14:48 金澤 ➔ 名古屋) 劃位",
-        subHtml: "• <b>適用行程</b>：Day 6 (2/1 Mon) 14:48 發車<br>• <b>開放預約時間</b>：<b>2027 年 1 月 1 日 (五) 09:00 (HKT)</b><br>• 💡 <b>重點提醒</b>：Pass 免費直達名古屋，回程前在近江町市場食飽海鮮再上車。",
-        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        subHtml: "• <b>開放預約時間</b>：<b>2027 年 1 月 1 日 (五) 09:00 (HKT)</b><br>• <b>適用行程</b>：Day 6 (2/1 Mon) 14:48 發車<br>• 💡 <b>重點提醒</b>：透過 e5489 系統免費劃指定席直達名古屋。",
+        link: "https://www.westjr.co.jp/global/tc/",
         linkText: "🔗 e5489 劃位 Portal"
       },
       {
@@ -1094,7 +1094,7 @@
         date: "2027-01-02T09:00:00+08:00",
         tagClass: "tag-red",
         tagText: "8. 炭焼きうなぎ 登河 栄店 (鰻魚飯三吃) 預約",
-        subHtml: "• <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐<br>• 👤 <b>預約方式</b>：建議透過 Tabelog 線上預訂（或利用 LINE 快捷訂位）<br>• 💡 <b>重點提醒</b>：名古屋市區人氣鰻魚飯，提早預訂免排隊！",
+        subHtml: "• <b>開放預約時間</b>：<b>2027 年 1 月 2 日 (六)</b><br>• <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐<br>• 💡 <b>重點提醒</b>：建議透過 Tabelog 線上預訂，提早預訂免排隊。",
         link: "https://tabelog.com/aichi/A2301/A230103/23070440/",
         linkText: "🔗 Tabelog 登河 預約"
       }
@@ -1177,7 +1177,7 @@
       }
     }
 
-    // 4. 購物清單邏輯
+    // 4. 購物清單邏輯 (已修復相片預覽)
     let tempImgBase64 = "";
     function previewShopImage(event) {
       const file = event.target.files[0];
@@ -1257,7 +1257,7 @@
       });
     }
 
-    // 5. 記帳邏輯（已完美修復港幣與日圓自動累計計算）
+    // 5. 記帳邏輯 (已改為：應付對方 + 個人總支出)
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
 
@@ -1312,8 +1312,8 @@
       container.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_expenses_adv') || '[]');
       
-      let cwTotalHkd = 0;
-      let meTotalHkd = 0;
+      let cwOwedToMeHkd = 0; // CW 幫 Me 付錢，Me 應付畀 CW 嘅金額
+      let meTotalSpentHkd = 0; // Me 嘅個人總支出
 
       if (list.length === 0) {
         container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無單據記錄</div>';
@@ -1326,16 +1326,25 @@
 
       list.forEach(item => {
         const val = Number(item.amount);
-        let amountInHkd = 0;
+        let amountInHkd = item.currency.includes('日圓') ? val / 20 : val;
 
-        if (item.currency.includes('日圓')) {
-          amountInHkd = val / 20; // 假設 20:1 換算
-        } else {
-          amountInHkd = val; // 港幣直接計算
+        // 計算邏輯
+        if (item.payer === 'CW') {
+          if (item.split === 'AA 攤分') {
+            cwOwedToMeHkd += (amountInHkd / 2); // Me 要畀番一半 CW
+            meTotalSpentHkd += (amountInHkd / 2); // Me 嘅支出
+          } else if (item.split === '幫對方付') {
+            cwOwedToMeHkd += amountInHkd; // Me 全數要畀 CW
+            meTotalSpentHkd += amountInHkd; // Me 嘅支出
+          }
+          // 如果 CW 獨付，Me 唔關事，Me 總支出不變，CW 應付 Me 不變
+        } else if (item.payer === 'Me') {
+          if (item.split === 'AA 攤分') {
+            meTotalSpentHkd += (amountInHkd / 2); // Me 自己出咗一半
+          } else if (item.split === '個人獨付' || item.split === '幫對方付') {
+            meTotalSpentHkd += amountInHkd; // Me 自己出晒
+          }
         }
-
-        if (item.payer === 'CW') cwTotalHkd += amountInHkd;
-        if (item.payer === 'Me') meTotalHkd += amountInHkd;
 
         const div = document.createElement('div');
         div.className = 'record-card';
@@ -1352,11 +1361,11 @@
         container.appendChild(div);
       });
 
-      // 同步更新統計數字（同時顯示港幣原額與對應日圓估算，確保港幣記帳唔會變 0）
-      document.getElementById('stat-cw-yen').innerText = `¥${Math.round(cwTotalHkd * 20).toLocaleString()}`;
-      document.getElementById('stat-cw-hkd').innerText = `HK$ ${Math.round(cwTotalHkd).toLocaleString()}`;
-      document.getElementById('stat-me-yen').innerText = `¥${Math.round(meTotalHkd * 20).toLocaleString()}`;
-      document.getElementById('stat-me-hkd').innerText = `HK$ ${Math.round(meTotalHkd).toLocaleString()}`;
+      // 同步更新頂部統計
+      document.getElementById('stat-cw-yen').innerText = `¥${Math.round(cwOwedToMeHkd * 20).toLocaleString()}`;
+      document.getElementById('stat-cw-hkd').innerText = `HK$ ${Math.round(cwOwedToMeHkd).toLocaleString()}`;
+      document.getElementById('stat-me-yen').innerText = `¥${Math.round(meTotalSpentHkd * 20).toLocaleString()}`;
+      document.getElementById('stat-me-hkd').innerText = `HK$ ${Math.round(meTotalSpentHkd).toLocaleString()}`;
     }
 
     // 6. 備忘錄
