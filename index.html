@@ -337,10 +337,47 @@
       flex-shrink: 0;
     }
 
+    /* 燈箱 Modal 樣式 */
+    #image-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #image-modal img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 10px;
+      border: 2px solid #FFF;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    #image-modal span {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 36px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .booking-header { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 6px; }
   </style>
 </head>
 <body>
+
+  <!-- 全螢幕圖片燈箱 (Lightbox) -->
+  <div id="image-modal" onclick="closeModal()">
+    <span onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="放大收據相片">
+  </div>
 
   <!-- 🏠 主頁面：行程總覽 -->
   <div id="page-main">
@@ -761,7 +798,7 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-time">18:00 之後 🚗 交通時間 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">榮商圈衝刺 ➔ 鰻魚飯三吃</span><span class="tag tag-red">登河 / 鰻木屋 / しら河</span></div>
+              <div class="timeline-head"><span class="timeline-title">榮商圈衝刺 ➔ 晚餐：鰻魚飯三吃</span><span class="tag tag-red">登河 / 鰻木屋 / しら河</span></div>
               <div class="timeline-desc">
                 入住 **Meitetsu Inn Nagoyaeki Shinkansenguchi** 後前往榮商圈購物，晚上享用正宗炭燒鰻魚飯三吃。
                 <div class="food-inline-card">
@@ -871,7 +908,7 @@
     </div>
   </div>
 
-  <!-- 🛍️ 購物清單頁面 (已修正上傳相片重複問題) -->
+  <!-- 🛍️ 購物清單頁面 (支援直接貼上截圖與檔案選擇) -->
   <div id="page-shopping" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
     
@@ -902,14 +939,13 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">📷 商品相片</label>
-      <input type="file" id="shop-file" class="form-input" accept="image/*" style="display:none;" onchange="previewShopImage(event)">
-      <div class="upload-box" onclick="document.getElementById('shop-file').click();">
-        <span id="shop-file-label">📥 點擊此處選擇或拍攝商品相片</span>
+      <label class="form-label">📷 商品相片 (支援直接貼上截圖 Ctrl+V / 點擊上傳)</label>
+      <input type="file" id="shop-file" class="form-input" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+      <div class="upload-box" id="shop-drop-zone" onclick="document.getElementById('shop-file').click();" onpaste="handlePaste(event)" tabindex="0">
+        <span id="shop-file-label">📥 點擊此處選擇相片，或直接在此處按 Ctrl+V / 貼上截圖</span>
       </div>
     </div>
 
-    <input type="hidden" id="shop-img-data" value="">
     <button class="action-btn" style="background:var(--tag-yellow); color:var(--text-main);" onclick="addShoppingItemAdvanced()">+ 放入購物清單</button>
 
     <div style="margin-top: 20px; border-top: 2px dashed #E0E0E0; padding-top: 15px;">
@@ -918,11 +954,11 @@
     </div>
   </div>
 
-  <!-- 🧾 消費記帳與結算 (已改為四格同時顯示雙方應付與個人總支出) -->
+  <!-- 🧾 消費記帳與結算 -->
   <div id="page-expenses" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🧾 消費記帳與結算</div>
     
-    <!-- 統計卡片 (四格：雙方各自應付對方 & 個人總支出) -->
+    <!-- 統計卡片 -->
     <div class="stats-container">
       <div class="stat-box">
         <div class="stat-title">CW 應付 Me</div>
@@ -949,8 +985,11 @@
     <div style="font-weight:900; font-size:15px; margin-bottom:8px;">+ 智能單據記帳</div>
 
     <div class="form-group">
-      <label class="form-label">📷 上傳/拍攝收據相片 (自動識別金額)</label>
-      <input type="file" class="form-input" accept="image/*">
+      <label class="form-label">📷 上傳/拍攝收據相片 (支援直接貼上截圖)</label>
+      <input type="file" id="exp-file" class="form-input" accept="image/*" style="display:none;" onchange="handleExpFileSelect(event)">
+      <div class="upload-box" id="exp-drop-zone" onclick="document.getElementById('exp-file').click();" onpaste="handleExpPaste(event)" tabindex="0">
+        <span id="exp-file-label">📥 點擊此處上傳收據，或在此處按 Ctrl+V 貼上截圖</span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -1005,6 +1044,15 @@
   </div>
 
   <script>
+    // 燈箱控制
+    function openModal(imgSrc) {
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('image-modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('image-modal').style.display = 'none';
+    }
+
     // 1. 頂部倒數計時
     function updateTimer() {
       const target = new Date("2027-01-27T09:35:00").getTime();
@@ -1040,7 +1088,7 @@
         date: "2026-11-10T13:00:00+08:00",
         tagClass: "tag-red",
         tagText: "1. 吉卜力公園",
-        subHtml: "• <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>• <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>• 💡 <b>重點提醒</b>：全預約制無現場票，需以全英文填寫護照姓名、Email、香港電話、Country & City (Hong Kong) 及護照號碼，優先搶「大散步券 Premium」或納入 Standard。",
+        subHtml: "• <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>• <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>• 💡 <b>重點提醒</b>：全預約制無現場票，需以全英文填寫護照姓名、Email、香港電話、Country & City (Hong Kong) 及護照號碼，優先搶「大散步券 Premium」或 Standard。",
         link: "https://l-tike.com/st1/ghibli-en-2/Tt/Ttg010agreement/index",
         linkText: "🔗 LAWSON 吉卜力英文預約"
       },
@@ -1186,16 +1234,40 @@
       }
     }
 
-    // 4. 購物清單邏輯 (已修正重複上傳框問題)
-    let tempImgBase64 = "";
-    function previewShopImage(event) {
+    // 4. 購物清單邏輯 (支援點擊檔案上傳 + 剪貼簿貼上截圖)
+    let tempShopImgBase64 = "";
+
+    function handleFileSelect(event) {
       const file = event.target.files[0];
       if (file) {
-        document.getElementById('shop-file-label').innerText = "✅ 已選: " + file.name;
-        const reader = new FileReader();
-        reader.onload = function(e) { tempImgBase64 = e.target.result; };
-        reader.readAsDataURL(file);
+        processImageFile(file, 'shop');
       }
+    }
+
+    function handlePaste(event) {
+      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") !== -1) {
+          const blob = items[i].getAsFile();
+          processImageFile(blob, 'shop');
+          event.preventDefault();
+          break;
+        }
+      }
+    }
+
+    function processImageFile(file, type) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (type === 'shop') {
+          tempShopImgBase64 = e.target.result;
+          document.getElementById('shop-file-label').innerText = "✅ 已成功載入商品相片 / 截圖";
+        } else if (type === 'exp') {
+          tempExpImgBase64 = e.target.result;
+          document.getElementById('exp-file-label').innerText = "✅ 已成功載入收據相片 / 截圖";
+        }
+      };
+      reader.readAsDataURL(file);
     }
 
     function addShoppingItemAdvanced() {
@@ -1213,7 +1285,7 @@
         name,
         yen: yen || '0',
         hkd: hkd || '0',
-        image: tempImgBase64 || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
+        image: tempShopImgBase64 || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
       });
 
       localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
@@ -1221,8 +1293,8 @@
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
       document.getElementById('shop-hkd').value = '';
-      document.getElementById('shop-file-label').innerText = '📥 點擊此處選擇或拍攝商品相片';
-      tempImgBase64 = "";
+      document.getElementById('shop-file-label').innerText = '📥 點擊此處選擇相片，或直接在此處按 Ctrl+V / 貼上截圖';
+      tempShopImgBase64 = "";
 
       renderShoppingAdvanced();
     }
@@ -1251,7 +1323,7 @@
         div.innerHTML = `
           <div style="margin-bottom:6px;"><span class="tag" style="background:var(--tag-yellow);">${item.category}</span></div>
           <div style="display:flex; gap:10px; align-items:center;">
-            <img src="${item.image}" style="width:48px; height:48px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color); flex-shrink:0;">
+            <img src="${item.image}" onclick="openModal('${item.image}')" style="width:48px; height:48px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color); flex-shrink:0; cursor:pointer;" title="點擊放大">
             <div class="record-info">
               <div style="font-weight:900; font-size:14px;">${item.name}</div>
               <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">預算: ¥${Number(item.yen).toLocaleString()} (HK$ ${Number(item.hkd).toLocaleString()})</div>
@@ -1266,9 +1338,29 @@
       });
     }
 
-    // 5. 記帳邏輯 (四格獨立顯示：CW 應付 Me / Me 應付 CW / CW 個人總支出 / Me 個人總支出)
+    // 5. 記帳邏輯 (支援收據相片預覽、點擊放大燈箱、Ctrl+V貼上截圖)
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
+    let tempExpImgBase64 = "";
+
+    function handleExpFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        processImageFile(file, 'exp');
+      }
+    }
+
+    function handleExpPaste(event) {
+      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") !== -1) {
+          const blob = items[i].getAsFile();
+          processImageFile(blob, 'exp');
+          event.preventDefault();
+          break;
+        }
+      }
+    }
 
     function selectPayer(payer) {
       selectedPayer = payer;
@@ -1298,13 +1390,17 @@
         currency,
         amount: Number(amount),
         payer: selectedPayer,
-        split: selectedSplit
+        split: selectedSplit,
+        image: tempExpImgBase64 || ''
       });
 
       localStorage.setItem('trip_expenses_adv', JSON.stringify(list));
       
       document.getElementById('exp-name').value = '';
       document.getElementById('exp-amount').value = '';
+      document.getElementById('exp-file-label').innerText = '📥 點擊此處上傳收據，或在此處按 Ctrl+V 貼上截圖';
+      tempExpImgBase64 = "";
+
       renderExpensesAdvanced();
     }
 
@@ -1321,10 +1417,10 @@
       container.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_expenses_adv') || '[]');
       
-      let cwOwedToMe = 0; // CW 應付畀 Me 嘅金額
-      let meOwedToCw = 0; // Me 應付畀 CW 嘅金額
-      let cwTotalSpent = 0; // CW 個人總支出
-      let meTotalSpent = 0; // Me 個人總支出
+      let cwOwedToMe = 0; 
+      let meOwedToCw = 0; 
+      let cwTotalSpent = 0; 
+      let meTotalSpent = 0; 
 
       if (list.length === 0) {
         container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無單據記錄</div>';
@@ -1345,34 +1441,40 @@
 
         if (item.payer === 'CW') {
           if (item.split === 'AA 攤分') {
-            meOwedToCw += (amtHkd / 2); // Me 要畀番一半 CW
-            cwTotalSpent += (amtHkd / 2); // CW 自己果份
-            meTotalSpent += (amtHkd / 2); // Me 自己果份
+            meOwedToCw += (amtHkd / 2); 
+            cwTotalSpent += (amtHkd / 2); 
+            meTotalSpent += (amtHkd / 2); 
           } else if (item.split === '個人獨付') {
-            cwTotalSpent += amtHkd; // CW 獨自享用
+            cwTotalSpent += amtHkd; 
           } else if (item.split === '幫對方付') {
-            meOwedToCw += amtHkd; // CW 幫 Me 付全數，Me 要還畀 CW
-            meTotalSpent += amtHkd; // 實際洗費算喺 Me 身上
+            meOwedToCw += amtHkd; 
+            meTotalSpent += amtHkd; 
           }
         } else if (item.payer === 'Me') {
           if (item.split === 'AA 攤分') {
-            cwOwedToMe += (amtHkd / 2); // CW 要畀番一半 Me
-            meTotalSpent += (amtHkd / 2); // Me 自己果份
-            cwTotalSpent += (amtHkd / 2); // CW 自己果份
+            cwOwedToMe += (amtHkd / 2); 
+            meTotalSpent += (amtHkd / 2); 
+            cwTotalSpent += (amtHkd / 2); 
           } else if (item.split === '個人獨付') {
-            meTotalSpent += amtHkd; // Me 獨自享用
+            meTotalSpent += amtHkd; 
           } else if (item.split === '幫對方付') {
-            cwOwedToMe += amtHkd; // Me 幫 CW 付全數，CW 要還畀 Me
-            cwTotalSpent += amtHkd; // 實際洗費算喺 CW 身上
+            cwOwedToMe += amtHkd; 
+            cwTotalSpent += amtHkd; 
           }
         }
 
         const div = document.createElement('div');
         div.className = 'record-card';
+        
+        let imgThumbHtml = item.image ? `<img src="${item.image}" onclick="openModal('${item.image}')" style="width:42px; height:42px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color); flex-shrink:0; cursor:pointer;" title="點擊放大收據">` : `<div style="width:42px; height:42px; background:#EEE; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#888; flex-shrink:0; border:1.5px dashed #CCC;">無相</div>`;
+
         div.innerHTML = `
-          <div class="record-info">
-            <div style="font-weight:900; font-size:14px;">${item.name}</div>
-            <div style="font-size:11px; color:var(--text-sub); margin-top:2px;">付款: ${item.payer} · ${item.split} · ${item.date}</div>
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0;">
+            ${imgThumbHtml}
+            <div class="record-info">
+              <div style="font-weight:900; font-size:14px;">${item.name}</div>
+              <div style="font-size:11px; color:var(--text-sub); margin-top:2px;">付款: ${item.payer} · ${item.split} · ${item.date}</div>
+            </div>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
             <div style="font-weight:900; font-size:14px; color:${item.payer === 'CW' ? '#E88282' : '#74B9BE'};">${item.currency.includes('日圓') ? '¥' : 'HK$'}${val.toLocaleString()}</div>
