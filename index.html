@@ -166,7 +166,7 @@
     .btn-sm { display: inline-flex; align-items: center; gap: 4px; background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; text-decoration: none; color: var(--text-main); box-shadow: 0 2px 0px var(--border-color); cursor: pointer; }
 
     .day-selector { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 18px; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
-    .day-tab { border: 2px solid var(--border-color); border-radius: 14px; padding: 7px 12px; font-size: 12.5px; font-weight: 900; background: var(--card-bg); color: var(--text-main); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0px var(--border-color); flex-shrink: 0; }
+    .day-tab { border: 2.2px solid var(--border-color); border-radius: 14px; padding: 7px 12px; font-size: 12.5px; font-weight: 900; background: var(--card-bg); color: var(--text-main); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0px var(--border-color); flex-shrink: 0; }
     .day-tab.active { background: var(--tag-red); color: white; }
 
     .memo-box {
@@ -250,18 +250,31 @@
     .row-inputs { display: flex; gap: 8px; width: 100%; }
     .row-inputs > div { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     
-    .upload-box {
+    /* 可編輯剪貼簿 paste 區域 */
+    .paste-area {
+      min-height: 52px;
       border: 2px dashed var(--border-color);
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
       background: var(--bg-color);
       font-size: 13px;
       color: var(--text-sub);
-      cursor: pointer;
       font-weight: 700;
-      user-select: text;
-      -webkit-user-select: text;
+      outline: none;
+      word-break: break-all;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .paste-area img {
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-color);
+      margin-top: 6px;
     }
 
     .pill-options { display: flex; gap: 6px; flex-wrap: wrap; width: 100%; }
@@ -371,6 +384,14 @@
     }
 
     .booking-header { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 6px; }
+
+    /* 保險條款點擊清單樣式 */
+    .insurance-section { margin-bottom: 12px; }
+    .insurance-sec-title { font-size: 14.5px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; }
+    .insurance-list { list-style: none; padding-left: 4px; }
+    .insurance-list li { font-size: 13px; color: var(--text-main); margin-bottom: 4px; line-height: 1.5; }
+    .insurance-sublist { list-style: none; padding-left: 12px; margin-top: 4px; }
+    .insurance-sublist li { font-size: 12.5px; color: var(--text-sub); margin-bottom: 3px; }
   </style>
 </head>
 <body>
@@ -718,7 +739,7 @@
                   <b>📍 乘車地點</b>：金澤站東口（兼六園口）巴士總站。<br>
                   <b>🟢 推薦班次 (可刷 Suica/ICOCA)</b>：<b>7號月台「城下町金澤周遊巴士」(左回線)</b>，直達可直接感應交通卡！<br>
                   <b>🔴 備選班次 (付現金 210 日圓)</b>：3, 7, 8, 9, 10, 11 號月台「紅白色北鐵巴士」。<i>(⚠️ 不支援 Suica/ICOCA，需抽整理券投現金 210 日圓)</i><br>
-                  <b>🚏 落車站點</b>：在「香林坊」或「片町」站落車（車程約 10 分鐘），徒步 5-6 分鐘即達飯店。
+                  <b>🚏 落車站點</b>：喺「香林坊」或「片町」站落車（車程約 10 分鐘），徒步 5-6 分鐘即達飯店。
                 </div>
               </div>
             </div>
@@ -828,7 +849,7 @@
               <div class="timeline-dot"></div>
               <div class="timeline-time">08:00 - 09:00 ☕ 喫茶店早餐</div>
               <div class="timeline-head"><span class="timeline-title">名古屋高分喫茶店：KAKO 柳橋店 / BUCYO COFFEE</span><span class="tag tag-yellow">免排隊小倉吐司</span></div>
-              <div class="timeline-desc">在名站附近高分復古喫茶店享用正宗小倉紅豆厚吐司與香濃咖啡，免去排長龍又能感受地道昭和風情！</div>
+              <div class="timeline-desc">喺名站附近高分復古喫茶店享用正宗小倉紅豆厚吐司與香濃咖啡，免去排長龍又能感受地道昭和風情！</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
@@ -908,9 +929,91 @@
         <div id="booking-items-container"></div>
       </div>
     </div>
+
+    <!-- 🇯🇵 日本旅遊保險 Notes (預設摺埋) -->
+    <div class="card">
+      <div class="card-header-toggle" onclick="toggleCard('body-insurance', 'pill-insurance')">
+        <div class="card-title">🇯🇵 日本旅遊保險 Notes - Allianz 銀計劃</div>
+        <div class="toggle-pill" id="pill-insurance">▼</div>
+      </div>
+      <div class="card-body" id="body-insurance" style="display: none;">
+        <div class="item-box" style="background:#FFFBF0;">
+          <div style="font-size:13.5px; font-weight:900; line-height:1.6;">
+            • <b>旅程</b>：2027/1/27 - 2027/2/2 / 日本 / 2人<br>
+            • <b>保單號碼</b>：ALEHKA700028478
+          </div>
+        </div>
+
+        <div class="item-box" style="border-color:var(--tag-red); background:#FFF5F5;">
+          <div style="font-weight:900; color:#C0392B; font-size:14px; margin-bottom:4px;">🚨 24小時緊急醫療支援</div>
+          <a href="tel:+85221935875" class="btn-sm" style="background:#C0392B; color:white; font-size:13px; font-weight:900; border-color:#C0392B; margin-bottom:6px;">📞 +852 2193 5875</a>
+          <div style="font-size:12.5px; color:var(--text-sub); font-weight:700;">入院 / 好嚴重 / 唔知去邊間醫院，先打呢個，唔好自己硬撐。</div>
+        </div>
+
+        <div class="sub-info-box" style="margin-bottom:15px;">
+          <div style="font-weight:900; color:var(--text-main); margin-bottom:4px;">📋 Claim 通用守則：</div>
+          • 單據、收據、醫生紙全部要正本，影相備份<br>
+          • 唔好掉任何收據<br>
+          • 返香港後經 Allianz 網上 e-claim 申請
+        </div>
+
+        <div class="insurance-section">
+          <div class="insurance-sec-title">1. 大風雪，交通延誤 / 航班取消</div>
+          <ul class="insurance-list">
+            <li>• <b>銀計劃旅程延誤上限</b>：HK$2,000，每 5 小時 HK$300</li>
+            <li>• <b>即刻做</b>：
+              <ul class="insurance-sublist">
+                <li>1. 向航空公司 / JR 拎 延誤證明 (Delay Certificate)</li>
+                <li>2. 影低航班取消 / 延誤版面、車票</li>
+                <li>3. 額外住宿 / 交通費，收據要 keep</li>
+              </ul>
+            </li>
+            <li style="margin-top:4px;">• ⚠️ 唔好自己即刻買貴酒店住先，打去 <a href="tel:+85221935875" style="color:var(--text-main); font-weight:900;">+852 2193 5875</a> 問吓咩使費 claim 得</li>
+          </ul>
+        </div>
+
+        <div style="border-top:1.5px dashed #E0E0E0; margin:12px 0;"></div>
+
+        <div class="insurance-section">
+          <div class="insurance-sec-title">2. 跣親 / 扭傷</div>
+          <ul class="insurance-list">
+            <li>• <b>銀計劃海外醫療上限</b>：HK$1,500,000</li>
+            <li>• <b>即刻做</b>：
+              <ul class="insurance-sublist">
+                <li>1. 去診所 / 醫院，唔好自己捱</li>
+                <li>2. 同醫生講清楚係「跌親 / 滑雪跌親」，要醫生寫明原因 + 診斷</li>
+                <li>3. 拎齊：診斷書、藥單、收據、X光報告 (如有)</li>
+              </ul>
+            </li>
+            <li style="margin-top:4px;">• ⚠️ 如果要入院 / 唔行得，打 <a href="tel:+85221935875" style="color:var(--text-main); font-weight:900;">+852 2193 5875</a>，佢哋會幫手安排醫院 / 回港</li>
+          </ul>
+        </div>
+
+        <div style="border-top:1.5px dashed #E0E0E0; margin:12px 0;"></div>
+
+        <div class="insurance-section">
+          <div class="insurance-sec-title">3. 腸胃炎 / 屙嘔 / 發燒</div>
+          <ul class="insurance-list">
+            <li>• 同樣用醫療保障，唔好自己去藥房亂買藥了事</li>
+            <li>• <b>即刻做</b>：
+              <ul class="insurance-sublist">
+                <li>1. 去診所睇，拎醫生紙寫明「腸胃炎 / Gastroenteritis」</li>
+                <li>2. 拎藥單 + 收據</li>
+                <li>3. 如果係食物中毒，記低食過邊間餐廳、幾點食</li>
+              </ul>
+            </li>
+            <li style="margin-top:4px;">• ⚠️ 如果嘔到脫水 / 發高燒唔退，即刻打 <a href="tel:+85221935875" style="color:var(--text-main); font-weight:900;">+852 2193 5875</a> 求助，唔好等</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:12px; text-align:right;">
+          <a href="#" onclick="alert('相關保險產品之保單條款及保障表請參閱條款文件'); return false;" class="btn-sm">📄 相關保險產品之保單條款及保障表</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 🛍️ 購物清單頁面 (手機長撳貼上) -->
+  <!-- 🛍️ 購物清單頁面 (支援手機長撳貼上相片) -->
   <div id="page-shopping" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
     
@@ -941,11 +1044,13 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">📷 商品相片 (長撳方框可直接貼上cap圖)</label>
-      <input type="file" id="shop-file" class="form-input" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
-      <div class="upload-box" id="shop-drop-zone" onclick="document.getElementById('shop-file').click();" onpaste="handlePaste(event)">
-        <span id="shop-file-label">📥 點擊選相，或【長撳此處】貼上電話cap圖</span>
+      <label class="form-label">📷 商品相片 (【長撳框內】彈選單按貼上 / 或點擊按鈕選相)</label>
+      <!-- 可編輯 paste 區域 -->
+      <div class="paste-area" id="shop-paste-box" contenteditable="true" onpaste="handlePasteArea(event, 'shop')">
+        <span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>
       </div>
+      <input type="file" id="shop-file" accept="image/*" style="display:none;" onchange="handleFileSelect(event, 'shop')">
+      <button class="btn-sm" style="margin-top:6px; width:100%; justify-content:center;" onclick="document.getElementById('shop-file').click();">📁 從手機相簿選擇檔案</button>
     </div>
 
     <button class="action-btn" style="background:var(--tag-yellow); color:var(--text-main);" onclick="addShoppingItemAdvanced()">+ 放入購物清單</button>
@@ -987,11 +1092,13 @@
     <div style="font-weight:900; font-size:15px; margin-bottom:8px;">+ 智能單據記帳</div>
 
     <div class="form-group">
-      <label class="form-label">📷 上傳/拍攝收據相片 (長撳方框可貼上cap圖)</label>
-      <input type="file" id="exp-file" class="form-input" accept="image/*" style="display:none;" onchange="handleExpFileSelect(event)">
-      <div class="upload-box" id="exp-drop-zone" onclick="document.getElementById('exp-file').click();" onpaste="handleExpPaste(event)">
-        <span id="exp-file-label">📥 點擊選相，或【長撳此處】貼上收據cap圖</span>
+      <label class="form-label">📷 上傳/拍攝收據相片 (【長撳框內】彈選單按貼上 / 或點擊按鈕選相)</label>
+      <!-- 可編輯 paste 區域 -->
+      <div class="paste-area" id="exp-paste-box" contenteditable="true" onpaste="handlePasteArea(event, 'exp')">
+        <span id="exp-paste-label">📋 【長撳此處】貼上收據Cap圖</span>
       </div>
+      <input type="file" id="exp-file" accept="image/*" style="display:none;" onchange="handleFileSelect(event, 'exp')">
+      <button class="btn-sm" style="margin-top:6px; width:100%; justify-content:center;" onclick="document.getElementById('exp-file').click();">📁 從手機相簿選擇檔案</button>
     </div>
 
     <div class="form-group">
@@ -1236,42 +1343,59 @@
       }
     }
 
-    // 4. 購物清單邏輯 (手機長撳貼上支援)
+    // 4. 通用圖片 Paste / File 處理 (支援 contenteditable 長撳貼上)
     let tempShopImgBase64 = "";
+    let tempExpImgBase64 = "";
 
-    function handleFileSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        processImageFile(file, 'shop');
-      }
-    }
+    function handlePasteArea(event, type) {
+      const clipboardData = event.clipboardData || window.clipboardData;
+      if (!clipboardData) return;
+      const items = clipboardData.items;
+      let hasImage = false;
 
-    function handlePaste(event) {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
       for (let i = 0; i < items.length; i++) {
         if (items[i].type.indexOf("image") !== -1) {
           const blob = items[i].getAsFile();
-          processImageFile(blob, 'shop');
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const base64 = e.target.result;
+            const pasteBox = document.getElementById(type + '-paste-box');
+            pasteBox.innerHTML = `✅ 已成功貼上截圖：<br><img src="${base64}">`;
+            if (type === 'shop') tempShopImgBase64 = base64;
+            if (type === 'exp') tempExpImgBase64 = base64;
+          };
+          reader.readAsDataURL(blob);
+          hasImage = true;
           event.preventDefault();
           break;
         }
       }
+      if (!hasImage) {
+        setTimeout(() => {
+          const pasteBox = document.getElementById(type + '-paste-box');
+          if (!pasteBox.querySelector('img')) {
+            pasteBox.innerHTML = `<span id="${type}-paste-label">📋 【長撳此處】貼上Cap圖</span>`;
+          }
+        }, 10);
+      }
     }
 
-    function processImageFile(file, type) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        if (type === 'shop') {
-          tempShopImgBase64 = e.target.result;
-          document.getElementById('shop-file-label').innerText = "✅ 已成功載入商品相片 / 貼上圖片";
-        } else if (type === 'exp') {
-          tempExpImgBase64 = e.target.result;
-          document.getElementById('exp-file-label').innerText = "✅ 已成功載入收據相片 / 貼上圖片";
-        }
-      };
-      reader.readAsDataURL(file);
+    function handleFileSelect(event, type) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          const pasteBox = document.getElementById(type + '-paste-box');
+          pasteBox.innerHTML = `✅ 已選取相片：<br><img src="${base64}">`;
+          if (type === 'shop') tempShopImgBase64 = base64;
+          if (type === 'exp') tempExpImgBase64 = base64;
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
+    // 5. 購物清單邏輯
     function addShoppingItemAdvanced() {
       const category = document.getElementById('shop-category').value;
       const name = document.getElementById('shop-name').value;
@@ -1295,7 +1419,7 @@
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
       document.getElementById('shop-hkd').value = '';
-      document.getElementById('shop-file-label').innerText = '📥 點擊選相，或【長撳此處】貼上電話cap圖';
+      document.getElementById('shop-paste-box').innerHTML = '<span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>';
       tempShopImgBase64 = "";
 
       renderShoppingAdvanced();
@@ -1332,7 +1456,7 @@
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
-            <button class="expense-del-btn" style="color:#2B2B2B; border-color:#2B2B2B;" onclick="alert('請重新輸入編輯')">編輯</button>
+            <button class="expense-del-btn" style="color:#2B2B2B; border-color:#2B2B2B;" onclick="alert('請刪除後重新新增')">編輯</button>
             <button class="expense-del-btn" onclick="deleteShoppingAdvanced(${item.id})">刪除</button>
           </div>
         `;
@@ -1340,29 +1464,9 @@
       });
     }
 
-    // 5. 記帳邏輯 (手機長撳貼上支援)
+    // 6. 記帳邏輯
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
-    let tempExpImgBase64 = "";
-
-    function handleExpFileSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        processImageFile(file, 'exp');
-      }
-    }
-
-    function handleExpPaste(event) {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf("image") !== -1) {
-          const blob = items[i].getAsFile();
-          processImageFile(blob, 'exp');
-          event.preventDefault();
-          break;
-        }
-      }
-    }
 
     function selectPayer(payer) {
       selectedPayer = payer;
@@ -1400,7 +1504,7 @@
       
       document.getElementById('exp-name').value = '';
       document.getElementById('exp-amount').value = '';
-      document.getElementById('exp-file-label').innerText = '📥 點擊選相，或【長撳此處】貼上收據cap圖';
+      document.getElementById('exp-paste-box').innerHTML = '<span id="exp-paste-label">📋 【長撳此處】貼上收據Cap圖</span>';
       tempExpImgBase64 = "";
 
       renderExpensesAdvanced();
@@ -1486,7 +1590,6 @@
         container.appendChild(div);
       });
 
-      // 同步更新四格統計數字
       document.getElementById('stat-cw-owed-yen').innerText = `¥${Math.round(cwOwedToMe * 20).toLocaleString()}`;
       document.getElementById('stat-cw-owed-hkd').innerText = `HK$ ${Math.round(cwOwedToMe).toLocaleString()}`;
       document.getElementById('stat-me-owed-yen').innerText = `¥${Math.round(meOwedToCw * 20).toLocaleString()}`;
@@ -1498,7 +1601,7 @@
       document.getElementById('stat-me-spent-hkd').innerText = `HK$ ${Math.round(meTotalSpent).toLocaleString()}`;
     }
 
-    // 6. 備忘錄
+    // 7. 備忘錄
     function saveMemo(dayNum) {
       const text = document.getElementById('memo-text-' + dayNum).value;
       localStorage.setItem('trip_memo_' + dayNum, text);
@@ -1516,7 +1619,7 @@
       }
     }
 
-    // 7. 通用工具
+    // 8. 通用工具
     function toggleCard(bodyId, pillId) {
       const body = document.getElementById(bodyId);
       const pill = document.getElementById(pillId);
