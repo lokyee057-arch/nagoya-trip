@@ -2,7 +2,7 @@
 <html lang="zh-HK">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Nagoya & Hokuriku Winter Loop 2027</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,19 +18,21 @@
       --tag-purple: #B39DDB;
       --text-main: #2B2B2B;
       --text-sub: #555555;
-      --shadow: 0 5px 0px #2B2B2B;
+      --shadow: 0 4px 0px #2B2B2B;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Zen Maru Gothic', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Zen Maru Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
       padding: 12px;
-      max-width: 600px;
+      max-width: 100%;
+      width: 100%;
       margin: 0 auto;
-      padding-bottom: 90px;
+      padding-bottom: 95px;
+      overflow-x: hidden;
     }
 
     .nav-bar {
@@ -39,7 +41,7 @@
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 24px);
-      max-width: 580px;
+      max-width: 560px;
       z-index: 1000;
       display: flex;
       gap: 6px;
@@ -56,7 +58,7 @@
       background: var(--card-bg);
       border: 2px solid var(--border-color);
       border-radius: 16px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
       white-space: nowrap;
@@ -64,6 +66,8 @@
       box-shadow: 0 2px 0px var(--border-color);
       text-decoration: none;
       color: var(--text-main);
+      flex: 1;
+      text-align: center;
     }
 
     .nav-btn.active { background: var(--tag-yellow); }
@@ -75,6 +79,7 @@
       padding: 16px;
       margin-bottom: 18px;
       box-shadow: var(--shadow);
+      width: 100%;
     }
 
     .card-header-toggle {
@@ -86,7 +91,7 @@
     }
 
     .card-title {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -97,14 +102,15 @@
       background: var(--bg-color);
       border: 2px solid var(--border-color);
       border-radius: 15px;
-      width: 38px;
-      height: 32px;
+      width: 36px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 900;
       box-shadow: 0 2px 0px var(--border-color);
+      flex-shrink: 0;
     }
 
     .card-body {
@@ -113,15 +119,15 @@
       padding-top: 15px;
     }
 
-    .header-card { text-align: center; padding: 22px 12px; }
-    .trip-title { font-size: 23px; font-weight: 900; margin-bottom: 4px; }
-    .trip-date { font-size: 14px; color: var(--text-sub); font-weight: 700; margin-bottom: 15px; }
-    .timer-container { display: flex; justify-content: center; gap: 8px; }
-    .timer-box { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 8px 10px; min-width: 58px; box-shadow: 0 3px 0px var(--border-color); }
-    .timer-num { font-size: 20px; font-weight: 900; }
+    .header-card { text-align: center; padding: 20px 12px; }
+    .trip-title { font-size: 21px; font-weight: 900; margin-bottom: 4px; word-break: break-word; }
+    .trip-date { font-size: 13.5px; color: var(--text-sub); font-weight: 700; margin-bottom: 15px; }
+    .timer-container { display: flex; justify-content: center; gap: 6px; }
+    .timer-box { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 8px 6px; min-width: 52px; box-shadow: 0 3px 0px var(--border-color); }
+    .timer-num { font-size: 18px; font-weight: 900; }
     .timer-unit { font-size: 11px; color: var(--text-sub); }
 
-    .tag { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 12px; font-weight: 700; border: 1.5px solid var(--border-color); }
+    .tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11.5px; font-weight: 700; border: 1.5px solid var(--border-color); max-width: 100%; word-break: break-word; }
     .tag-red { background: var(--tag-red); color: white; }
     .tag-green { background: var(--tag-green); color: white; }
     .tag-yellow { background: var(--tag-yellow); color: var(--text-main); }
@@ -129,13 +135,13 @@
     .tag-gray { background: #E0E0E0; color: #2B2B2B; }
 
     .flight-route { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; }
-    .airport-code { font-size: 22px; font-weight: 900; }
-    .airport-time { font-size: 13px; color: var(--text-sub); font-weight: 700; }
-    .arrow { font-size: 20px; font-weight: 900; }
+    .airport-code { font-size: 20px; font-weight: 900; }
+    .airport-time { font-size: 12.5px; color: var(--text-sub); font-weight: 700; }
+    .arrow { font-size: 18px; font-weight: 900; }
 
-    .item-box { background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; position: relative; }
-    .item-box-title { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
-    .item-box-sub { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; }
+    .item-box { background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; position: relative; width: 100%; overflow: hidden; }
+    .item-box-title { font-size: 15.5px; font-weight: 900; margin-bottom: 6px; }
+    .item-box-sub { font-size: 13px; color: var(--text-sub); line-height: 1.6; word-break: break-word; }
 
     .sub-info-box {
       background: #F4F3EF;
@@ -143,7 +149,7 @@
       border-radius: 10px;
       padding: 10px 12px;
       margin-top: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       color: #4A4A4A;
       line-height: 1.6;
     }
@@ -157,10 +163,10 @@
     }
 
     .link-btns { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-    .btn-sm { display: inline-flex; align-items: center; gap: 4px; background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 5px 12px; font-size: 12px; font-weight: 700; text-decoration: none; color: var(--text-main); box-shadow: 0 2px 0px var(--border-color); cursor: pointer; }
+    .btn-sm { display: inline-flex; align-items: center; gap: 4px; background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; text-decoration: none; color: var(--text-main); box-shadow: 0 2px 0px var(--border-color); cursor: pointer; }
 
-    .day-selector { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 18px; padding-bottom: 5px; }
-    .day-tab { border: 2px solid var(--border-color); border-radius: 14px; padding: 7px 12px; font-size: 13px; font-weight: 900; background: var(--card-bg); color: var(--text-main); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0px var(--border-color); }
+    .day-selector { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 18px; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
+    .day-tab { border: 2px solid var(--border-color); border-radius: 14px; padding: 7px 12px; font-size: 12.5px; font-weight: 900; background: var(--card-bg); color: var(--text-main); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0px var(--border-color); flex-shrink: 0; }
     .day-tab.active { background: var(--tag-red); color: white; }
 
     .memo-box {
@@ -174,7 +180,7 @@
     .memo-header {
       padding: 10px 14px;
       background: #F4F1EA;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 900;
       cursor: pointer;
       display: flex;
@@ -189,11 +195,11 @@
     }
     .memo-textarea {
       width: 100%;
-      height: 80px;
+      height: 75px;
       border: 1.5px solid var(--border-color);
       border-radius: 10px;
       padding: 8px;
-      font-size: 13.5px;
+      font-size: 13px;
       font-family: inherit;
       resize: vertical;
       background: var(--bg-color);
@@ -205,13 +211,14 @@
       margin-top: 20px;
       padding-top: 15px;
       border-top: 2px dashed #E0E0E0;
+      gap: 8px;
     }
     .day-nav-btn {
       background: var(--card-bg);
       border: 2px solid var(--border-color);
       border-radius: 12px;
-      padding: 8px 14px;
-      font-size: 13px;
+      padding: 8px 12px;
+      font-size: 12.5px;
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 2px 0px var(--border-color);
@@ -223,27 +230,16 @@
     .timeline-item { position: relative; margin-bottom: 22px; }
     .timeline-item:last-child { margin-bottom: 0; }
     .timeline-dot { position: absolute; left: -12px; top: 4px; width: 10px; height: 10px; background-color: var(--tag-yellow); border: 2px solid var(--border-color); border-radius: 50%; z-index: 2; }
-    .timeline-time { font-size: 13px; font-weight: 900; color: var(--text-sub); margin-bottom: 3px; }
+    .timeline-time { font-size: 12.5px; font-weight: 900; color: var(--text-sub); margin-bottom: 3px; }
     .timeline-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 5px; }
-    .timeline-title { font-size: 16px; font-weight: 900; }
-    .timeline-desc { font-size: 14px; color: var(--text-main); line-height: 1.65; }
+    .timeline-title { font-size: 15px; font-weight: 900; }
+    .timeline-desc { font-size: 13.5px; color: var(--text-main); line-height: 1.65; word-break: break-word; }
 
-    .mini-countdown {
-      font-size: 11px;
-      color: #666;
-      background: #F0EFEA;
-      border: 1px solid #CCC;
-      border-radius: 8px;
-      padding: 2px 6px;
-      margin-left: 6px;
-      font-weight: normal;
-      display: inline-block;
-    }
-
-    /* 購物 & 記帳介面專用樣式 */
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-    .form-label { font-size: 13.5px; font-weight: 900; }
+    /* 表單與控制項樣式修正（防出界） */
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; width: 100%; }
+    .form-label { font-size: 13px; font-weight: 900; }
     .form-input, .form-select {
+      width: 100%;
       padding: 10px 12px;
       border: 2px solid var(--border-color);
       border-radius: 12px;
@@ -251,36 +247,36 @@
       background: var(--bg-color);
       font-family: inherit;
     }
-    .row-inputs { display: flex; gap: 8px; }
-    .row-inputs > div { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .row-inputs { display: flex; gap: 8px; width: 100%; }
+    .row-inputs > div { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     
     .upload-box {
       border: 2px dashed var(--border-color);
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
       background: var(--bg-color);
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-sub);
       cursor: pointer;
+      word-break: break-all;
     }
 
-    .pill-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill-options { display: flex; gap: 6px; flex-wrap: wrap; width: 100%; }
     .pill-option-btn {
       flex: 1;
-      padding: 8px 12px;
+      min-width: 70px;
+      padding: 8px 8px;
       border: 2px solid var(--border-color);
       border-radius: 12px;
       background: var(--card-bg);
       font-weight: 900;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       text-align: center;
       box-shadow: 0 2px 0px var(--border-color);
     }
-    .pill-option-btn.selected {
-      background: var(--tag-yellow);
-    }
+    .pill-option-btn.selected { background: var(--tag-yellow); }
 
     .action-btn {
       width: 100%;
@@ -289,7 +285,7 @@
       border: 2px solid var(--border-color);
       border-radius: 14px;
       padding: 12px;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 3px 0px var(--border-color);
@@ -298,20 +294,22 @@
 
     .stats-container {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 15px;
+      width: 100%;
     }
     .stat-box {
       flex: 1;
+      min-width: 0;
       background: var(--card-bg);
       border: 2px solid var(--border-color);
       border-radius: 14px;
-      padding: 12px;
+      padding: 10px 6px;
       text-align: center;
       box-shadow: 0 2px 0px var(--border-color);
     }
-    .stat-title { font-size: 12px; font-weight: 900; color: var(--text-sub); margin-bottom: 4px; }
-    .stat-val { font-size: 14px; font-weight: 900; }
+    .stat-title { font-size: 11px; font-weight: 900; color: var(--text-sub); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .stat-val { font-size: 13.5px; font-weight: 900; overflow: hidden; text-overflow: ellipsis; }
 
     .record-card {
       background: var(--card-bg);
@@ -323,7 +321,24 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 0px var(--border-color);
+      gap: 8px;
+      width: 100%;
+      overflow: hidden;
     }
+    .record-info { flex: 1; min-width: 0; word-break: break-word; }
+    .expense-del-btn {
+      color: #C0392B;
+      cursor: pointer;
+      font-weight: 900;
+      padding: 3px 8px;
+      border: 1.5px solid #C0392B;
+      border-radius: 8px;
+      font-size: 11px;
+      background: #FFF;
+      flex-shrink: 0;
+    }
+
+    .booking-header { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 6px; }
   </style>
 </head>
 <body>
@@ -331,7 +346,7 @@
   <!-- 🏠 主頁面：行程總覽 -->
   <div id="page-main">
     <div id="sec-home" class="card header-card">
-      <div style="font-size: 38px; margin-bottom: 5px;">🏔️⛺</div>
+      <div style="font-size: 36px; margin-bottom: 5px;">🏔️⛺</div>
       <div class="trip-title">Nagoya & Hokuriku Winter Loop 2027</div>
       <div class="trip-date">2027.01.27 - 02.02 (7 Days)</div>
       
@@ -352,8 +367,8 @@
       <div class="card-body" id="body-flights" style="display: none;">
         <div class="item-box">
           <span class="tag tag-red">去程 · 1月27日 (Wed)</span>
-          <span style="float: right; font-size: 12px; font-weight: 700;">國泰 CX536 (特選經濟)</span>
-          <div class="flight-route">
+          <span style="float: right; font-size: 11.5px; font-weight: 700; margin-top: 2px;">國泰 CX536 (特選經濟)</span>
+          <div class="flight-route" style="margin-top: 10px;">
             <div><div class="airport-code">HKG</div><div class="airport-time">09:35 起飛</div></div>
             <div class="arrow">➔</div>
             <div style="text-align: right;"><div class="airport-code">NGO</div><div class="airport-time">14:10 抵達</div></div>
@@ -361,8 +376,8 @@
         </div>
         <div class="item-box">
           <span class="tag tag-green">回程 · 2月2日 (Tue)</span>
-          <span style="float: right; font-size: 12px; font-weight: 700;">國泰 CX539 (商務艙)</span>
-          <div class="flight-route">
+          <span style="float: right; font-size: 11.5px; font-weight: 700; margin-top: 2px;">國泰 CX539 (商務艙)</span>
+          <div class="flight-route" style="margin-top: 10px;">
             <div><div class="airport-code">NGO</div><div class="airport-time">15:15 起飛</div></div>
             <div class="arrow">➔</div>
             <div style="text-align: right;"><div class="airport-code">HKG</div><div class="airport-time">19:10 抵達</div></div>
@@ -434,8 +449,8 @@
               <div class="timeline-desc">
                 由商圈散步 10-15 分鐘至餐廳。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🥩 とんかつジョニー (Tonkatsu Johnny) [首選]</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：人氣在地厚切炸豬排專門店 (馬喰一代作為後備)</div>
+                  <div style="font-weight:900; font-size:14px;">🥩 とんかつジョニー (Tonkatsu Johnny) [首選]</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：人氣在地厚切炸豬排專門店 (馬喰一代作為後備)</div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/aichi/A2301/A230103/23075253/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=とんかつジョニー+名古屋" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -507,8 +522,8 @@
               <div class="timeline-desc">
                 搭乘 Linimo 轉地鐵東山線返回名古屋站（車程 50 分鐘），直奔獅子丸享用極順雞白湯拉麵。續住 Via Inn 名古屋站新幹線口。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🍜 麵家 獅子丸 (Menya Shishimaru)</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：現場排隊（不設預約，建議 18:00 前抵達）</div>
+                  <div style="font-weight:900; font-size:14px;">🍜 麵家 獅子丸 (Menya Shishimaru)</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：現場排隊（不設預約，建議 18:00 前抵達）</div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/aichi/A2301/A230101/23056811/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=麵家+獅子丸+名古屋" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -562,8 +577,8 @@
               <div class="timeline-desc">
                 古街步行至丸明，享受 A5 飛驒牛燒肉（店家完全不接受任何預約，到場直接寫名排隊）。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🍲 丸明 高山店 (飛驒牛專門)</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>不接受電話/網上預約，17:30 到場直接寫名字排隊入座</b></div>
+                  <div style="font-weight:900; font-size:14px;">🍲 丸明 高山店 (飛驒牛專門)</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>不接受電話/網上預約，17:30 到場直接寫名字排隊入座</b></div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/gifu/A2104/A210401/21000041/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=丸明+高山店" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -625,8 +640,8 @@
               <div class="timeline-desc">
                 落車步行 1 分鐘直奔隔壁味藏天國撳飛。💡 <b>等位盲點提醒</b>：旺季現場可能需等候 1 小時以上，撳飛後可先返回隔壁高山櫻庵大堂休息，無需在寒風中硬等。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🥩 味藏天國 (A5 飛驒牛壽喜燒)</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>不設預約！17:35 巴士落車即刻去現場撳飛（點選壽喜燒）</b></div>
+                  <div style="font-weight:900; font-size:14px;">🥩 味藏天國 (A5 飛驒牛壽喜燒)</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>不設預約！17:35 巴士落車即刻去現場撳飛（點選壽喜燒）</b></div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/gifu/A2104/A210401/21000040/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=味蔵天国+高山" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -694,8 +709,8 @@
               <div class="timeline-desc">
                 返回金澤站前享用金澤第一濃郁黑味噌拉麵「麵屋大河」，或在飯店附近的片町/香林坊商圈品嚐在地海鮮與居酒屋。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🍜 麵屋大河 (Menya Taiga)</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：金澤站前排隊名店（極致濃郁柚子生薑黑味噌拉麵）</div>
+                  <div style="font-weight:900; font-size:14px;">🍜 麵屋大河 (Menya Taiga)</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：金澤站前排隊名店（極致濃郁柚子生薑黑味噌拉麵）</div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/ishikawa/A1701/A170101/17007412/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=面屋大河+金沢" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -751,8 +766,8 @@
               <div class="timeline-desc">
                 入住 **Meitetsu Inn Nagoyaeki Shinkansenguchi** 後前往榮商圈購物，晚上享用正宗炭燒鰻魚飯三吃。
                 <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14.5px;">🍱 炭焼きうなぎ 登河 栄店 / うなぎのしら河</div>
-                  <div style="font-size:13px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>建議出發前透過 Tabelog / 官網線上預訂席位</b></div>
+                  <div style="font-weight:900; font-size:14px;">🍱 炭焼きうなぎ 登河 栄店 / うなぎのしら河</div>
+                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：⚠️ <b>建議出發前透過 Tabelog / 官網線上預訂席位</b></div>
                   <div class="link-btns">
                     <a href="https://tabelog.com/aichi/A2301/A230103/23070440/" target="_blank" class="btn-sm">🔗 Tabelog 線上預訂</a>
                     <a href="https://www.google.com/maps/search/?api=1&query=登河+栄店" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
@@ -845,153 +860,21 @@
       </div>
     </div>
 
-    <!-- 🎟️ 必搶預約項目清單 (連倒數計時) -->
+    <!-- 🎟️ 必搶預按項目清單 (依日期自動排序，僅最接近者顯示倒數) -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
         <div class="card-title">🎟️ 必搶預約項目清單 (帳號+佔位完整版)</div>
         <div class="toggle-pill" id="pill-booking-list">▼</div>
       </div>
       <div class="card-body" id="body-booking-list" style="display: none;">
-        
-        <div class="item-box booking-box" data-date="2026-11-10T13:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-red">1. 吉卜力公園 · 11月10日 13:00 (HKT)</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>
-              • <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>
-              • 👤 <b>帳號登記</b>：需提前註冊 LAWSON TICKET 國際版帳號<br>
-              • 💳 <b>信用卡/外國人支援</b>：支援海外信用卡，結帳時需 SMS 3D 驗證。<br>
-              • 💡 <b>重點提醒</b>：全預約制無現場票，優先搶「大散步券 Premium」或「Standard」。
-            </div>
-            <div class="link-btns"><a href="https://l-tike.com/ghibli-park/" target="_blank" class="btn-sm">🔗 LAWSON 搶票</a></div>
-          </div>
+        <div id="booking-items-container">
+          <!-- 項目會由下方 JS 根據日期自動排序並渲染 -->
         </div>
-
-        <div class="item-box booking-box" data-date="2026-12-29T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-green">2. JR Pass 購買 & 北陸/地區周遊券 (5日券) 購買</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 3 至 Day 7 (1/29 - 2/2)<br>
-              • <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>
-              • 👤 <b>帳號登記</b>：需提前註冊「WESTER 會員」帳號<br>
-              • 💳 <b>信用卡/支援</b>：需海外信用卡扣款，取票時須出示同一張實體信用卡及護照。<br>
-              • 💡 <b>重點提醒</b>：購買 Pass 的同時，可直接免費劃位 1/29 當天的 Hida 3號 指定席！
-            </div>
-            <div class="link-btns"><a href="https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/" target="_blank" class="btn-sm">🔗 JR 西日本 Pass 官網</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2026-12-29T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-yellow">3. JR 特急 Hida 3號 (08:58 名古屋 ➔ 高山) 劃位</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 3 (1/29 Fri) 08:58 發車<br>
-              • <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b><br>
-              • 👤 <b>帳號登記</b>：需預先註冊 e5489 會員（JR西日本線上預約系統）<br>
-              • 💡 <b>重點提醒</b>：使用 Pass 接入 e5489 免費指定席，熱門時段需搶頭香！
-            </div>
-            <div class="link-btns"><a href="https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/" target="_blank" class="btn-sm">🔗 e5489 劃位 Portal</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2026-12-30T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-purple">4. 濃飛高速巴士 (高山 ➔ 白川鄉預約班次)</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 4 (1/30 Sat) 去程 11:50 / 回程 16:45<br>
-              • <b>開放預約時間</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b><br>
-              • 👤 <b>帳號登記</b>：需提前註冊 Japan Bus Online 會員帳號<br>
-              • 💡 <b>重點提醒</b>：JR Pass 包車資但不包預約，旺季全車指定席，12/30 必須上網搶預約位，現場憑 Pass 取票！
-            </div>
-            <div class="link-btns"><a href="https://www.japanexpressbus.com/zh-tw/" target="_blank" class="btn-sm">🔗 Japan Bus Online 預約</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2026-12-31T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-yellow">5. JR 特急 Hida 7號 (11:19 高山 ➔ 富山) 劃位</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 5 (1/31 Sun) 11:19 發車<br>
-              • <b>開放預約時間</b>：<b>2026 年 12 月 31 日 (三) 09:00 (HKT)</b><br>
-              • 💡 <b>盲點提醒</b>：使用 Pass 免費劃指定席；富山站 36 分鐘轉車可順便買鱒魚壽司便當！
-            </div>
-            <div class="link-btns"><a href="https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/" target="_blank" class="btn-sm">🔗 e5489 劃位 Portal</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2027-01-01T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-green">6. JR 特急 Shirasagi 12號 (14:48 金澤 ➔ 名古屋) 劃位</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 6 (2/1 Mon) 14:48 發車<br>
-              • <b>開放預約時間</b>：<b>2027 年 1 月 1 日 (五) 09:00 (HKT)</b><br>
-              • 💡 <b>重點提醒</b>：Pass 免費直達名古屋，回程前在近江町市場食飽海鮮再上車。
-            </div>
-            <div class="link-btns"><a href="https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/" target="_blank" class="btn-sm">🔗 e5489 劃位 Portal</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2026-11-29T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-purple">7. 奧飛驒 Value Pass 2日券 (奧飛驒套票)</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 3 (1/29 Fri) 新穗高纜車套票<br>
-              • 👤 <b>購票方式</b>：透過 Klook 或 Rakuten Travel 體驗預訂，取得 Email 電子憑證。<br>
-              • 💡 <b>重點提醒</b>：高山往新穗高巴士不設預約，建議 13:40 提早到濃飛總站月台排隊。
-            </div>
-            <div class="link-btns"><a href="https://www.klook.com/zh-HK/" target="_blank" class="btn-sm">🔗 Klook 奧飛驒套票預訂</a></div>
-          </div>
-        </div>
-
-        <div class="item-box booking-box" data-date="2027-01-02T09:00:00+08:00">
-          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
-            <span class="tag tag-red">8. 炭焼きうなぎ 登河 栄店 (鰻魚飯三吃) 預約</span>
-            <span class="mini-countdown"></span>
-            <span class="toggle-arrow" style="float:right; font-size:12px;">▲</span>
-          </div>
-          <div class="booking-body" style="margin-top:8px;">
-            <div class="item-box-sub">
-              • <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐<br>
-              • 👤 <b>預約專線/方式</b>：建議透過 Tabelog 線上預訂（或利用 LINE 快捷訂位）<br>
-              • 💡 <b>重點提醒</b>：名古屋市區人氣鰻魚飯，提早預訂免排隊！
-            </div>
-            <div class="link-btns"><a href="https://tabelog.com/aichi/A2301/A230103/23070440/" target="_blank" class="btn-sm">🔗 Tabelog 登河 預約</a></div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 
-  <!-- 🛍️ 購物清單頁面 (升級預覽版) -->
+  <!-- 🛍️ 購物清單頁面 -->
   <div id="page-shopping" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
     
@@ -1025,7 +908,7 @@
       <label class="form-label">📷 商品相片 (可上傳檔案)</label>
       <input type="file" id="shop-file" class="form-input" accept="image/*" onchange="previewShopImage(event)">
       <div class="upload-box">
-        <span id="shop-file-label">📥 點擊此處或上傳圖片檔案</span>
+        <span id="shop-file-label">📥 點擊在此處或上傳圖片檔案</span>
       </div>
     </div>
 
@@ -1038,7 +921,7 @@
     </div>
   </div>
 
-  <!-- 🧾 單據記帳頁面 (升級預覽版) -->
+  <!-- 🧾 單據記帳頁面 -->
   <div id="page-expenses" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🧾 消費記帳與結算</div>
     
@@ -1047,12 +930,12 @@
       <div class="stat-box">
         <div class="stat-title">CW 累積代墊</div>
         <div class="stat-val" id="stat-cw-yen">¥0</div>
-        <div style="font-size:11px; color:var(--text-sub);" id="stat-cw-hkd">HK$ 0</div>
+        <div style="font-size:10.5px; color:var(--text-sub);" id="stat-cw-hkd">HK$ 0</div>
       </div>
       <div class="stat-box">
         <div class="stat-title">Me 累積代墊</div>
         <div class="stat-val" id="stat-me-yen">¥0</div>
-        <div style="font-size:11px; color:var(--text-sub);" id="stat-me-hkd">HK$ 0</div>
+        <div style="font-size:10.5px; color:var(--text-sub);" id="stat-me-hkd">HK$ 0</div>
       </div>
     </div>
 
@@ -1093,9 +976,9 @@
     <div class="form-group">
       <label class="form-label">3. 費用分攤方式</label>
       <div class="pill-options">
-        <div class="pill-option-btn selected" id="split-aa" onclick="selectSplit('AA 攤分')">⚖️ AA 攤分</div>
-        <div class="pill-option-btn" id="split-solo" onclick="selectSplit('個人獨付')">👤 個人獨付</div>
-        <div class="pill-option-btn" id="split-help" onclick="selectSplit('幫對方付')">🤝 幫對方付</div>
+        <div class="pill-option-btn selected" id="split-aa" onclick="selectSplit('AA 攤分')">⚖️ AA</div>
+        <div class="pill-option-btn" id="split-solo" onclick="selectSplit('個人獨付')">👤 獨付</div>
+        <div class="pill-option-btn" id="split-help" onclick="selectSplit('幫對方付')">🤝 幫付</div>
       </div>
     </div>
 
@@ -1109,9 +992,9 @@
 
   <!-- 底部固定導航欄 -->
   <div class="nav-bar">
-    <button class="nav-btn active" onclick="switchPage('main', this)">🏠 行程總覽</button>
-    <button class="nav-btn" onclick="switchPage('shopping', this)">🛍️ 購物清單</button>
-    <button class="nav-btn" onclick="switchPage('expenses', this)">🧾 單據記帳</button>
+    <button class="nav-btn active" onclick="switchPage('main', this)">🏠 行程</button>
+    <button class="nav-btn" onclick="switchPage('shopping', this)">🛍️ 購物</button>
+    <button class="nav-btn" onclick="switchPage('expenses', this)">🧾 記帳</button>
   </div>
 
   <script>
@@ -1143,53 +1026,148 @@
       if (page === 'expenses') renderExpensesAdvanced();
     }
 
-    // 3. 必搶預約自動摺疊 & 動態倒數
-    function initBookingItems() {
+    // 3. 必搶預約自動排序 & 僅顯示最接近嘅單個項目倒數
+    const bookingData = [
+      {
+        id: 1,
+        date: "2026-11-10T13:00:00+08:00",
+        tagClass: "tag-red",
+        tagText: "1. 吉卜力公園 · 11月10日 13:00 (HKT)",
+        subHtml: "• <b>適用行程</b>：Day 2 (1/28 Thu) 愛·地球博記念公園<br>• <b>開放預約時間</b>：<b>2026 年 11 月 10 日 (二) 13:00 (HKT)</b>（入場前 2 個月）<br>• 👤 <b>帳號登記</b>：需提前註冊 LAWSON TICKET 國際版帳號<br>• 💳 <b>信用卡支援</b>：支援海外信用卡，結帳需 SMS 3D 驗證。<br>• 💡 <b>重點提醒</b>：全預約制無現場票，優先搶「大散步券 Premium」或「Standard」。",
+        link: "https://l-tike.com/ghibli-park/",
+        linkText: "🔗 LAWSON 搶票"
+      },
+      {
+        id: 2,
+        date: "2026-11-29T09:00:00+08:00",
+        tagClass: "tag-purple",
+        tagText: "7. 奧飛驒 Value Pass 2日券 (奧飛驒套票)",
+        subHtml: "• <b>適用行程</b>：Day 3 (1/29 Fri) 新穗高纜車套票<br>• 👤 <b>購票方式</b>：透過 Klook 或 Rakuten Travel 體驗預訂，取得 Email 電子憑證。<br>• 💡 <b>重點提醒</b>：高山往新穗高巴士不設預約，建議 13:40 提早到濃飛總站月台排隊。",
+        link: "https://www.klook.com/zh-HK/",
+        linkText: "🔗 Klook 奧飛驒套票預訂"
+      },
+      {
+        id: 3,
+        date: "2026-12-29T09:00:00+08:00",
+        tagClass: "tag-green",
+        tagText: "2. JR Pass 購買 & 北陸/地區周遊券 (5日券) 購買",
+        subHtml: "• <b>適用行程</b>：Day 3 至 Day 7 (1/29 - 2/2)<br>• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>• 👤 <b>帳號登記</b>：需提前註冊「WESTER 會員」帳號<br>• 💳 <b>信用卡支援</b>：需海外信用卡扣款，取票時須出示同一張實體信用卡及護照。",
+        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        linkText: "🔗 JR 西日本 Pass 官網"
+      },
+      {
+        id: 4,
+        date: "2026-12-29T09:00:00+08:00",
+        tagClass: "tag-yellow",
+        tagText: "3. JR 特急 Hida 3號 (08:58 名古屋 ➔ 高山) 劃位",
+        subHtml: "• <b>適用行程</b>：Day 3 (1/29 Fri) 08:58 發車<br>• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b><br>• 👤 <b>帳號登記</b>：需預先註冊 e5489 會員（JR西日本線上預約系統）",
+        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        linkText: "🔗 e5489 劃位 Portal"
+      },
+      {
+        id: 5,
+        date: "2026-12-30T09:00:00+08:00",
+        tagClass: "tag-purple",
+        tagText: "4. 濃飛高速巴士 (高山 ➔ 白川鄉預約班次)",
+        subHtml: "• <b>適用行程</b>：Day 4 (1/30 Sat) 去程 11:50 / 回程 16:45<br>• <b>開放預約時間</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b><br>• 👤 <b>帳號登記</b>：需提前註冊 Japan Bus Online 會員帳號",
+        link: "https://www.japanexpressbus.com/zh-tw/",
+        linkText: "🔗 Japan Bus Online 預約"
+      },
+      {
+        id: 6,
+        date: "2026-12-31T09:00:00+08:00",
+        tagClass: "tag-yellow",
+        tagText: "5. JR 特急 Hida 7號 (11:19 高山 ➔ 富山) 劃位",
+        subHtml: "• <b>適用行程</b>：Day 5 (1/31 Sun) 11:19 發車<br>• <b>開放預約時間</b>：<b>2026 年 12 月 31 日 (三) 09:00 (HKT)</b><br>• 💡 <b>盲點提醒</b>：使用 Pass 免費劃指定席；富山站 36 分鐘轉車可順便買鱒魚壽司便當！",
+        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        linkText: "🔗 e5489 劃位 Portal"
+      },
+      {
+        id: 7,
+        date: "2027-01-01T09:00:00+08:00",
+        tagClass: "tag-green",
+        tagText: "6. JR 特急 Shirasagi 12號 (14:48 金澤 ➔ 名古屋) 劃位",
+        subHtml: "• <b>適用行程</b>：Day 6 (2/1 Mon) 14:48 發車<br>• <b>開放預約時間</b>：<b>2027 年 1 月 1 日 (五) 09:00 (HKT)</b><br>• 💡 <b>重點提醒</b>：Pass 免費直達名古屋，回程前在近江町市場食飽海鮮再上車。",
+        link: "https://www.westjr.co.jp/global/tc/ticket/pass/takayama_hokuriku/",
+        linkText: "🔗 e5489 劃位 Portal"
+      },
+      {
+        id: 8,
+        date: "2027-01-02T09:00:00+08:00",
+        tagClass: "tag-red",
+        tagText: "8. 炭焼きうなぎ 登河 栄店 (鰻魚飯三吃) 預約",
+        subHtml: "• <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐<br>• 👤 <b>預約方式</b>：建議透過 Tabelog 線上預訂（或利用 LINE 快捷訂位）<br>• 💡 <b>重點提醒</b>：名古屋市區人氣鰻魚飯，提早預訂免排隊！",
+        link: "https://tabelog.com/aichi/A2301/A230103/23070440/",
+        linkText: "🔗 Tabelog 登河 預約"
+      }
+    ];
+
+    function renderBookingList() {
+      const container = document.getElementById('booking-items-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // 嚴格跟隨預約日期由舊到新 (即未來最接近者在前) 排序
+      bookingData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      // 找出未來時間差最小（即最接近）且尚未過期的單個 item
       const now = new Date();
-      const boxes = document.querySelectorAll('.booking-box');
-      let nextBox = null;
+      let closestId = null;
       let minDiff = Infinity;
 
-      boxes.forEach(box => {
-        const dateStr = box.getAttribute('data-date');
-        const targetDate = new Date(dateStr);
-        const diffDays = (now - targetDate) / (1000 * 60 * 60 * 24);
-
-        if (diffDays >= 1) {
-          const body = box.querySelector('.booking-body');
-          const arrow = box.querySelector('.toggle-arrow');
-          if(body) body.style.display = 'none';
-          if(arrow) arrow.innerText = '▼';
-        }
-
-        const timeDiff = targetDate - now;
-        if (timeDiff > 0 && timeDiff < minDiff) {
-          minDiff = timeDiff;
-          nextBox = { box, targetDate };
+      bookingData.forEach(item => {
+        const diff = new Date(item.date) - now;
+        if (diff > 0 && diff < minDiff) {
+          minDiff = diff;
+          closestId = item.id;
         }
       });
 
-      // 為每個預約項目動態更新各自的倒數
-      boxes.forEach(box => {
-        const dateStr = box.getAttribute('data-date');
-        const targetDate = new Date(dateStr);
-        const countdownEl = box.querySelector('.mini-countdown');
-        if (countdownEl) {
-          function updateItemTimer() {
-            const tDiff = targetDate - new Date();
+      bookingData.forEach(item => {
+        const targetDate = new Date(item.date);
+        const isPast = (now - targetDate) > 0;
+        const isClosest = (item.id === closestId);
+
+        const box = document.createElement('div');
+        box.className = 'item-box booking-box';
+        box.style.marginBottom = '12px';
+
+        box.innerHTML = `
+          <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; flex:1; min-width:0;">
+              <span class="tag ${item.tagClass}">${item.tagText}</span>
+              ${isClosest ? '<span class="mini-countdown" id="countdown-' + item.id + '" style="background:var(--tag-yellow); font-weight:900;">計算中...</span>' : ''}
+            </div>
+            <span class="toggle-arrow" style="font-size:12px; flex-shrink:0;">${isPast ? '▼' : '▲'}</span>
+          </div>
+          <div class="booking-body" style="margin-top:8px; display: ${isPast ? 'none' : 'block'};">
+            <div class="item-box-sub">${item.subHtml}</div>
+            <div class="link-btns"><a href="${item.link}" target="_blank" class="btn-sm">${item.linkText}</a></div>
+          </div>
+        `;
+        container.appendChild(box);
+      });
+
+      // 啟動單一最接近項目的即時倒數
+      if (closestId !== null) {
+        const targetItem = bookingData.find(i => i.id === closestId);
+        const countdownEl = document.getElementById('countdown-' + closestId);
+        if (countdownEl && targetItem) {
+          function updateClosestTimer() {
+            const tDiff = new Date(targetItem.date) - new Date();
             if (tDiff > 0) {
               const d = Math.floor(tDiff / (1000 * 60 * 60 * 24));
               const h = Math.floor((tDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
               const m = Math.floor((tDiff % (1000 * 60 * 60)) / (1000 * 60));
               countdownEl.innerText = `⏳ 倒數 ${d}天${h}時${m}分`;
             } else {
-              countdownEl.innerText = '⏳ 預約已開始/過期';
+              countdownEl.innerText = '⏳ 預約中';
             }
           }
-          setInterval(updateItemTimer, 60000);
-          updateItemTimer();
+          setInterval(updateClosestTimer, 1000);
+          updateClosestTimer();
         }
-      });
+      }
     }
 
     function toggleBookingItem(header) {
@@ -1209,11 +1187,9 @@
     function previewShopImage(event) {
       const file = event.target.files[0];
       if (file) {
-        document.getElementById('shop-file-label').innerText = "✅已選擇: " + file.name;
+        document.getElementById('shop-file-label').innerText = "✅ 已選: " + file.name;
         const reader = new FileReader();
-        reader.onload = function(e) {
-          tempImgBase64 = e.target.result;
-        };
+        reader.onload = function(e) { tempImgBase64 = e.target.result; };
         reader.readAsDataURL(file);
       }
     }
@@ -1224,10 +1200,7 @@
       const yen = document.getElementById('shop-yen').value;
       const hkd = document.getElementById('shop-hkd').value;
 
-      if (!name) {
-        alert('請輸入商品名稱');
-        return;
-      }
+      if (!name) { alert('請輸入商品名稱'); return; }
 
       let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
       list.push({
@@ -1270,14 +1243,14 @@
 
       list.forEach(item => {
         const div = document.createElement('div');
-        div.style.cssText = 'background:var(--card-bg); border:2px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:0 2px 0px var(--border-color);';
+        div.style.cssText = 'background:var(--card-bg); border:2px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:0 2px 0px var(--border-color); width:100%; overflow:hidden;';
         div.innerHTML = `
           <div style="margin-bottom:6px;"><span class="tag" style="background:var(--tag-yellow);">${item.category}</span></div>
-          <div style="display:flex; gap:12px; align-items:center;">
-            <img src="${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color);">
-            <div style="flex:1;">
-              <div style="font-weight:900; font-size:14.5px;">${item.name}</div>
-              <div style="font-size:12.5px; color:var(--text-sub); margin-top:2px;">預算: ¥${Number(item.yen).toLocaleString()} (HK$ ${Number(item.hkd).toLocaleString()})</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <img src="${item.image}" style="width:48px; height:48px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color); flex-shrink:0;">
+            <div class="record-info">
+              <div style="font-weight:900; font-size:14px;">${item.name}</div>
+              <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">預算: ¥${Number(item.yen).toLocaleString()} (HK$ ${Number(item.hkd).toLocaleString()})</div>
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
@@ -1289,7 +1262,7 @@
       });
     }
 
-    // 5. 記帳邏輯 (CW vs Me 代墊與結算)
+    // 5. 記帳邏輯
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
 
@@ -1311,10 +1284,7 @@
       const currency = document.getElementById('exp-currency').value;
       const amount = document.getElementById('exp-amount').value;
 
-      if (!name || !amount) {
-        alert('請填寫項目名稱與金額');
-        return;
-      }
+      if (!name || !amount) { alert('請填寫項目名稱與金額'); return; }
 
       let list = JSON.parse(localStorage.getItem('trip_expenses_adv') || '[]');
       list.push({
@@ -1369,12 +1339,12 @@
         const div = document.createElement('div');
         div.className = 'record-card';
         div.innerHTML = `
-          <div>
-            <div style="font-weight:900; font-size:14.5px;">${item.name}</div>
-            <div style="font-size:11.5px; color:var(--text-sub); margin-top:2px;">付款人: ${item.payer} · ${item.split} · ${item.date}</div>
+          <div class="record-info">
+            <div style="font-weight:900; font-size:14px;">${item.name}</div>
+            <div style="font-size:11px; color:var(--text-sub); margin-top:2px;">付款: ${item.payer} · ${item.split} · ${item.date}</div>
           </div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div style="font-weight:900; font-size:15px; color:${item.payer === 'CW' ? '#E88282' : '#74B9BE'};">${item.currency.includes('日圓') ? '¥' : 'HK$'}${val.toLocaleString()}</div>
+          <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <div style="font-weight:900; font-size:14px; color:${item.payer === 'CW' ? '#E88282' : '#74B9BE'};">${item.currency.includes('日圓') ? '¥' : 'HK$'}${val.toLocaleString()}</div>
             <button class="expense-del-btn" onclick="deleteExpenseAdvanced(${item.id})">刪除</button>
           </div>
         `;
@@ -1430,7 +1400,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      initBookingItems();
+      renderBookingList();
       renderShoppingAdvanced();
       renderExpensesAdvanced();
 
