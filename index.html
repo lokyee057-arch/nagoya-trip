@@ -235,7 +235,7 @@
     .timeline-title { font-size: 15px; font-weight: 900; }
     .timeline-desc { font-size: 13.5px; color: var(--text-main); line-height: 1.65; word-break: break-word; }
 
-    /* 表單與控制項樣式修正（防出界） */
+    /* 表單與控制項樣式 */
     .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; width: 100%; }
     .form-label { font-size: 13px; font-weight: 900; }
     .form-input, .form-select {
@@ -309,7 +309,7 @@
       box-shadow: 0 2px 0px var(--border-color);
     }
     .stat-title { font-size: 11px; font-weight: 900; color: var(--text-sub); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .stat-val { font-size: 13.5px; font-weight: 900; overflow: hidden; text-overflow: ellipsis; }
+    .stat-val { font-size: 13px; font-weight: 900; overflow: hidden; text-overflow: ellipsis; }
 
     .record-card {
       background: var(--card-bg);
@@ -860,16 +860,14 @@
       </div>
     </div>
 
-    <!-- 🎟️ 必搶預按項目清單 (依日期自動排序，僅最接近者顯示倒數) -->
+    <!-- 🎟️ 必搶預約項目清單 -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-booking-list', 'pill-booking-list')">
         <div class="card-title">🎟️ 必搶預約項目清單 (帳號+佔位完整版)</div>
         <div class="toggle-pill" id="pill-booking-list">▼</div>
       </div>
       <div class="card-body" id="body-booking-list" style="display: none;">
-        <div id="booking-items-container">
-          <!-- 項目會由下方 JS 根據日期自動排序並渲染 -->
-        </div>
+        <div id="booking-items-container"></div>
       </div>
     </div>
   </div>
@@ -930,12 +928,12 @@
       <div class="stat-box">
         <div class="stat-title">CW 累積代墊</div>
         <div class="stat-val" id="stat-cw-yen">¥0</div>
-        <div style="font-size:10.5px; color:var(--text-sub);" id="stat-cw-hkd">HK$ 0</div>
+        <div style="font-size:10px; color:var(--text-sub);" id="stat-cw-hkd">HK$ 0</div>
       </div>
       <div class="stat-box">
         <div class="stat-title">Me 累積代墊</div>
         <div class="stat-val" id="stat-me-yen">¥0</div>
-        <div style="font-size:10.5px; color:var(--text-sub);" id="stat-me-hkd">HK$ 0</div>
+        <div style="font-size:10px; color:var(--text-sub);" id="stat-me-hkd">HK$ 0</div>
       </div>
     </div>
 
@@ -1107,10 +1105,8 @@
       if (!container) return;
       container.innerHTML = '';
 
-      // 嚴格跟隨預約日期由舊到新 (即未來最接近者在前) 排序
       bookingData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-      // 找出未來時間差最小（即最接近）且尚未過期的單個 item
       const now = new Date();
       let closestId = null;
       let minDiff = Infinity;
@@ -1148,7 +1144,6 @@
         container.appendChild(box);
       });
 
-      // 啟動單一最接近項目的即時倒數
       if (closestId !== null) {
         const targetItem = bookingData.find(i => i.id === closestId);
         const countdownEl = document.getElementById('countdown-' + closestId);
@@ -1182,7 +1177,7 @@
       }
     }
 
-    // 4. 購物清單邏輯 (支援圖片與雙幣預算)
+    // 4. 購物清單邏輯
     let tempImgBase64 = "";
     function previewShopImage(event) {
       const file = event.target.files[0];
@@ -1262,7 +1257,7 @@
       });
     }
 
-    // 5. 記帳邏輯
+    // 5. 記帳邏輯（已完美修復港幣與日圓自動累計計算）
     let selectedPayer = 'CW';
     let selectedSplit = 'AA 攤分';
 
@@ -1317,8 +1312,8 @@
       container.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_expenses_adv') || '[]');
       
-      let cwTotalYen = 0;
-      let meTotalYen = 0;
+      let cwTotalHkd = 0;
+      let meTotalHkd = 0;
 
       if (list.length === 0) {
         container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無單據記錄</div>';
@@ -1331,10 +1326,16 @@
 
       list.forEach(item => {
         const val = Number(item.amount);
+        let amountInHkd = 0;
+
         if (item.currency.includes('日圓')) {
-          if (item.payer === 'CW') cwTotalYen += val;
-          if (item.payer === 'Me') meTotalYen += val;
+          amountInHkd = val / 20; // 假設 20:1 換算
+        } else {
+          amountInHkd = val; // 港幣直接計算
         }
+
+        if (item.payer === 'CW') cwTotalHkd += amountInHkd;
+        if (item.payer === 'Me') meTotalHkd += amountInHkd;
 
         const div = document.createElement('div');
         div.className = 'record-card';
@@ -1351,10 +1352,11 @@
         container.appendChild(div);
       });
 
-      document.getElementById('stat-cw-yen').innerText = `¥${cwTotalYen.toLocaleString()}`;
-      document.getElementById('stat-cw-hkd').innerText = `HK$ ${Math.round(cwTotalYen / 20).toLocaleString()}`;
-      document.getElementById('stat-me-yen').innerText = `¥${meTotalYen.toLocaleString()}`;
-      document.getElementById('stat-me-hkd').innerText = `HK$ ${Math.round(meTotalYen / 20).toLocaleString()}`;
+      // 同步更新統計數字（同時顯示港幣原額與對應日圓估算，確保港幣記帳唔會變 0）
+      document.getElementById('stat-cw-yen').innerText = `¥${Math.round(cwTotalHkd * 20).toLocaleString()}`;
+      document.getElementById('stat-cw-hkd').innerText = `HK$ ${Math.round(cwTotalHkd).toLocaleString()}`;
+      document.getElementById('stat-me-yen').innerText = `¥${Math.round(meTotalHkd * 20).toLocaleString()}`;
+      document.getElementById('stat-me-hkd').innerText = `HK$ ${Math.round(meTotalHkd).toLocaleString()}`;
     }
 
     // 6. 備忘錄
