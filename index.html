@@ -554,7 +554,7 @@
               <div class="timeline-dot"></div>
               <div class="timeline-time">09:40 - 11:30 🚶 徒步 15mins</div>
               <div class="timeline-head"><span class="timeline-title">反向進攻「魔女之谷」與「幽靈故里」</span><span class="tag tag-red">避開人潮</span></div>
-              <div class="timeline-desc">略過大倉庫，徒步 15 分鐘前往最新魔女之谷（哈爾移動城堡、OKI_NO邸）與幽靈故里。</div>
+              <div class="timeline-desc">略過大倉庫，徒步 15 分鐘前往最新魔女之谷（哈爾移動城堡, OKI_NO邸）與幽靈故里。</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot"></div>
@@ -579,7 +579,7 @@
               <div class="timeline-time">17:00 之後 🚗 交通時間 50mins</div>
               <div class="timeline-head"><span class="timeline-title">晚餐：麵家 獅子丸 (雞白湯拉麵)</span><span class="tag tag-red">名站排隊名店</span></div>
               <div class="timeline-desc">
-                搭乘 Linimo 轉地鐵東山線返回名古屋站（車程 50 分鐘），直奔獅子丸享用極順雞白湯拉麵. 續住 Via Inn 名古屋站新幹線口。
+                搭乘 Linimo 轉地鐵東山線返回名古屋站（車程 50 分鐘），直奔獅子丸享用極順雞白湯拉麵。續住 Via Inn 名古屋站新幹線口。
                 <div class="food-inline-card">
                   <div style="font-weight:900; font-size:14px;">🍜 麵家 獅子丸 (Menya Shishimaru)</div>
                   <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：現場排隊（不設預約，建議 18:00 前抵達）</div>
@@ -1071,7 +1071,7 @@
       <button class="btn-sm" style="margin-top:6px; width:100%; justify-content:center;" onclick="document.getElementById('shop-file').click();">📁 從手機相簿選擇檔案</button>
     </div>
 
-    <button class="action-btn" style="background:var(--tag-yellow); color:var(--text-main);" onclick="addShoppingItemAdvanced()">+ 放入購物清單</button>
+    <button id="shop-submit-btn" class="action-btn" style="background:var(--tag-yellow); color:var(--text-main);" onclick="addShoppingItemAdvanced()">+ 放入購物清單</button>
 
     <div style="margin-top: 20px; border-top: 2px dashed #E0E0E0; padding-top: 15px;">
       <div style="font-weight:900; font-size:15px; margin-bottom:10px;">📋 我的選購清單</div>
@@ -1361,9 +1361,36 @@
       }
     }
 
-    // 4. 通用圖片 Paste / File 處理 (支援 contenteditable 長撳貼上)
+    // 4. 圖片壓縮與 Paste / File 處理 (解決 localStorage quota 超載問題)
     let tempShopImgBase64 = "";
     let tempExpImgBase64 = "";
+    let currentEditingShopId = null;
+
+    function resizeImage(base64Str, maxWidth = 600, maxHeight = 600, quality = 0.7, callback) {
+      const img = new Image();
+      img.src = base64Str;
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        callback(canvas.toDataURL('image/jpeg', quality));
+      };
+    }
 
     function handlePasteArea(event, type) {
       const clipboardData = event.clipboardData || window.clipboardData;
@@ -1376,11 +1403,12 @@
           const blob = items[i].getAsFile();
           const reader = new FileReader();
           reader.onload = function(e) {
-            const base64 = e.target.result;
-            const pasteBox = document.getElementById(type + '-paste-box');
-            pasteBox.innerHTML = `✅ 已成功貼上截圖：<br><img src="${base64}">`;
-            if (type === 'shop') tempShopImgBase64 = base64;
-            if (type === 'exp') tempExpImgBase64 = base64;
+            resizeImage(e.target.result, 600, 600, 0.7, (compressedBase64) => {
+              const pasteBox = document.getElementById(type + '-paste-box');
+              pasteBox.innerHTML = `✅ 已成功貼上截圖：<br><img src="${compressedBase64}">`;
+              if (type === 'shop') tempShopImgBase64 = compressedBase64;
+              if (type === 'exp') tempExpImgBase64 = compressedBase64;
+            });
           };
           reader.readAsDataURL(blob);
           hasImage = true;
@@ -1403,17 +1431,45 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const base64 = e.target.result;
-          const pasteBox = document.getElementById(type + '-paste-box');
-          pasteBox.innerHTML = `✅ 已選取相片：<br><img src="${base64}">`;
-          if (type === 'shop') tempShopImgBase64 = base64;
-          if (type === 'exp') tempExpImgBase64 = base64;
+          resizeImage(e.target.result, 600, 600, 0.7, (compressedBase64) => {
+            const pasteBox = document.getElementById(type + '-paste-box');
+            pasteBox.innerHTML = `✅ 已選取相片：<br><img src="${compressedBase64}">`;
+            if (type === 'shop') tempShopImgBase64 = compressedBase64;
+            if (type === 'exp') tempExpImgBase64 = compressedBase64;
+          });
         };
         reader.readAsDataURL(file);
       }
     }
 
-    // 5. 購物清單邏輯
+    // 5. 購物清單邏輯 (支援新增與真實編輯)
+    function editShoppingAdvanced(id) {
+      let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
+      const item = list.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById('shop-category').value = item.category;
+      document.getElementById('shop-name').value = item.name;
+      document.getElementById('shop-yen').value = item.yen;
+      document.getElementById('shop-hkd').value = item.hkd;
+      
+      tempShopImgBase64 = item.image;
+      const pasteBox = document.getElementById('shop-paste-box');
+      if (item.image) {
+        pasteBox.innerHTML = `✅ 已載入商品相片：<br><img src="${item.image}">`;
+      } else {
+        pasteBox.innerHTML = '<span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>';
+      }
+
+      currentEditingShopId = id;
+      const btn = document.getElementById('shop-submit-btn');
+      btn.innerText = '💾 儲存修改';
+      btn.style.background = 'var(--tag-green)';
+      btn.style.color = 'white';
+
+      document.getElementById('shop-category').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function addShoppingItemAdvanced() {
       const category = document.getElementById('shop-category').value;
       const name = document.getElementById('shop-name').value;
@@ -1423,16 +1479,43 @@
       if (!name) { alert('請輸入商品名稱'); return; }
 
       let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
-      list.push({
-        id: Date.now(),
-        category,
-        name,
-        yen: yen || '0',
-        hkd: hkd || '0',
-        image: tempShopImgBase64 || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
-      });
 
-      localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
+      if (currentEditingShopId !== null) {
+        list = list.map(item => {
+          if (item.id === currentEditingShopId) {
+            return {
+              ...item,
+              category,
+              name,
+              yen: yen || '0',
+              hkd: hkd || '0',
+              image: tempShopImgBase64 || item.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
+            };
+          }
+          return item;
+        });
+        currentEditingShopId = null;
+        const btn = document.getElementById('shop-submit-btn');
+        btn.innerText = '+ 放入購物清單';
+        btn.style.background = 'var(--tag-yellow)';
+        btn.style.color = 'var(--text-main)';
+      } else {
+        list.push({
+          id: Date.now(),
+          category,
+          name,
+          yen: yen || '0',
+          hkd: hkd || '0',
+          image: tempShopImgBase64 || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
+        });
+      }
+
+      try {
+        localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
+      } catch (err) {
+        alert('儲存失敗：相片容量過大，請重新選擇較小的截圖');
+        return;
+      }
       
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
@@ -1463,7 +1546,7 @@
 
       list.forEach(item => {
         const div = document.createElement('div');
-        div.style.cssText = 'background:var(--card-bg); border:2px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:0 2px 0px var(--border-color); width:100%; overflow:hidden;';
+        div.style.cssText = 'background:var(--card-bg); border:2.5px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:0 2px 0px var(--border-color); width:100%; overflow:hidden;';
         div.innerHTML = `
           <div style="margin-bottom:6px;"><span class="tag" style="background:var(--tag-yellow);">${item.category}</span></div>
           <div style="display:flex; gap:10px; align-items:center;">
@@ -1474,7 +1557,7 @@
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
-            <button class="expense-del-btn" style="color:#2B2B2B; border-color:#2B2B2B;" onclick="alert('請刪除後重新新增')">編輯</button>
+            <button class="expense-del-btn" style="color:#2B2B2B; border-color:#2B2B2B;" onclick="editShoppingAdvanced(${item.id})">編輯</button>
             <button class="expense-del-btn" onclick="deleteShoppingAdvanced(${item.id})">刪除</button>
           </div>
         `;
@@ -1518,7 +1601,12 @@
         image: tempExpImgBase64 || ''
       });
 
-      localStorage.setItem('trip_expenses_adv', JSON.stringify(list));
+      try {
+        localStorage.setItem('trip_expenses_adv', JSON.stringify(list));
+      } catch (err) {
+        alert('儲存失敗：相片容量過大，請重新選擇較小的截圖');
+        return;
+      }
       
       document.getElementById('exp-name').value = '';
       document.getElementById('exp-amount').value = '';
