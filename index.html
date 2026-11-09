@@ -1035,6 +1035,15 @@
   <div id="page-shopping" class="card" style="display:none;">
     <div class="card-title" style="margin-bottom:12px;">🛍️ 購物清單</div>
     
+    <!-- 🎟️ 日本優惠 Code 懶人包快捷入口 -->
+    <div class="item-box" style="background:#FFFBF0; border-color:var(--tag-yellow); margin-bottom:16px;">
+      <div style="font-weight:900; font-size:14.5px; margin-bottom:4px;">🎟️ 日本優惠 Code 懶人包</div>
+      <div class="item-box-sub" style="margin-bottom:8px;">集合各大日本藥妝、百貨及電器行最新折扣優惠碼與免稅券。</div>
+      <div class="link-btns">
+        <a href="https://alinchuang.my.canva.site/" target="_blank" class="btn-sm" style="background:var(--tag-yellow); color:var(--text-main);">🔗 開啟優惠 Code 懶人包網頁</a>
+      </div>
+    </div>
+
     <div class="form-group">
       <label class="form-label">選擇分類</label>
       <select id="shop-category" class="form-select">
@@ -1059,6 +1068,12 @@
         <label class="form-label">預算金額 (港幣 HK$)</label>
         <input type="number" id="shop-hkd" class="form-input" placeholder="例如: 28000">
       </div>
+    </div>
+
+    <!-- 新增：格價 / 備註欄位 -->
+    <div class="form-group">
+      <label class="form-label">格價 / 備註 (Remark)</label>
+      <input type="text" id="shop-remark" class="form-input" placeholder="例如：Bic Camera 有平 / 唐吉訶德格價 ¥5300">
     </div>
 
     <div class="form-group">
@@ -1442,7 +1457,7 @@
       }
     }
 
-    // 5. 購物清單邏輯 (支援新增與真實編輯)
+    // 5. 購物清單邏輯 (支援新增、編輯與 Remark 格價備註)
     function editShoppingAdvanced(id) {
       let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
       const item = list.find(i => i.id === id);
@@ -1452,6 +1467,7 @@
       document.getElementById('shop-name').value = item.name;
       document.getElementById('shop-yen').value = item.yen;
       document.getElementById('shop-hkd').value = item.hkd;
+      document.getElementById('shop-remark').value = item.remark || '';
       
       tempShopImgBase64 = item.image;
       const pasteBox = document.getElementById('shop-paste-box');
@@ -1475,6 +1491,7 @@
       const name = document.getElementById('shop-name').value;
       const yen = document.getElementById('shop-yen').value;
       const hkd = document.getElementById('shop-hkd').value;
+      const remark = document.getElementById('shop-remark').value;
 
       if (!name) { alert('請輸入商品名稱'); return; }
 
@@ -1489,6 +1506,7 @@
               name,
               yen: yen || '0',
               hkd: hkd || '0',
+              remark: remark || '',
               image: tempShopImgBase64 || item.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
             };
           }
@@ -1506,6 +1524,7 @@
           name,
           yen: yen || '0',
           hkd: hkd || '0',
+          remark: remark || '',
           image: tempShopImgBase64 || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
         });
       }
@@ -1520,6 +1539,7 @@
       document.getElementById('shop-name').value = '';
       document.getElementById('shop-yen').value = '';
       document.getElementById('shop-hkd').value = '';
+      document.getElementById('shop-remark').value = '';
       document.getElementById('shop-paste-box').innerHTML = '<span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>';
       tempShopImgBase64 = "";
 
@@ -1554,6 +1574,7 @@
             <div class="record-info">
               <div style="font-weight:900; font-size:14px;">${item.name}</div>
               <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">預算: ¥${Number(item.yen).toLocaleString()} (HK$ ${Number(item.hkd).toLocaleString()})</div>
+              ${item.remark ? `<div style="font-size:12px; color:#C0392B; font-weight:700; margin-top:3px;">📝 備註/格價: ${item.remark}</div>` : ''}
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
