@@ -384,14 +384,6 @@
     }
 
     .booking-header { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 6px; }
-
-    /* 保險條款點擊清單樣式 */
-    .insurance-section { margin-bottom: 12px; }
-    .insurance-sec-title { font-size: 14.5px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; }
-    .insurance-list { list-style: none; padding-left: 4px; }
-    .insurance-list li { font-size: 13px; color: var(--text-main); margin-bottom: 4px; line-height: 1.5; }
-    .insurance-sublist { list-style: none; padding-left: 12px; margin-top: 4px; }
-    .insurance-sublist li { font-size: 12.5px; color: var(--text-sub); margin-bottom: 3px; }
   </style>
 </head>
 <body>
@@ -819,29 +811,6 @@
       </div>
     </div>
 
-    <!-- 🚨 惡劣天氣應變 Plan B 與實時情報速查 -->
-    <div class="card" style="border-color:var(--tag-red); background:#FFF8F8;">
-      <div class="card-header-toggle" onclick="toggleCard('body-planb', 'pill-planb')">
-        <div class="card-title" style="color:#C0392B;">🚨 惡劣天氣應變 Plan B (新穗高纜車停航)</div>
-        <div class="toggle-pill" id="pill-planb">▼</div>
-      </div>
-      <div class="card-body" id="body-planb" style="display: none;">
-        <div class="item-box" style="background:#FFF5F5; border-color:var(--tag-red);">
-          <div style="font-weight:900; color:#C0392B; font-size:14.5px; margin-bottom:6px;">⚡ 新穗高纜車停航應變劇本</div>
-          <div style="font-size:13px; line-height:1.7; color:var(--text-main);">
-            • <b>朝早第一件事</b>：出發前透過下方快捷按鈕查看新穗高官網。如果因大風雪宣佈**運休/停航**，即時取消當日上山行程。<br>
-            • <b>替代方案</b>：改為在高山老街深度慢活、泡湯，或前往飛驒古川參觀，完全不受影響。
-          </div>
-        </div>
-        <div style="font-weight:900; font-size:14.5px; margin:15px 0 8px 0; color:var(--text-main);">🌐 實時天氣與設施運行狀態速查（必收藏）</div>
-        <div class="link-btns" style="margin-top:10px;">
-          <a href="https://www.shinhotaka-ropeway.jp/" target="_blank" class="btn-sm" style="background:#C0392B; color:white; border-color:#C0392B;">🚡 新穗高纜車即時運行狀況</a>
-          <a href="https://www.nouhibus.co.jp/" target="_blank" class="btn-sm" style="background:#74B9BE; color:white; border-color:#74B9BE;">🚌 濃飛巴士即時停班公告</a>
-          <a href="https://tenki.jp/forecast/4/21/5310/21203/" target="_blank" class="btn-sm" style="background:#F3CD7B; border-color:var(--border-color);">⛅ Tenki.jp 高山天氣與積雪</a>
-        </div>
-      </div>
-    </div>
-
     <!-- 🏨 住宿安排與地圖 -->
     <div class="card">
       <div class="card-header-toggle" onclick="toggleCard('body-hotel', 'pill-hotel')">
@@ -1140,24 +1109,7 @@
       if (!container) return;
       container.innerHTML = '';
 
-      bookingData.sort((a, b) => new Date(a.date) - new Date(b.date));
-      const now = new Date();
-      let closestId = null;
-      let minDiff = Infinity;
-
       bookingData.forEach(item => {
-        const diff = new Date(item.date) - now;
-        if (diff > 0 && diff < minDiff) {
-          minDiff = diff;
-          closestId = item.id;
-        }
-      });
-
-      bookingData.forEach(item => {
-        const targetDate = new Date(item.date);
-        const isPast = (now - targetDate) > 0;
-        const isClosest = (item.id === closestId);
-
         const box = document.createElement('div');
         box.className = 'item-box booking-box';
         box.style.marginBottom = '12px';
@@ -1166,11 +1118,10 @@
           <div class="booking-header" style="cursor:pointer;" onclick="toggleBookingItem(this)">
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; flex:1; min-width:0;">
               <span class="tag ${item.tagClass}">${item.tagText}</span>
-              ${isClosest ? '<span class="mini-countdown" id="countdown-' + item.id + '" style="background:var(--tag-yellow); font-weight:900;">計算中...</span>' : ''}
             </div>
-            <span class="toggle-arrow" style="font-size:12px; flex-shrink:0;">${isPast && item.id !== 1 ? '▼' : '▲'}</span>
+            <span class="toggle-arrow" style="font-size:12px; flex-shrink:0;">▼</span>
           </div>
-          <div class="booking-body" style="margin-top:8px; display: ${isPast && item.id !== 1 ? 'none' : 'block'};">
+          <div class="booking-body" style="margin-top:8px; display: block;">
             <div class="item-box-sub">${item.subHtml}</div>
             <div class="link-btns"><a href="${item.link}" target="_blank" class="btn-sm">${item.linkText}</a></div>
           </div>
@@ -1184,10 +1135,10 @@
       const arrow = header.querySelector('.toggle-arrow');
       if (body.style.display === 'none') {
         body.style.display = 'block';
-        arrow.innerText = '▲';
+        arrow.innerText = '▼';
       } else {
         body.style.display = 'none';
-        arrow.innerText = '▼';
+        arrow.innerText = '▲';
       }
     }
 
