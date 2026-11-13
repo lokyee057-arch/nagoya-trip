@@ -143,17 +143,6 @@
     .item-box-title { font-size: 15.5px; font-weight: 900; margin-bottom: 6px; }
     .item-box-sub { font-size: 13px; color: var(--text-sub); line-height: 1.6; word-break: break-word; }
 
-    .sub-info-box {
-      background: #F4F3EF;
-      border: 1.5px solid #D5D0C5;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      font-size: 12.5px;
-      color: #4A4A4A;
-      line-height: 1.6;
-    }
-
     .food-inline-card {
       background: #FFFBF0;
       border: 2px solid var(--border-color);
@@ -250,7 +239,6 @@
     .row-inputs { display: flex; gap: 8px; width: 100%; }
     .row-inputs > div { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     
-    /* 可編輯剪貼簿 paste 區域 */
     .paste-area {
       min-height: 52px;
       border: 2px dashed var(--border-color);
@@ -352,7 +340,6 @@
       flex-shrink: 0;
     }
 
-    /* 燈箱 Modal 樣式 */
     #image-modal {
       display: none;
       position: fixed;
@@ -1071,7 +1058,7 @@
         date: "2026-12-29T09:00:00+08:00",
         tagClass: "tag-yellow",
         tagText: "2. JR 特急 Hida 3號 (08:43 名古屋 ➔ 高山) 單買指定席",
-        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>• <b>適用行程</b>：Day 3 (1/29 Fri) 08:43 發車（順便選特大行李席）",
+        subHtml: "• <b>開放預約日期</b>：<b>2026 年 12 月 29 日 (二) 09:00 (HKT)</b>（乘車前 30 天）<br>• <b>適用行程</b>：Day 3 (1/29 Fri) 08:43 發車（順便選特大行李席）",
         link: "https://www.westjr.co.jp/global/tc/",
         linkText: "🔗 e5489 劃位 Portal"
       },
@@ -1080,16 +1067,16 @@
         date: "2026-12-30T09:00:00+08:00",
         tagClass: "tag-purple",
         tagText: "3. 濃飛高速巴士 (高山 ➔ 白川鄉來回指定席)",
-        subHtml: "• <b>開放預約時間</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b>（乘車前一個月）<br>• <b>適用行程</b>：Day 4 (1/30 Sat) 去程 08:50 / 回程",
+        subHtml: "• <b>開放預約日期</b>：<b>2026 年 12 月 30 日 (三) 09:00 (HKT)</b>（乘車前一個月）<br>• <b>適用行程</b>：Day 4 (1/30 Sat) 去程 08:50 / 回程",
         link: "https://japanbusonline.com/zh-tw/CourseSearch/11900040002",
         linkText: "🔗 Japan Bus Online 預約"
       },
       {
         id: 4,
-        date: "2026-12-29T09:00:00+08:00",
+        date: "2026-12-28T00:00:00+08:00",
         tagClass: "tag-green",
         tagText: "4. 奧飛驒巴士套票 (新穗高纜車套票)",
-        subHtml: "• <b>開放預約時間</b>：隨時可預訂（或於高山濃飛巴士中心購買）<br>• <b>適用行程</b>：Day 5 (1/31 Sun) 新穗高賞雪",
+        subHtml: "• <b>開放預約日期</b>：<b>隨時可預訂</b>（出發前買定或於高山濃飛巴士中心購買）<br>• <b>適用行程</b>：Day 5 (1/31 Sun) 新穗高賞雪",
         link: "https://www.klook.com/zh-HK/activity/21617-okuhida-kamikochi-bus-tickets-shinhotaka-ropeway-nagoya/",
         linkText: "🔗 Klook 奧飛驒套票預訂"
       },
@@ -1098,7 +1085,7 @@
         date: "2027-01-02T09:00:00+08:00",
         tagClass: "tag-red",
         tagText: "5. 炭焼きうなぎ 登河 栄店 (鰻魚飯三吃) 預約",
-        subHtml: "• <b>開放預約時間</b>：<b>2027 年 1 月 2 日 (六)</b><br>• <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐",
+        subHtml: "• <b>開放預約日期</b>：<b>2027 年 1 月 2 日 (六)</b><br>• <b>適用行程</b>：Day 6 (2/1 Mon) 晚餐",
         link: "https://tabelog.com/aichi/A2301/A230103/23070440/",
         linkText: "🔗 Tabelog 登河 預約"
       }
@@ -1108,6 +1095,9 @@
       const container = document.getElementById('booking-items-container');
       if (!container) return;
       container.innerHTML = '';
+
+      // 嚴格按日期先後排序 (由近到遠)
+      bookingData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       bookingData.forEach(item => {
         const box = document.createElement('div');
