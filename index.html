@@ -141,7 +141,17 @@
 
     .item-box { background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; position: relative; width: 100%; overflow: hidden; }
     .item-box-title { font-size: 15.5px; font-weight: 900; margin-bottom: 6px; }
-    .item-box-sub { font-size: 13px; color: var(--text-sub); line-height: 1.6; word-break: break-word; }
+    .item-box-sub { font-size: 13px; color: var(--text-sub); line-height: 1.65; word-break: break-word; }
+
+    .transport-seg {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 9px 11px;
+      margin-top: 8px;
+      font-size: 12.8px;
+      line-height: 1.6;
+    }
 
     .warn-inline-box {
       background: #FFF5F5;
@@ -480,7 +490,7 @@
               <div class="timeline-head"><span class="timeline-title">機場 ➔ 名古屋站飯店 [Check-in]</span><span class="tag tag-purple">名鐵 μ-SKY (28mins)</span></div>
               <div class="timeline-desc">
                 • 15:15-15:35 步行前往機場交通廣場月台（20 分鐘）<br>
-                • 15:37-16:05 搭乘名鐵特急 μ-SKY 直達名鐵名古屋站（車程 28 分鐘）<br>
+                • 15:37-16:05 <b>兩步極簡搭法</b>：先喺閘前售票機買最近班次嘅 <b>¥450 座位券 (μ-Ticket)</b> 揀連位 ➔ 直接用手機 <b>Suica 拍卡入閘</b>去對應車廂上車（28 分鐘直達名鐵名古屋站）<br>
                 • 16:05-16:15 步行前往 <b>Via Inn Nagoya Shinkansenguchi</b> 辦理 Check-in 寄放行李。<br>
                 • 💡 <b>順路提醒</b>：今晚回飯店前記得先去 <b>Seven-Eleven 買定明天 (Day 2) 嘅簡單早餐</b>！
               </div>
@@ -809,6 +819,95 @@
             <div class="memo-content" id="memo-body-7"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-7" oninput="saveMemo(7)"></textarea></div>
           </div>
           <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(6)">◀ 前一日 (Day 6)</button><div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🚍 全程交通與支付方式小卡 -->
+    <div class="card">
+      <div class="card-header-toggle" onclick="toggleCard('body-transport-guide', 'pill-transport-guide')">
+        <div class="card-title">🚍 全程交通與支付方式小卡</div>
+        <div class="toggle-pill" id="pill-transport-guide">▼</div>
+      </div>
+      <div class="card-body" id="body-transport-guide" style="display: none;">
+        <div class="item-box">
+          <span class="tag tag-yellow">Day 1 (1/27 Wed)</span>
+          <div class="transport-seg">
+            <b>機場 ➔ 名鐵名古屋站</b>（名鐵特急 μ-SKY / 特別車廂）<br>
+            • <b>支付/取票</b>：先喺閘前售票機買最近班次嘅 <b>¥450 座位券 (μ-Ticket)</b> 揀連位 ➔ 直接用手機 <b>Suica 拍卡入閘</b>去對應月台車廂上車（若搭一般車廂則無需買 ¥450 券，直接拍卡上車）。<br>
+            • <b>預計價錢</b>：約 ¥1,430 / 人（基本車資 ¥980 + 座位券 ¥450）<br>
+            • <b>Remark</b>：落機後順便去 JR 綠色窗口/指定席售票機，用訂飛實體信用卡一次過攞齊 Day 3 同 Day 6 嘅 JR 實體車票。
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-purple">Day 2 (1/28 Thu)</span>
+          <div class="transport-seg">
+            <b>名鐵巴士中心 ➔ 愛·地球博記念公園 (吉卜力)</b>（名鐵直行高速巴士）<br>
+            • <b>支付/取票</b>：直接用手機 <b>Suica / ICOCA 拍卡</b>（或現場買飛），無需提前預約。<br>
+            • <b>預計價錢</b>：¥1,200 / 人（單程）<br>
+            • <b>Remark</b>：建議搭 09:20 或 09:30「直行便」，一程直達園區門口免轉車。
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-green">Day 3 (1/29 Fri)</span>
+          <div class="transport-seg">
+            <b>① JR 名古屋 ➔ JR 高山站</b>（JR 特急 Hida 3號 · 全車指定席）<br>
+            • <b>支付/取票</b>：<b>提前 30 天網上 e5489 預約，用 Day 1 攞定嘅實體紙本車票入閘</b>。<br>
+            • <b>預計價錢</b>：約 ¥6,000 - ¥6,500 / 人<br>
+            • <b>Remark</b>：劃位時順便揀特大行李置放處座位。
+          </div>
+          <div class="transport-seg">
+            <b>② JR 高山 ➔ JR 飛驒古川 (來回)</b>（JR 普通 / 特急列車）<br>
+            • <b>支付/取票</b>：現場售票機買飛或直接用 Suica 拍卡（車程約 20 分鐘）。<br>
+            • <b>預計價錢</b>：約 ¥240 / 人（單程）
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-purple">Day 4 (1/30 Sat)</span>
+          <div class="transport-seg">
+            <b>高山濃飛巴士中心 ➔ 白川鄉 (來回)</b>（濃飛高速巴士 · 全車指定席）<br>
+            • <b>支付/取票</b>：<b>提前一個月於 Highwaybus.com 網上預約付款並取票</b>。<br>
+            • <b>預計價錢</b>：約 ¥5,000 / 人（來回套票）<br>
+            • <b>Remark</b>：搶 08:50 頭幾班車去程，避開旅行團人潮。
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-green">Day 5 (1/31 Sun)</span>
+          <div class="transport-seg">
+            <b>高山濃飛巴士中心 ➔ 新穗高纜車站 (來回)</b>（濃飛巴士 ＋ 雙層纜車套票）<br>
+            • <b>支付/取票</b>：<b>隨時可於 Klook 預訂</b>或於高山濃飛巴士中心現場購買套票。<br>
+            • <b>預計價錢</b>：約 ¥7,500 - ¥9,000 / 人（巴士＋纜車套票）<br>
+            • <b>Remark</b>：建議搭 07:40 頭班車上山；15:00 前於高山櫻庵前台用宅急便寄大行李去名古屋酒店。
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-red">Day 6 (2/1 Mon)</span>
+          <div class="transport-seg">
+            <b>① JR 高山 ➔ JR 鵜沼站</b>（JR 特急 Hida 6號 · 全車指定席）<br>
+            • <b>支付/取票</b>：<b>提前 30 天網上 e5489 預約，必須用 Day 1 攞定嘅實體紙本車票入閘</b>。<br>
+            • <b>預計價錢</b>：約 ¥4,500 - ¥5,000 / 人<br>
+            • <b>Remark</b>：⚠️ 高山站與鵜沼站<b>不支援</b> Suica 拍卡跨區出入閘！
+          </div>
+          <div class="transport-seg">
+            <b>② 新鵜沼 ➔ 犬山遊園 ➔ 名鐵名古屋站</b>（名鐵線 · 免預約）<br>
+            • <b>支付/取票</b>：出 JR 鵜沼站步行 3 分鐘到名鐵新鵜沼站，全程直接用手機 <b>Suica 拍卡</b>出入閘即可。<br>
+            • <b>預計價錢</b>：約 ¥620 / 人（新鵜沼➔犬山遊園 ¥180 + 犬山➔名古屋 ¥440）
+          </div>
+        </div>
+
+        <div class="item-box">
+          <span class="tag tag-yellow">Day 7 (2/2 Tue)</span>
+          <div class="transport-seg">
+            <b>名鐵名古屋 ➔ 常滑站 ➔ 中部國際機場 (NGO)</b>（名鐵特急 / 準急）<br>
+            • <b>支付/取票</b>：全程直接用手機 <b>Suica 拍卡</b>出入閘即可（無需劃位）。<br>
+            • <b>預計價錢</b>：約 ¥990 / 人（名古屋➔常滑 ¥680 + 常滑➔機場 ¥310）<br>
+            • <b>Remark</b>：大行李先寄存於「名鐵名古屋站」大型儲物櫃；注意 μ-SKY 唔停常滑站，去常滑要搭特急或準急。
+          </div>
         </div>
       </div>
     </div>
