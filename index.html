@@ -7,392 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: #FBF9F4;
-      --card-bg: #FFFFFF;
-      --border-color: #2B2B2B;
-      --tag-red: #E88282;
-      --tag-green: #74B9BE;
-      --tag-yellow: #F3CD7B;
-      --tag-purple: #B39DDB;
-      --text-main: #2B2B2B;
-      --text-sub: #555555;
-      --shadow: 0 4px 0px #2B2B2B;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Zen Maru Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding: 12px;
-      max-width: 100%;
-      width: 100%;
-      margin: 0 auto;
-      padding-bottom: 95px;
-      overflow-x: hidden;
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 560px;
-      z-index: 1000;
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      background: rgba(251, 249, 244, 0.95);
-      padding: 10px 12px;
-      border: 2.5px solid var(--border-color);
-      border-radius: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 3px 0px var(--border-color);
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-btn {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-      box-shadow: 0 2px 0px var(--border-color);
-      text-decoration: none;
-      color: var(--text-main);
-      flex: 1;
-      text-align: center;
-    }
-
-    .nav-btn.active { background: var(--tag-yellow); }
-
-    .card {
-      background: var(--card-bg);
-      border: 2.5px solid var(--border-color);
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 18px;
-      box-shadow: var(--shadow);
-      width: 100%;
-    }
-
-    .card-header-toggle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .toggle-pill {
-      background: var(--bg-color);
-      border: 2px solid var(--border-color);
-      border-radius: 15px;
-      width: 36px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 900;
-      box-shadow: 0 2px 0px var(--border-color);
-      flex-shrink: 0;
-    }
-
-    .card-body {
-      margin-top: 15px;
-      border-top: 2px dashed #E0E0E0;
-      padding-top: 15px;
-    }
-
-    .header-card { text-align: center; padding: 20px 12px; }
-    .trip-title { font-size: 21px; font-weight: 900; margin-bottom: 4px; word-break: break-word; }
-    .trip-date { font-size: 13.5px; color: var(--text-sub); font-weight: 700; margin-bottom: 15px; }
-    .timer-container { display: flex; justify-content: center; gap: 6px; }
-    .timer-box { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 8px 6px; min-width: 52px; box-shadow: 0 3px 0px var(--border-color); }
-    .timer-num { font-size: 18px; font-weight: 900; }
-    .timer-unit { font-size: 11px; color: var(--text-sub); }
-
-    .tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11.5px; font-weight: 700; border: 1.5px solid var(--border-color); max-width: 100%; word-break: break-word; }
-    .tag-red { background: var(--tag-red); color: white; }
-    .tag-green { background: var(--tag-green); color: white; }
-    .tag-yellow { background: var(--tag-yellow); color: var(--text-main); }
-    .tag-purple { background: var(--tag-purple); color: white; }
-    .tag-gray { background: #E0E0E0; color: #2B2B2B; }
-
-    .flight-route { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; }
-    .airport-code { font-size: 20px; font-weight: 900; }
-    .airport-time { font-size: 12.5px; color: var(--text-sub); font-weight: 700; }
-    .arrow { font-size: 18px; font-weight: 900; }
-
-    .item-box { background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; position: relative; width: 100%; overflow: hidden; }
-    .item-box-title { font-size: 15.5px; font-weight: 900; margin-bottom: 6px; }
-    .item-box-sub { font-size: 13px; color: var(--text-sub); line-height: 1.65; word-break: break-word; }
-
-    .transport-seg {
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      padding: 9px 11px;
-      margin-top: 8px;
-      font-size: 12.8px;
-      line-height: 1.6;
-    }
-
-    .warn-inline-box {
-      background: #FFF5F5;
-      border: 1.5px solid var(--tag-red);
-      border-radius: 10px;
-      padding: 8px 10px;
-      margin-top: 8px;
-      font-size: 12.5px;
-      color: #B03A2E;
-      line-height: 1.55;
-    }
-
-    .food-inline-card {
-      background: #FFFBF0;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin-top: 8px;
-    }
-
-    .link-btns { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-    .btn-sm { display: inline-flex; align-items: center; gap: 4px; background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; text-decoration: none; color: var(--text-main); box-shadow: 0 2px 0px var(--border-color); cursor: pointer; }
-
-    .day-selector { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 18px; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
-    .day-tab { border: 2.2px solid var(--border-color); border-radius: 14px; padding: 7px 12px; font-size: 12.5px; font-weight: 900; background: var(--card-bg); color: var(--text-main); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0px var(--border-color); flex-shrink: 0; }
-    .day-tab.active { background: var(--tag-red); color: white; }
-
-    .memo-box {
-      background: #FFF;
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
-      margin-top: 20px;
-      box-shadow: 0 2px 0px var(--border-color);
-      overflow: hidden;
-    }
-    .memo-header {
-      padding: 10px 14px;
-      background: #F4F1EA;
-      font-size: 13px;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-    .memo-content {
-      display: none;
-      padding: 12px;
-      border-top: 2px dashed #E0E0E0;
-    }
-    .memo-textarea {
-      width: 100%;
-      height: 75px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      padding: 8px;
-      font-size: 13px;
-      font-family: inherit;
-      resize: vertical;
-      background: var(--bg-color);
-    }
-
-    .day-nav-footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 2px dashed #E0E0E0;
-      gap: 8px;
-    }
-    .day-nav-btn {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      padding: 8px 12px;
-      font-size: 12.5px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 2px 0px var(--border-color);
-      color: var(--text-main);
-    }
-
-    .timeline { position: relative; padding-left: 12px; }
-    .timeline::before { content: ''; position: absolute; left: 3px; top: 8px; bottom: 8px; width: 2.5px; background-color: var(--border-color); }
-    .timeline-item { position: relative; margin-bottom: 22px; }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-dot { position: absolute; left: -12px; top: 4px; width: 10px; height: 10px; background-color: var(--tag-yellow); border: 2px solid var(--border-color); border-radius: 50%; z-index: 2; }
-    .timeline-time { font-size: 12.5px; font-weight: 900; color: var(--text-sub); margin-bottom: 3px; }
-    .timeline-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 5px; }
-    .timeline-title { font-size: 15px; font-weight: 900; }
-    .timeline-desc { font-size: 13.5px; color: var(--text-main); line-height: 1.65; word-break: break-word; }
-
-    /* 表單與控制項樣式 */
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; width: 100%; }
-    .form-label { font-size: 13px; font-weight: 900; }
-    .form-input, .form-select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      font-size: 14px;
-      background: var(--bg-color);
-      font-family: inherit;
-    }
-    .row-inputs { display: flex; gap: 8px; width: 100%; }
-    .row-inputs > div { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-    
-    .paste-area {
-      min-height: 52px;
-      border: 2px dashed var(--border-color);
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      background: var(--bg-color);
-      font-size: 13px;
-      color: var(--text-sub);
-      font-weight: 700;
-      outline: none;
-      word-break: break-all;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .paste-area img {
-      max-width: 100%;
-      max-height: 120px;
-      border-radius: 8px;
-      border: 1.5px solid var(--border-color);
-      margin-top: 6px;
-    }
-
-    .pill-options { display: flex; gap: 6px; flex-wrap: wrap; width: 100%; }
-    .pill-option-btn {
-      flex: 1;
-      min-width: 70px;
-      padding: 8px 8px;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      background: var(--card-bg);
-      font-weight: 900;
-      font-size: 12px;
-      cursor: pointer;
-      text-align: center;
-      box-shadow: 0 2px 0px var(--border-color);
-    }
-    .pill-option-btn.selected { background: var(--tag-yellow); }
-
-    .action-btn {
-      width: 100%;
-      background: var(--tag-green);
-      color: white;
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
-      padding: 12px;
-      font-size: 14.5px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 3px 0px var(--border-color);
-      margin-top: 5px;
-    }
-
-    .stats-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 15px;
-      width: 100%;
-    }
-    .stat-box {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
-      padding: 10px 6px;
-      text-align: center;
-      box-shadow: 0 2px 0px var(--border-color);
-    }
-    .stat-title { font-size: 11px; font-weight: 900; color: var(--text-sub); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .stat-val { font-size: 13px; font-weight: 900; overflow: hidden; text-overflow: ellipsis; }
-
-    .record-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 0px var(--border-color);
-      gap: 8px;
-      width: 100%;
-      overflow: hidden;
-    }
-    .record-info { flex: 1; min-width: 0; word-break: break-word; }
-    .expense-del-btn {
-      color: #C0392B;
-      cursor: pointer;
-      font-weight: 900;
-      padding: 3px 8px;
-      border: 1.5px solid #C0392B;
-      border-radius: 8px;
-      font-size: 11px;
-      background: #FFF;
-      flex-shrink: 0;
-    }
-
-    #image-modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    #image-modal img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 10px;
-      border: 2px solid #FFF;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    #image-modal span {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: #fff;
-      font-size: 36px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .booking-header { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 6px; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -406,8 +21,8 @@
   <div id="page-main">
     <div id="sec-home" class="card header-card">
       <div style="font-size: 36px; margin-bottom: 5px;">🏔️⛺</div>
-      <div class="trip-title">Nagoya & Takayama Winter Loop 2027</div>
-      <div class="trip-date">2027.01.27 - 02.02 (7 Days) · 零金澤免Pass版</div>
+      <div class="trip-title" id="web-title"></div>
+      <div class="trip-date" id="web-subtitle"></div>
       
       <div class="timer-container">
         <div class="timer-box"><div class="timer-num" id="d-days">00</div><div class="timer-unit">天</div></div>
@@ -424,24 +39,7 @@
         <div class="toggle-pill" id="pill-flights">▼</div>
       </div>
       <div class="card-body" id="body-flights" style="display: none;">
-        <div class="item-box">
-          <span class="tag tag-red">去程 · 1月27日 (Wed)</span>
-          <span style="float: right; font-size: 11.5px; font-weight: 700; margin-top: 2px;">國泰 CX536 (特選經濟)</span>
-          <div class="flight-route" style="margin-top: 10px;">
-            <div><div class="airport-code">HKG</div><div class="airport-time">09:35 起飛</div></div>
-            <div class="arrow">➔</div>
-            <div style="text-align: right;"><div class="airport-code">NGO</div><div class="airport-time">14:10 抵達</div></div>
-          </div>
-        </div>
-        <div class="item-box">
-          <span class="tag tag-green">回程 · 2月2日 (Tue)</span>
-          <span style="float: right; font-size: 11.5px; font-weight: 700; margin-top: 2px;">國泰 CX539 (商務艙)</span>
-          <div class="flight-route" style="margin-top: 10px;">
-            <div><div class="airport-code">NGO</div><div class="airport-time">15:15 起飛</div></div>
-            <div class="arrow">➔</div>
-            <div style="text-align: right;"><div class="airport-code">HKG</div><div class="airport-time">19:10 抵達</div></div>
-          </div>
-        </div>
+        <div id="flights-container"></div>
         <a href="https://www.cathaypacific.com" target="_blank" class="btn-sm">🔗 國泰航空官網 / 管理預訂</a>
       </div>
     </div>
@@ -453,462 +51,8 @@
         <div class="toggle-pill" id="pill-itinerary">▲</div>
       </div>
       <div class="card-body" id="body-itinerary">
-        <div class="day-selector">
-          <button class="day-tab active" id="tab-1" onclick="showDay(1)">Day 1 (1/27 Wed)</button>
-          <button class="day-tab" id="tab-2" onclick="showDay(2)">Day 2 (1/28 Thu)</button>
-          <button class="day-tab" id="tab-3" onclick="showDay(3)">Day 3 (1/29 Fri)</button>
-          <button class="day-tab" id="tab-4" onclick="showDay(4)">Day 4 (1/30 Sat)</button>
-          <button class="day-tab" id="tab-5" onclick="showDay(5)">Day 5 (1/31 Sun)</button>
-          <button class="day-tab" id="tab-6" onclick="showDay(6)">Day 6 (2/1 Mon)</button>
-          <button class="day-tab" id="tab-7" onclick="showDay(7)">Day 7 (2/2 Tue)</button>
-        </div>
-
-        <!-- Day 1 -->
-        <div id="day-content-1" class="day-details">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">06:30</div>
-              <div class="timeline-head"><span class="timeline-title">預計到達香港國際機場 (HKG)</span><span class="tag tag-yellow">提前 3 小時</span></div>
-              <div class="timeline-desc">抵達香港機場，前往櫃位辦理特選經濟客艙報到、寄艙行李及安檢。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">09:35 - 14:10 ✈️ 飛行時間 3h 35m</div>
-              <div class="timeline-head"><span class="timeline-title">搭乘國泰航空 CX536 ➔ 名古屋 (NGO)</span><span class="tag tag-green">特選經濟客艙</span></div>
-              <div class="timeline-desc">航班起飛，享受特選經濟舒適空間與機上餐飲，於 14:10 降落名古屋中部國際機場（**落機後可順便於 JR 綠色窗口或售票機，用實體信用卡一次過攞齊 Day 3 同 Day 6 兩程 JR 實體車票**）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">14:10 - 15:15</div>
-              <div class="timeline-head"><span class="timeline-title">降落與出關手續</span><span class="tag tag-purple">快速通關</span></div>
-              <div class="timeline-desc">特選經濟客艙優先下機，快速辦理入境與託運行李提取手續（約 65 分鐘）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">15:15 - 16:15 🚗 交通時間 60mins</div>
-              <div class="timeline-head"><span class="timeline-title">機場 ➔ 名古屋站飯店 [Check-in]</span><span class="tag tag-purple">名鐵 μ-SKY (28mins)</span></div>
-              <div class="timeline-desc">
-                • 15:15-15:35 步行前往機場交通廣場月台（20 分鐘）<br>
-                • 15:37-16:05 <b>兩步極簡搭法</b>：先喺閘前售票機買最近班次嘅 <b>¥450 座位券 (μ-Ticket)</b> 揀連位 ➔ 直接用手機 <b>Suica 拍卡入閘</b>去對應車廂上車（28 分鐘直達名鐵名古屋站）<br>
-                • 16:05-16:15 步行前往 <b>Via Inn Nagoya Shinkansenguchi</b> 辦理 Check-in 寄放行李。<br>
-                • 💡 <b>順路提醒</b>：今晚回飯店前記得先去 <b>Seven-Eleven 買定明天 (Day 2) 嘅簡單早餐</b>！
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">16:30 - 18:30</div>
-              <div class="timeline-head"><span class="timeline-title">名古屋站商圈散策</span><span class="tag tag-yellow">高島屋 / JR Towers</span></div>
-              <div class="timeline-desc">兩手空空逛 JR Central Towers，並至名鐵百貨 3 樓巴士中心熟悉明日上車位置。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">18:30 🚗 交通時間 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：とんかつジョニー (首選)</span><span class="tag tag-red">厚切炸豬排專門</span></div>
-              <div class="timeline-desc">
-                由商圈散步 10-15 分鐘至餐廳。
-                <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14px;">🥩 とんかつジョニー (Tonkatsu Johnny) [首選]</div>
-                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：人氣在地厚切炸豬排專門店</div>
-                  <div class="link-btns">
-                    <a href="https://tabelog.com/aichi/A2301/A230103/23075253/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=とんかつジョニー+名古屋" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(1)"><span>📝 Day 1 隨身備註與修改</span><span id="memo-arrow-1">▼</span></div>
-            <div class="memo-content" id="memo-body-1"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-1" oninput="saveMemo(1)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><div></div><button class="day-nav-btn" onclick="showDay(2)">後一日 (Day 2) ▶</button></div>
-        </div>
-
-        <!-- Day 2 -->
-        <div id="day-content-2" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:30 - 09:05 🥐 便利店早餐 & 步行前往巴士站</div>
-              <div class="timeline-head"><span class="timeline-title">享用 7-Eleven 早餐 ➔ 步行至名鐵巴士中心</span><span class="tag tag-yellow">免轉車直達</span></div>
-              <div class="timeline-desc">輕鬆在飯店食完早餐，步行前往名鐵百貨 3 樓「名鉄バスセンター (名鐵巴士中心)」候車（建議 09:05 前抵達）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">09:20 / 09:30 - 10:00 / 10:10 🚌 車程 40mins (直行便)</div>
-              <div class="timeline-head"><span class="timeline-title">搭乘名鐵直行高速巴士 ➔ 愛·地球博記念公園</span><span class="tag tag-purple">車資 ¥1,200 (直達園區門口)</span></div>
-              <div class="timeline-desc">
-                • <b>目標班次</b>：搭乘 <b>09:20</b> 或 <b>09:30</b> 開出之「直行便」（10:00 或 10:10 抵達園區門口）。<br>
-                • 💡 <b>優勢</b>：一程過直達免轉地鐵與 Linimo，直接使用 Suica / ICOCA 拍卡或現場購票即可（大倉庫入場時間已訂 13:00）。
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">10:10 - 10:30 🚶 徒步 5-10mins</div>
-              <div class="timeline-head"><span class="timeline-title">電梯樓 & 地球屋外圍打卡</span><span class="tag tag-yellow">空景拍照</span></div>
-              <div class="timeline-desc">落車步行 5-10 分鐘至青春之丘，趁大巴人潮未湧至先拍乾淨電梯樓與黃色建築（Premium 券可入地球屋內部參觀）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">10:30 - 11:45 🚶 徒步 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">反向進攻「魔女之谷」與「幽靈故里」</span><span class="tag tag-red">避開人潮 · Premium 全包</span></div>
-              <div class="timeline-desc">略過大倉庫，徒步 15 分鐘前往魔女之谷（持 O-Sanpo Day Pass Premium 可入內參觀 <b>哈爾移動城堡、魔女之家、オキノ邸</b>）與幽靈故里。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">11:45 - 12:30</div>
-              <div class="timeline-head"><span class="timeline-title">午餐：魔女之谷「飛天烤箱」</span><span class="tag tag-gray">避開午餐高峰</span></div>
-              <div class="timeline-desc">11:45 搶先享用鹹派或貓咪尾巴麵包，避開正午排隊地獄。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">12:30 - 13:30 🚌 園區巴士 15mins</div>
-              <div class="timeline-head"><span class="timeline-title">「DONDOKO之森」森林漫步</span><span class="tag tag-yellow">龍貓山頂 · 小月與小梅的家</span></div>
-              <div class="timeline-desc">搭乘園區免費接駁巴士（15 分鐘）至山頂，打卡巨型龍貓木造設施與參觀「小月與小梅的家」。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">13:30 - 16:30 🚌 園區巴士 15mins (已訂 13:00 場次)</div>
-              <div class="timeline-head"><span class="timeline-title">空城計！殺回「吉卜力大倉庫」</span><span class="tag tag-red">核心精華 · 13:00 後隨時入場</span></div>
-              <div class="timeline-desc">搭接駁車返回大倉庫，持 <b>13:00 入場券</b>（13:00–14:00 之間入場即可）利用黃金空窗期排無臉男合照（只需 15-20 分）、拍飛船、睇短篇動畫與買手信。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">17:00 之後 🚌 巴士或鐵路返名站</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：麵家 獅子丸 (雞白湯拉麵)</span><span class="tag tag-red">名站排隊名店</span></div>
-              <div class="timeline-desc">
-                搭乘名鐵巴士（或 Linimo 轉地鐵東山線）返回名古屋站，直奔獅子丸享用極順雞白湯拉麵。續住 Via Inn 名古屋站新幹線口。
-                <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14px;">🍜 麵家 獅子丸 (Menya Shishimaru)</div>
-                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：現場排隊（不設預約，建議 18:00 前抵達）</div>
-                  <div class="link-btns">
-                    <a href="https://tabelog.com/aichi/A2301/A230101/23056811/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=麵家+獅子丸+名古屋" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(2)"><span>📝 Day 2 隨身備註與修改</span><span id="memo-arrow-2">▼</span></div>
-            <div class="memo-content" id="memo-body-2"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-2" oninput="saveMemo(2)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(1)">◀ 前一日 (Day 1)</button><button class="day-nav-btn" onclick="showDay(3)">後一日 (Day 3) ▶</button></div>
-        </div>
-
-        <!-- Day 3 -->
-        <div id="day-content-3" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:43 - 11:18 🚗 交通時間 155mins</div>
-              <div class="timeline-head"><span class="timeline-title">JR 名古屋 ➔ JR 高山站 (單買車票)</span><span class="tag tag-green">🎫 08:43 JR 特急 Hida 3 號</span></div>
-              <div class="timeline-desc">搭乘 <b>08:43 JR 特急飛驒號 3 號</b> 直達高山站（11:18 抵達）。使用 Day 1 已經攞定嘅實體車票入閘，攜帶大件行李上山。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">11:18 - 11:35 🚶 徒步 3mins</div>
-              <div class="timeline-head"><span class="timeline-title">高山櫻庵 ➔ [行李寄存]</span><span class="tag tag-green">站旁3分鐘</span></div>
-              <div class="timeline-desc">出高山站步行 3 分鐘至高山櫻庵寄存大行李箱。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">11:35 - 13:30 🚄 搭 JR 前往飛驒古川</div>
-              <div class="timeline-head"><span class="timeline-title">飛驒古川漫遊 (白壁土藏街、氣多若宮神社)</span><span class="tag tag-yellow">你的名字取景地</span></div>
-              <div class="timeline-desc">由高山搭乘 JR 普通/特急 20 分鐘即可直達飛驒古川，漫步靜謐古意街道、白壁土藏街打卡。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">13:30 - 17:00 🚶 返回高山三町古街</div>
-              <div class="timeline-head"><span class="timeline-title">高山三町古街 / 宮川朝市 / 飛驒牛握壽司</span><span class="tag tag-yellow">在地美食</span></div>
-              <div class="timeline-desc">返回高山市區，輕鬆漫步三町古街、品嚐飛驒牛握壽司與水布丁。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">17:30 🚶 徒步 10mins</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：丸明 高山店 (飛驒牛燒肉)</span><span class="tag tag-red">⚠️ 現場排隊入座</span></div>
-              <div class="timeline-desc">
-                享受 A5 飛驒牛燒肉盛宴。
-                <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14px;">🍲 丸明 高山店</div>
-                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：17:30 到場直接現場排隊入座</div>
-                  <div class="link-btns">
-                    <a href="https://tabelog.com/gifu/A2104/A210401/21000041/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=丸明+高山店" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">20:00 🚶 徒步 8mins</div>
-              <div class="timeline-head"><span class="timeline-title">高山櫻庵 [Check-in] ＋ 免費夜鳴拉麵 🍜</span><span class="tag tag-green">溫泉與宵夜 (第1晚)</span></div>
-              <div class="timeline-desc">登記入住高山櫻庵，享受頂樓露天雪見溫泉。每晚 <b>21:30 - 23:00</b> 供應<b>免費醬油拉麵</b>！</div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(3)"><span>📝 Day 3 隨身備註與修改</span><span id="memo-arrow-3">▼</span></div>
-            <div class="memo-content" id="memo-body-3"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-3" oninput="saveMemo(3)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(2)">◀ 前一日 (Day 2)</button><button class="day-nav-btn" onclick="showDay(4)">後一日 (Day 4) ▶</button></div>
-        </div>
-
-        <!-- Day 4 -->
-        <div id="day-content-4" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:00 - 08:50 🍳 飯店早餐</div>
-              <div class="timeline-head"><span class="timeline-title">高山櫻庵豐富日式朝食</span><span class="tag tag-green">包早餐</span></div>
-              <div class="timeline-desc">悠閒享用高山櫻庵精緻日式溫泉早餐。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:50 - 12:40 🚌 濃飛巴士往返</div>
-              <div class="timeline-head"><span class="timeline-title">白川鄉合掌村秘境漫遊 🛖</span><span class="tag tag-green">🎫 濃飛巴士單買來回票</span></div>
-              <div class="timeline-desc">
-                • 搭乘 <b>08:50 頭幾班濃飛巴士</b>前往白川鄉合掌村（<b>提前一個月於 Highwaybus.com 預約來回指定席</b>），完美避開旅行團。<br>
-                • 主力遊覽南端明善寺、神田家、三小屋及荻町城跡展望台。<br>
-                • 下午搭乘回程巴士返回高山市區。
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">14:00 - 18:00 🚶 高山市區漫步</div>
-              <div class="timeline-head"><span class="timeline-title">高山陣屋、古街小食與手沖咖啡</span><span class="tag tag-yellow">下午茶時光</span></div>
-              <div class="timeline-desc">返高山市區後輕鬆漫步，去古民家咖啡廳歎手沖咖啡，享受高山慢活步調。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">19:00 🍜 晚餐與溫泉</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：高山拉麵 / 朴葉味噌燒 ➔ 續住高山櫻庵</span><span class="tag tag-green">第二晚溫泉</span></div>
-              <div class="timeline-desc">晚餐品嚐高山地道拉麵或朴葉味噌燒，返回高山櫻庵繼續享用雪見溫泉與夜鳴拉麵（第二晚）。</div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(4)"><span>📝 Day 4 隨身備註與修改</span><span id="memo-arrow-4">▼</span></div>
-            <div class="memo-content" id="memo-body-4"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-4" oninput="saveMemo(4)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(3)">◀ 前一日 (Day 3)</button><button class="day-nav-btn" onclick="showDay(5)">後一日 (Day 5) ▶</button></div>
-        </div>
-
-        <!-- Day 5 -->
-        <div id="day-content-5" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">07:40 - 13:00 🚡 新穗高賞雪</div>
-              <div class="timeline-head"><span class="timeline-title">新穗高雙層纜車賞雪 ❄️</span><span class="tag tag-purple">🎫 購買濃飛巴士＋纜車套票</span></div>
-              <div class="timeline-desc">
-                • 搭乘 <b>07:40 頭幾班濃飛巴士</b>前往新穗高（朝早能見度最高、風雪最小）。<br>
-                • 乘搭新穗高雙層纜車登上雪白展望台，欣賞壯麗北阿爾卑斯山絕景。
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">13:00 - 15:00 📦 寄行李與買手信</div>
-              <div class="timeline-head"><span class="timeline-title">高山慢活買手信 ➔ 宅急便寄行李</span><span class="tag tag-green">兩手空空去名古屋</span></div>
-              <div class="timeline-desc">
-                下午返回高山市區買手信、漫步。<br>
-                📦 <b>關鍵行李策略</b>：<b>15:00 前於高山櫻庵前台用宅急便將大件行李寄往明後天入住的名古屋酒店</b>，明日輕鬆輕裝出發！
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">18:00 🍜 晚餐與溫泉</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：高山拉麵 / 朴葉味噌燒 ➔ 續住高山櫻庵</span><span class="tag tag-green">第三晚溫泉 (高山連住)</span></div>
-              <div class="timeline-desc">享受在高山櫻庵的最後一晚雪見溫泉與免費夜鳴拉麵。</div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(5)"><span>📝 Day 5 隨身備註與修改</span><span id="memo-arrow-5">▼</span></div>
-            <div class="memo-content" id="memo-body-5"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-5" oninput="saveMemo(5)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(4)">◀ 前一日 (Day 4)</button><button class="day-nav-btn" onclick="showDay(6)">後一日 (Day 6) ▶</button></div>
-        </div>
-
-        <!-- Day 6 -->
-        <div id="day-content-6" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:00 - 09:15 🏮 宮川朝市</div>
-              <div class="timeline-head"><span class="timeline-title">逛高山宮川朝市</span><span class="tag tag-yellow">在地早市</span></div>
-              <div class="timeline-desc">退房前再去一次宮川朝市，感受高山早晨的熱鬧與人情味。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">09:36 - 11:30 🚄 JR + 名鐵轉乘</div>
-              <div class="timeline-head"><span class="timeline-title">輕裝出發 ➔ 鵜沼站轉乘 ➔ 犬山城</span><span class="tag tag-purple">不走回頭路順路遊</span></div>
-              <div class="timeline-desc">
-                • 攜帶輕裝背囊出發！搭乘 <b>09:36 JR 特急 Hida 6號</b>，於 <b>「鵜沼站」</b> 落車（使用 Day 1 已經攞定嘅「高山 ➔ 鵜沼」實體車票）。<br>
-                • 步行 3 分鐘轉乘名鐵（新鵜沼 ➔ 犬山遊園，免預約直接拍 IC 卡），中途落車遊覽日本現存最古老國寶天守——<b>犬山城</b>與城下町。
-                <div class="warn-inline-box">
-                  ⚠️ <b>重要溫馨提示 (唔好拍 IC 卡！)</b>：<br>
-                  JR 高山站與鵜沼站<b>不支援</b>用 Suica / ICOCA 拍卡跨區出入閘！JR 段必須使用 Day 1 喺名古屋站一次過攞定嘅<b>實體紙本車票</b>入閘；落車轉乘<b>名鐵</b>後先可以開始拍 IC 卡。
-                </div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">13:30 - 17:30 🛍️ 購物衝刺</div>
-              <div class="timeline-head"><span class="timeline-title">名鐵返名古屋 ➔ 大須商店街購物衝刺</span><span class="tag tag-yellow">大須 / 榮商圈</span></div>
-              <div class="timeline-desc">由犬山搭乘名鐵（直接拍 IC 卡）極速返回名古屋，入住 Meitetsu Inn / 領取昨日宅急便寄到酒店的大行李，前往大須商店街購物。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">18:30 🍱 晚餐名物</div>
-              <div class="timeline-head"><span class="timeline-title">晚餐：正宗炭燒鰻魚飯三吃 (登河 / しら河)</span><span class="tag tag-red">名古屋名物</span></div>
-              <div class="timeline-desc">
-                享用名古屋必食嘅炭燒鰻魚飯三吃。
-                <div class="food-inline-card">
-                  <div style="font-weight:900; font-size:14px;">🍱 炭焼きうなぎ 登河 栄店 / うなぎのしら河</div>
-                  <div style="font-size:12.5px; color:var(--text-sub); margin:4px 0;">• 狀態：建議提前預約免排隊</div>
-                  <div class="link-btns">
-                    <a href="https://tabelog.com/aichi/A2301/A230103/23070440/" target="_blank" class="btn-sm">🔗 Tabelog 頁面</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=登河+栄店" target="_blank" class="btn-sm">🗺️ Google 地圖</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(6)"><span>📝 Day 6 隨身備註與修改</span><span id="memo-arrow-6">▼</span></div>
-            <div class="memo-content" id="memo-body-6"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-6" oninput="saveMemo(6)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(5)">◀ 前一日 (Day 5)</button><button class="day-nav-btn" onclick="showDay(7)">後一日 (Day 7) ▶</button></div>
-        </div>
-
-        <!-- Day 7 -->
-        <div id="day-content-7" class="day-details" style="display: none;">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">08:00 - 09:00 ☕ 喫茶店早餐</div>
-              <div class="timeline-head"><span class="timeline-title">名古屋高分喫茶店：KAKO 柳橋店 / BUCYO COFFEE</span><span class="tag tag-yellow">正宗小倉紅豆厚吐司</span></div>
-              <div class="timeline-desc">喺名站附近高分復古喫茶店享用正宗小倉紅豆厚吐司與香濃咖啡，感受地道昭和風情！</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">09:00 - 09:30 🧳 行李寄存</div>
-              <div class="timeline-head"><span class="timeline-title">退房出發 ➔ 名鐵名古屋站寄行李</span><span class="tag tag-purple">輕裝出發去常滑</span></div>
-              <div class="timeline-desc">名古屋站退房，將大件行李寄存於 <b>「名鐵名古屋站」大型儲物櫃</b>，輕裝搭乘名鐵特急/準急去常滑（註：μSKY 唔停常滑站，要搭特急或準急）。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">09:30 - 11:45 🚶 陶瓷散步道</div>
-              <div class="timeline-head"><span class="timeline-title">常滑陶瓷散步道 & 巨型招財貓 (Tokonyan)</span><span class="tag tag-yellow">招財貓之鄉</span></div>
-              <div class="timeline-desc">由常滑站漫步陶瓷散步道，打卡巨型招財貓與復古老街。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">12:00 - 12:15 🚗 返回機場</div>
-              <div class="timeline-head"><span class="timeline-title">取回行李 ➔ 中部國際機場 (NGO)</span><span class="tag tag-purple">名鐵線 (5mins)</span></div>
-              <div class="timeline-desc">由常滑站搭乘名鐵返回機場，去名鐵車站提取寄存在 Locker 的大行李。</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-time">12:30 - 15:15 🍷✨ 商務艙貴賓室</div>
-              <div class="timeline-head"><span class="timeline-title">提早 2.5 小時到達 ➔ 貴賓室極致享受</span><span class="tag tag-green">🛫 15:15 CX539 返港 (商務艙)</span></div>
-              <div class="timeline-desc">輕鬆辦理商務艙託運與快速出關，直奔 JAL 櫻花 / 國泰貴賓室暢享精緻熱食與香檳，優雅地等待 15:15 商務艙登機返港。</div>
-            </div>
-          </div>
-          <div class="memo-box">
-            <div class="memo-header" onclick="toggleMemo(7)"><span>📝 Day 7 隨身備註與修改</span><span id="memo-arrow-7">▼</span></div>
-            <div class="memo-content" id="memo-body-7"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-7" oninput="saveMemo(7)"></textarea></div>
-          </div>
-          <div class="day-nav-footer"><button class="day-nav-btn" onclick="showDay(6)">◀ 前一日 (Day 6)</button><div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 🚍 全程交通與支付方式小卡 -->
-    <div class="card">
-      <div class="card-header-toggle" onclick="toggleCard('body-transport-guide', 'pill-transport-guide')">
-        <div class="card-title">🚍 全程交通與支付方式小卡</div>
-        <div class="toggle-pill" id="pill-transport-guide">▼</div>
-      </div>
-      <div class="card-body" id="body-transport-guide" style="display: none;">
-        <div class="item-box">
-          <span class="tag tag-yellow">Day 1 (1/27 Wed)</span>
-          <div class="transport-seg">
-            <b>機場 ➔ 名鐵名古屋站</b>（名鐵特急 μ-SKY / 特別車廂）<br>
-            • <b>支付/取票</b>：先喺閘前售票機買最近班次嘅 <b>¥450 座位券 (μ-Ticket)</b> 揀連位 ➔ 直接用手機 <b>Suica 拍卡入閘</b>去對應月台車廂上車（若搭一般車廂則無需買 ¥450 券，直接拍卡上車）。<br>
-            • <b>預計價錢</b>：約 ¥1,430 / 人（基本車資 ¥980 + 座位券 ¥450）<br>
-            • <b>Remark</b>：落機後順便去 JR 綠色窗口/指定席售票機，用訂飛實體信用卡一次過攞齊 Day 3 同 Day 6 嘅 JR 實體車票。
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-purple">Day 2 (1/28 Thu)</span>
-          <div class="transport-seg">
-            <b>名鐵巴士中心 ➔ 愛·地球博記念公園 (吉卜力)</b>（名鐵直行高速巴士）<br>
-            • <b>支付/取票</b>：直接用手機 <b>Suica / ICOCA 拍卡</b>（或現場買飛），無需提前預約。<br>
-            • <b>預計價錢</b>：¥1,200 / 人（單程）<br>
-            • <b>Remark</b>：建議搭 09:20 或 09:30「直行便」，一程直達園區門口免轉車。
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-green">Day 3 (1/29 Fri)</span>
-          <div class="transport-seg">
-            <b>① JR 名古屋 ➔ JR 高山站</b>（JR 特急 Hida 3號 · 全車指定席）<br>
-            • <b>支付/取票</b>：<b>提前 30 天網上 e5489 預約，用 Day 1 攞定嘅實體紙本車票入閘</b>。<br>
-            • <b>預計價錢</b>：約 ¥6,000 - ¥6,500 / 人<br>
-            • <b>Remark</b>：劃位時順便揀特大行李置放處座位。
-          </div>
-          <div class="transport-seg">
-            <b>② JR 高山 ➔ JR 飛驒古川 (來回)</b>（JR 普通 / 特急列車）<br>
-            • <b>支付/取票</b>：現場售票機買飛或直接用 Suica 拍卡（車程約 20 分鐘）。<br>
-            • <b>預計價錢</b>：約 ¥240 / 人（單程）
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-purple">Day 4 (1/30 Sat)</span>
-          <div class="transport-seg">
-            <b>高山濃飛巴士中心 ➔ 白川鄉 (來回)</b>（濃飛高速巴士 · 全車指定席）<br>
-            • <b>支付/取票</b>：<b>提前一個月於 Highwaybus.com 網上預約付款並取票</b>。<br>
-            • <b>預計價錢</b>：約 ¥5,000 / 人（來回套票）<br>
-            • <b>Remark</b>：搶 08:50 頭幾班車去程，避開旅行團人潮。
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-green">Day 5 (1/31 Sun)</span>
-          <div class="transport-seg">
-            <b>高山濃飛巴士中心 ➔ 新穗高纜車站 (來回)</b>（濃飛巴士 ＋ 雙層纜車套票）<br>
-            • <b>支付/取票</b>：<b>隨時可於 Klook 預訂</b>或於高山濃飛巴士中心現場購買套票。<br>
-            • <b>預計價錢</b>：約 ¥7,500 - ¥9,000 / 人（巴士＋纜車套票）<br>
-            • <b>Remark</b>：建議搭 07:40 頭班車上山；15:00 前於高山櫻庵前台用宅急便寄大行李去名古屋酒店。
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-red">Day 6 (2/1 Mon)</span>
-          <div class="transport-seg">
-            <b>① JR 高山 ➔ JR 鵜沼站</b>（JR 特急 Hida 6號 · 全車指定席）<br>
-            • <b>支付/取票</b>：<b>提前 30 天網上 e5489 預約，必須用 Day 1 攞定嘅實體紙本車票入閘</b>。<br>
-            • <b>預計價錢</b>：約 ¥4,500 - ¥5,000 / 人<br>
-            • <b>Remark</b>：⚠️ 高山站與鵜沼站<b>不支援</b> Suica 拍卡跨區出入閘！
-          </div>
-          <div class="transport-seg">
-            <b>② 新鵜沼 ➔ 犬山遊園 ➔ 名鐵名古屋站</b>（名鐵線 · 免預約）<br>
-            • <b>支付/取票</b>：出 JR 鵜沼站步行 3 分鐘到名鐵新鵜沼站，全程直接用手機 <b>Suica 拍卡</b>出入閘即可。<br>
-            • <b>預計價錢</b>：約 ¥620 / 人（新鵜沼➔犬山遊園 ¥180 + 犬山➔名古屋 ¥440）
-          </div>
-        </div>
-
-        <div class="item-box">
-          <span class="tag tag-yellow">Day 7 (2/2 Tue)</span>
-          <div class="transport-seg">
-            <b>名鐵名古屋 ➔ 常滑站 ➔ 中部國際機場 (NGO)</b>（名鐵特急 / 準急）<br>
-            • <b>支付/取票</b>：全程直接用手機 <b>Suica 拍卡</b>出入閘即可（無需劃位）。<br>
-            • <b>預計價錢</b>：約 ¥990 / 人（名古屋➔常滑 ¥680 + 常滑➔機場 ¥310）<br>
-            • <b>Remark</b>：大行李先寄存於「名鐵名古屋站」大型儲物櫃；注意 μ-SKY 唔停常滑站，去常滑要搭特急或準急。
-          </div>
-        </div>
+        <div class="day-selector" id="day-tabs-container"></div>
+        <div id="day-contents-container"></div>
       </div>
     </div>
 
@@ -919,24 +63,7 @@
         <div class="toggle-pill" id="pill-hotel">▼</div>
       </div>
       <div class="card-body" id="body-hotel" style="display: none;">
-        <div class="item-box">
-          <span class="tag tag-yellow">Day 1 & Day 2 (1/27 - 1/29) · 2晚</span>
-          <div class="item-box-title" style="margin-top: 5px;">Via Inn Nagoya Shinkansenguchi</div>
-          <div class="item-box-sub">• 雙人房-禁煙 (已確認入住 1/27 - 1/29)<br>• 位於名古屋站新幹線口。</div>
-          <div class="link-btns"><a href="https://www.google.com/maps/search/?api=1&query=Via+Inn+Nagoya+Shinkansenguchi" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a></div>
-        </div>
-        <div class="item-box">
-          <span class="tag tag-green">Day 3至Day 5 (1/29 - 2/1) · 3晚連住</span>
-          <div class="item-box-title" style="margin-top: 5px;">高山櫻庵 Takayama Ouan</div>
-          <div class="item-box-sub">• 已確定 3 晚高山連住<br>• JR 高山站步行 3 分鐘，頂樓露天雪見溫泉，每日 21:30 - 23:00 免費夜鳴醬油拉麵。</div>
-          <div class="link-btns"><a href="https://www.google.com/maps/search/?api=1&query=高山櫻庵" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a></div>
-        </div>
-        <div class="item-box">
-          <span class="tag tag-yellow">Day 6 (2/1 - 2/2) · 1晚</span>
-          <div class="item-box-title" style="margin-top: 5px;">Meitetsu Inn Nagoyaeki Shinkansenguchi</div>
-          <div class="item-box-sub">• 標準雙人房-禁煙 (入住 2/1 - 2/2)<br>• 名古屋站新幹線口，方便次日前往常滑與機場。</div>
-          <div class="link-btns"><a href="https://www.google.com/maps/search/?api=1&query=Meitetsu+Inn+Nagoyaeki+Shinkansenguchi" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a></div>
-        </div>
+        <div id="hotels-container"></div>
       </div>
     </div>
 
@@ -959,14 +86,11 @@
       </div>
       <div class="card-body" id="body-insurance" style="display: none;">
         <div class="item-box" style="background:#FFFBF0;">
-          <div style="font-size:13.5px; font-weight:900; line-height:1.6;">
-            • <b>旅程</b>：2027/1/27 - 2027/2/2 / 日本 / 2人<br>
-            • <b>保單號碼</b>：ALEHKA700028478
-          </div>
+          <div style="font-size:13.5px; font-weight:900; line-height:1.6;" id="insurance-info"></div>
         </div>
         <div class="item-box" style="border-color:var(--tag-red); background:#FFF5F5;">
           <div style="font-weight:900; color:#C0392B; font-size:14px; margin-bottom:4px;">🚨 24小時緊急醫療支援</div>
-          <a href="tel:+85221935875" class="btn-sm" style="background:#C0392B; color:white; font-size:13px; font-weight:900; border-color:#C0392B; margin-bottom:6px;">📞 +852 2193 5875</a>
+          <a id="insurance-tel-link" href="#" class="btn-sm" style="background:#C0392B; color:white; font-size:13px; font-weight:900; border-color:#C0392B; margin-bottom:6px;">📞</a>
           <div style="font-size:12.5px; color:var(--text-sub); font-weight:700;">入院 / 好嚴重 / 唔知去邊間醫院，先打呢個，唔好自己硬撐。</div>
         </div>
       </div>
@@ -1122,6 +246,8 @@
     <button class="nav-btn" onclick="switchPage('expenses', this)">🧾 記帳</button>
   </div>
 
+  <!-- 引入外部資料與邏輯檔 -->
+  <script src="data.js"></script>
   <script>
     function openModal(imgSrc) {
       document.getElementById('modal-img').src = imgSrc;
@@ -1132,7 +258,7 @@
     }
 
     function updateTimer() {
-      const target = new Date("2027-01-27T09:35:00").getTime();
+      const target = new Date(tripData.startDate).getTime();
       const now = new Date().getTime();
       const diff = target - now;
       if (diff > 0) {
@@ -1155,6 +281,102 @@
 
       if (page === 'shopping') renderShoppingAdvanced();
       if (page === 'expenses') renderExpensesAdvanced();
+    }
+
+    function renderDynamicContent() {
+      document.getElementById('web-title').innerText = tripData.title;
+      document.getElementById('web-subtitle').innerText = tripData.subTitle;
+
+      // 渲染航班
+      const flightsContainer = document.getElementById('flights-container');
+      flightsContainer.innerHTML = tripData.flights.map(f => `
+        <div class="item-box">
+          <span class="tag ${f.tagClass}">${f.type} · ${f.date}</span>
+          <span style="float: right; font-size: 11.5px; font-weight: 700; margin-top: 2px;">${f.flightNo}</span>
+          <div class="flight-route" style="margin-top: 10px;">
+            <div><div class="airport-code">${f.depCode}</div><div class="airport-time">${f.depTime}</div></div>
+            <div class="arrow">➔</div>
+            <div style="text-align: right;"><div class="airport-code">${f.arrCode}</div><div class="airport-time">${f.arrTime}</div></div>
+          </div>
+        </div>
+      `).join('');
+
+      // 渲染每日行程與交通小卡
+      const tabsContainer = document.getElementById('day-tabs-container');
+      const contentsContainer = document.getElementById('day-contents-container');
+      tabsContainer.innerHTML = '';
+      contentsContainer.innerHTML = '';
+
+      tripData.days.forEach((d, idx) => {
+        const isActive = idx === 0 ? 'active' : '';
+        const displayStyle = idx === 0 ? 'block' : 'none';
+
+        tabsContainer.innerHTML += `
+          <button class="day-tab ${isActive}" id="tab-${d.day}" onclick="showDay(${d.day})">${d.title.split(' ')[0]} (${d.title.split(' ')[1]})</button>
+        `;
+
+        // 尋找對應當日的交通指引
+        const tg = tripData.transportGuide.find(t => t.tag.startsWith(`Day ${d.day}`));
+        let transportHtml = '';
+        if (tg) {
+          let segsHtml = tg.segs.map(s => `
+            <div class="transport-seg">
+              <b>${s.title}</b><br>
+              • <b>支付/取票</b>：${s.pay}<br>
+              • <b>預計價錢</b>：${s.price}
+              ${s.remark ? `<br>• <b>Remark</b>：${s.remark}` : ''}
+            </div>
+          `).join('');
+
+          transportHtml = `
+            <div class="item-box" style="margin-bottom:18px; border-color:var(--tag-yellow); background:#FFFBF0;">
+              <span class="tag ${tg.tagClass}">🚍 Day ${d.day} 交通小卡與支付指引</span>
+              ${segsHtml}
+            </div>
+          `;
+        }
+
+        let timelineHtml = d.timeline.map(item => `
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">${item.time}</div>
+            <div class="timeline-head"><span class="timeline-title">${item.title}</span><span class="tag ${item.tagClass}">${item.tag}</span></div>
+            <div class="timeline-desc">${item.desc}</div>
+          </div>
+        `).join('');
+
+        let prevBtn = idx > 0 ? `<button class="day-nav-btn" onclick="showDay(${tripData.days[idx-1].day})">◀ 前一日 (Day ${tripData.days[idx-1].day})</button>` : '<div></div>';
+        let nextBtn = idx < tripData.days.length - 1 ? `<button class="day-nav-btn" onclick="showDay(${tripData.days[idx+1].day})">後一日 (Day ${tripData.days[idx+1].day}) ▶</button>` : '<div></div>';
+
+        contentsContainer.innerHTML += `
+          <div id="day-content-${d.day}" class="day-details" style="display: ${displayStyle};">
+            ${transportHtml}
+            <div class="timeline">${timelineHtml}</div>
+            <div class="memo-box">
+              <div class="memo-header" onclick="toggleMemo(${d.day})"><span>📝 Day ${d.day} 隨身備註與修改</span><span id="memo-arrow-${d.day}">▼</span></div>
+              <div class="memo-content" id="memo-body-${d.day}"><textarea class="memo-textarea" placeholder="點擊在此輸入或修改今日備註..." id="memo-text-${d.day}" oninput="saveMemo(${d.day})"></textarea></div>
+            </div>
+            <div class="day-nav-footer">${prevBtn}${nextBtn}</div>
+          </div>
+        `;
+      });
+
+      // 渲染住宿
+      const hotelsContainer = document.getElementById('hotels-container');
+      hotelsContainer.innerHTML = tripData.hotels.map(h => `
+        <div class="item-box">
+          <span class="tag tag-yellow">${h.tag}</span>
+          <div class="item-box-title" style="margin-top: 5px;">${h.name}</div>
+          <div class="item-box-sub">${h.desc}</div>
+          <div class="link-btns"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.mapQuery)}" target="_blank" class="btn-sm">🗺️ 開啟 Google 地圖導航</a></div>
+        </div>
+      `).join('');
+
+      // 渲染保險
+      document.getElementById('insurance-info').innerHTML = `• <b>旅程</b>：${tripData.insurance.trip}<br>• <b>保單號碼</b>：${tripData.insurance.policyNo}`;
+      const telLink = document.getElementById('insurance-tel-link');
+      telLink.href = `tel:${tripData.insurance.emergencyTel}`;
+      telLink.innerText = `📞 ${tripData.insurance.emergencyTel}`;
     }
 
     const bookingData = [
@@ -1282,7 +504,6 @@
       const clipboardData = event.clipboardData || window.clipboardData;
       if (!clipboardData) return;
       const items = clipboardData.items;
-      let hasImage = false;
 
       for (let i = 0; i < items.length; i++) {
         if (items[i].type.indexOf("image") !== -1) {
@@ -1297,7 +518,6 @@
             });
           };
           reader.readAsDataURL(blob);
-          hasImage = true;
           event.preventDefault();
           break;
         }
@@ -1583,6 +803,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      renderDynamicContent();
       renderBookingList();
       renderShoppingAdvanced();
       renderExpensesAdvanced();
