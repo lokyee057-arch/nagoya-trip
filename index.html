@@ -8,6 +8,66 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* 購物清單專屬升級樣式 */
+    .filter-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 12px; padding-bottom: 4px; }
+    .filter-tab {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 0px var(--border-color);
+      flex-shrink: 0;
+    }
+    .filter-tab.active { background: var(--tag-yellow); }
+    .search-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 13px;
+      background: var(--bg-color);
+      margin-bottom: 12px;
+      font-family: inherit;
+    }
+    .shop-item-card {
+      background: var(--card-bg);
+      border: 2.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 0px var(--border-color);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .shop-item-card.purchased {
+      opacity: 0.55;
+      background: #F4F1EA;
+    }
+    .shop-item-card.purchased .shop-title-text {
+      text-decoration: line-through;
+    }
+    .order-btns {
+      display: flex;
+      gap: 4px;
+    }
+    .order-btn {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 1px 0px var(--border-color);
+    }
+  </style>
 </head>
 <body>
 
@@ -107,6 +167,16 @@
       <div class="link-btns">
         <a href="https://alinchuang.my.canva.site/" target="_blank" class="btn-sm" style="background:var(--tag-yellow); color:var(--text-main);">🔗 開啟優惠 Code 懶人包網頁</a>
       </div>
+    </div>
+
+    <!-- 搜尋欄與分類 Tab -->
+    <input type="text" id="shop-search" class="search-input" placeholder="🔍 搜尋已加入嘅商品名稱..." oninput="renderShoppingAdvanced()">
+    <div class="filter-tabs" id="filter-tabs-container">
+      <button class="filter-tab active" onclick="setFilterCategory('全部')">全部</button>
+      <button class="filter-tab" onclick="setFilterCategory('💎 奢侈品精品')">💎 奢侈品</button>
+      <button class="filter-tab" onclick="setFilterCategory('💄 美妝護膚')">💄 美妝</button>
+      <button class="filter-tab" onclick="setFilterCategory('🍵 手信零食')">🍵 手信</button>
+      <button class="filter-tab" onclick="setFilterCategory('🎒 其他物品')">🎒 其他</button>
     </div>
 
     <div class="form-group">
@@ -287,7 +357,6 @@
       document.getElementById('web-title').innerText = tripData.title;
       document.getElementById('web-subtitle').innerText = tripData.subTitle;
 
-      // 渲染航班
       const flightsContainer = document.getElementById('flights-container');
       flightsContainer.innerHTML = tripData.flights.map(f => `
         <div class="item-box">
@@ -301,7 +370,6 @@
         </div>
       `).join('');
 
-      // 渲染每日行程與交通小卡
       const tabsContainer = document.getElementById('day-tabs-container');
       const contentsContainer = document.getElementById('day-contents-container');
       tabsContainer.innerHTML = '';
@@ -315,7 +383,6 @@
           <button class="day-tab ${isActive}" id="tab-${d.day}" onclick="showDay(${d.day})">${d.title.split(' ')[0]} (${d.title.split(' ')[1]})</button>
         `;
 
-        // 尋找對應當日的交通指引
         const tg = tripData.transportGuide.find(t => t.tag.startsWith(`Day ${d.day}`));
         let transportHtml = '';
         if (tg) {
@@ -361,7 +428,6 @@
         `;
       });
 
-      // 渲染住宿
       const hotelsContainer = document.getElementById('hotels-container');
       hotelsContainer.innerHTML = tripData.hotels.map(h => `
         <div class="item-box">
@@ -372,7 +438,6 @@
         </div>
       `).join('');
 
-      // 渲染保險
       document.getElementById('insurance-info').innerHTML = `• <b>旅程</b>：${tripData.insurance.trip}<br>• <b>保單號碼</b>：${tripData.insurance.policyNo}`;
       const telLink = document.getElementById('insurance-tel-link');
       telLink.href = `tel:${tripData.insurance.emergencyTel}`;
@@ -479,6 +544,15 @@
     let tempShopImgBase64 = "";
     let tempExpImgBase64 = "";
     let currentEditingShopId = null;
+    let currentFilterCategory = "全部";
+
+    function setFilterCategory(cat) {
+      currentFilterCategory = cat;
+      document.querySelectorAll('.filter-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === '全部' && btn.innerText === '全部'));
+      });
+      renderShoppingAdvanced();
+    }
 
     function resizeImage(base64Str, maxWidth = 600, maxHeight = 600, quality = 0.7, callback) {
       const img = new Image();
@@ -596,7 +670,7 @@
       } else {
         list.push({
           id: Date.now(), category, name, yen: yen || '0', hkd: hkd || '0', remark: remark || '',
-          image: tempShopImgBase64 || ''
+          image: tempShopImgBase64 || '', purchased: false
         });
       }
 
@@ -617,31 +691,71 @@
       renderShoppingAdvanced();
     }
 
+    function togglePurchased(id) {
+      let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
+      list = list.map(item => {
+        if (item.id === id) { item.purchased = !item.purchased; }
+        return item;
+      });
+      localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
+      renderShoppingAdvanced();
+    }
+
+    function moveShoppingItem(index, direction) {
+      let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= list.length) return;
+      const temp = list[index];
+      list[index] = list[targetIndex];
+      list[targetIndex] = temp;
+      localStorage.setItem('trip_shopping_adv', JSON.stringify(list));
+      renderShoppingAdvanced();
+    }
+
     function renderShoppingAdvanced() {
       const container = document.getElementById('shopping-list-advanced');
       if (!container) return;
       container.innerHTML = '';
       let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
-      
-      if (list.length === 0) {
-        container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無選購清單</div>';
+      const searchQuery = (document.getElementById('shop-search').value || '').toLowerCase();
+
+      // 過濾分類與搜尋字眼
+      let filtered = list.filter(item => {
+        const matchCat = (currentFilterCategory === '全部' || item.category === currentFilterCategory);
+        const matchSearch = item.name.toLowerCase().includes(searchQuery) || (item.remark && item.remark.toLowerCase().includes(searchQuery));
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="color:#888; font-size:13px; text-align:center; padding:15px;">暫無符合條件的商品</div>';
         return;
       }
 
-      list.forEach(item => {
+      filtered.forEach((item) => {
+        // 搵返原陣列嘅真實 index 用於上下移動
+        const realIndex = list.findIndex(i => i.id === item.id);
         const div = document.createElement('div');
-        div.style.cssText = 'background:var(--card-bg); border:2.5px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:0 2px 0px var(--border-color); width:100%; overflow:hidden;';
+        div.className = `shop-item-card ${item.purchased ? 'purchased' : ''}`;
         div.innerHTML = `
-          <div style="margin-bottom:6px;"><span class="tag" style="background:var(--tag-yellow);">${item.category}</span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tag" style="background:var(--tag-yellow);">${item.category}</span>
+            <div class="order-btns">
+              <button class="order-btn" onclick="moveShoppingItem(${realIndex}, -1)">▲ 上移</button>
+              <button class="order-btn" onclick="moveShoppingItem(${realIndex}, 1)">▼ 下移</button>
+            </div>
+          </div>
           <div style="display:flex; gap:10px; align-items:center;">
             ${item.image ? `<img src="${item.image}" onclick="openModal('${item.image}')" style="width:48px; height:48px; object-fit:cover; border-radius:8px; border:1.5px solid var(--border-color); flex-shrink:0; cursor:pointer;" title="點擊放大">` : ''}
             <div class="record-info">
-              <div style="font-weight:900; font-size:14px;">${item.name}</div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <input type="checkbox" ${item.purchased ? 'checked' : ''} onchange="togglePurchased(${item.id})" style="width:16px; height:16px; cursor:pointer;">
+                <div class="shop-title-text" style="font-weight:900; font-size:14px;">${item.name}</div>
+              </div>
               <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">預算: ¥${Number(item.yen).toLocaleString()} (HK$ ${Number(item.hkd).toLocaleString()})</div>
               ${item.remark ? `<div style="font-size:12px; color:#C0392B; font-weight:700; margin-top:3px;">📝 備註/格價: ${item.remark}</div>` : ''}
             </div>
           </div>
-          <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
+          <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:4px;">
             <button class="expense-del-btn" style="color:#2B2B2B; border-color:#2B2B2B;" onclick="editShoppingAdvanced(${item.id})">編輯</button>
             <button class="expense-del-btn" onclick="deleteShoppingAdvanced(${item.id})">刪除</button>
           </div>
