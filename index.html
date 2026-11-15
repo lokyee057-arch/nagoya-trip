@@ -67,6 +67,18 @@
       cursor: pointer;
       box-shadow: 0 1px 0px var(--border-color);
     }
+
+    /* 置頂固定行程列 (Sticky Header) */
+    .sticky-itinerary-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 0 6px 0;
+      border-bottom: 2px dashed #E0E0E0;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -105,13 +117,16 @@
     </div>
 
     <!-- 📅 7 天完整行程 -->
-    <div class="card">
+    <div class="card" style="overflow: visible;">
       <div class="card-header-toggle" onclick="toggleCard('body-itinerary', 'pill-itinerary')">
         <div class="card-title">📅 每日行程與攻略 (高山3晚連住)</div>
         <div class="toggle-pill" id="pill-itinerary">▲</div>
       </div>
       <div class="card-body" id="body-itinerary">
-        <div class="day-selector" id="day-tabs-container"></div>
+        <!-- 置頂固定列包裝 -->
+        <div class="sticky-itinerary-header">
+          <div class="day-selector" id="day-tabs-container"></div>
+        </div>
         <div id="day-contents-container"></div>
       </div>
     </div>
@@ -179,49 +194,55 @@
       <button class="filter-tab" onclick="setFilterCategory('🎒 其他物品')">🎒 其他</button>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">選擇分類</label>
-      <select id="shop-category" class="form-select">
-        <option value="💎 奢侈品精品">💎 奢侈品精品</option>
-        <option value="💄 美妝護膚">💄 美妝護膚</option>
-        <option value="🍵 手信零食">🍵 手信零食</option>
-        <option value="🎒 其他物品">🎒 其他物品</option>
-      </select>
-    </div>
+    <!-- 新增商品收納按鈕 (預設收埋) -->
+    <button class="action-btn" id="shop-toggle-form-btn" style="background:var(--tag-yellow); color:var(--text-main); margin-bottom:12px;" onclick="toggleShopForm()">+ 新增商品到購物清單</button>
 
-    <div class="form-group">
-      <label class="form-label">商品名稱 / 品牌</label>
-      <input type="text" id="shop-name" class="form-input" placeholder="例如：Panthère 錶 / 白戀人餅乾">
-    </div>
-
-    <div class="row-inputs">
+    <!-- 輸入表單區域 (預設隱藏) -->
+    <div id="shop-form-container" style="display:none; background:var(--bg-color); border:2px solid var(--border-color); border-radius:14px; padding:12px; margin-bottom:15px;">
       <div class="form-group">
-        <label class="form-label">預算金額 (日圓 ¥)</label>
-        <input type="number" id="shop-yen" class="form-input" placeholder="例如: 540000">
+        <label class="form-label">選擇分類</label>
+        <select id="shop-category" class="form-select">
+          <option value="💎 奢侈品精品">💎 奢侈品精品</option>
+          <option value="💄 美妝護膚">💄 美妝護膚</option>
+          <option value="🍵 手信零食">🍵 手信零食</option>
+          <option value="🎒 其他物品">🎒 其他物品</option>
+        </select>
       </div>
+
       <div class="form-group">
-        <label class="form-label">預算金額 (港幣 HK$)</label>
-        <input type="number" id="shop-hkd" class="form-input" placeholder="例如: 28000">
+        <label class="form-label">商品名稱 / 品牌</label>
+        <input type="text" id="shop-name" class="form-input" placeholder="例如：Panthère 錶 / 白戀人餅乾">
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">格價 / 備註 (Remark)</label>
-      <input type="text" id="shop-remark" class="form-input" placeholder="例如：Bic Camera 有平 / 唐吉訶德格價 ¥5300">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">📷 商品相片</label>
-      <div class="paste-area" id="shop-paste-box" contenteditable="true" onpaste="handlePasteArea(event, 'shop')">
-        <span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>
+      <div class="row-inputs">
+        <div class="form-group">
+          <label class="form-label">預算金額 (日圓 ¥)</label>
+          <input type="number" id="shop-yen" class="form-input" placeholder="例如: 540000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">預算金額 (港幣 HK$)</label>
+          <input type="number" id="shop-hkd" class="form-input" placeholder="例如: 28000">
+        </div>
       </div>
-      <input type="file" id="shop-file" accept="image/*" style="display:none;" onchange="handleFileSelect(event, 'shop')">
-      <button class="btn-sm" style="margin-top:6px; width:100%; justify-content:center;" onclick="document.getElementById('shop-file').click();">📁 從手機相簿選擇檔案</button>
+
+      <div class="form-group">
+        <label class="form-label">格價 / 備註 (Remark)</label>
+        <input type="text" id="shop-remark" class="form-input" placeholder="例如：Bic Camera 有平 / 唐吉訶德格價 ¥5300">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">📷 商品相片</label>
+        <div class="paste-area" id="shop-paste-box" contenteditable="true" onpaste="handlePasteArea(event, 'shop')">
+          <span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>
+        </div>
+        <input type="file" id="shop-file" accept="image/*" style="display:none;" onchange="handleFileSelect(event, 'shop')">
+        <button class="btn-sm" style="margin-top:6px; width:100%; justify-content:center;" onclick="document.getElementById('shop-file').click();">📁 從手機相簿選擇檔案</button>
+      </div>
+
+      <button id="shop-submit-btn" class="action-btn" onclick="addShoppingItemAdvanced()">💾 儲存商品</button>
     </div>
 
-    <button id="shop-submit-btn" class="action-btn" style="background:var(--tag-yellow); color:var(--text-main);" onclick="addShoppingItemAdvanced()">+ 放入購物清單</button>
-
-    <div style="margin-top: 20px; border-top: 2px dashed #E0E0E0; padding-top: 15px;">
+    <div style="margin-top: 10px; border-top: 2px dashed #E0E0E0; padding-top: 15px;">
       <div style="font-weight:900; font-size:15px; margin-bottom:10px;">📋 我的選購清單</div>
       <div id="shopping-list-advanced"></div>
     </div>
@@ -544,14 +565,26 @@
     let tempShopImgBase64 = "";
     let tempExpImgBase64 = "";
     let currentEditingShopId = null;
-    let currentFilterCategory = "全部";
+    let currentFilterCategory = "all";
 
     function setFilterCategory(cat) {
       currentFilterCategory = cat;
       document.querySelectorAll('.filter-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === '全部' && btn.innerText === '全部'));
+        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'all' && btn.innerText === '全部'));
       });
       renderShoppingAdvanced();
+    }
+
+    function toggleShopForm() {
+      const form = document.getElementById('shop-form-container');
+      const btn = document.getElementById('shop-toggle-form-btn');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+        btn.innerText = '- 關閉新增商品表單';
+      } else {
+        form.style.display = 'none';
+        btn.innerText = '+ 新增商品到購物清單';
+      }
     }
 
     function resizeImage(base64Str, maxWidth = 600, maxHeight = 600, quality = 0.7, callback) {
@@ -638,6 +671,10 @@
       btn.innerText = '💾 儲存修改';
       btn.style.background = 'var(--tag-green)';
       btn.style.color = 'white';
+      
+      // 自動展開表單
+      document.getElementById('shop-form-container').style.display = 'block';
+      document.getElementById('shop-toggle-form-btn').innerText = '- 關閉新增商品表單';
       document.getElementById('shop-category').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -664,9 +701,8 @@
         });
         currentEditingShopId = null;
         const btn = document.getElementById('shop-submit-btn');
-        btn.innerText = '+ 放入購物清單';
-        btn.style.background = 'var(--tag-yellow)';
-        btn.style.color = 'var(--text-main)';
+        btn.innerText = '💾 儲存商品';
+        btn.style.background = 'var(--tag-green)';
       } else {
         list.push({
           id: Date.now(), category, name, yen: yen || '0', hkd: hkd || '0', remark: remark || '',
@@ -681,6 +717,10 @@
       document.getElementById('shop-remark').value = '';
       document.getElementById('shop-paste-box').innerHTML = '<span id="shop-paste-label">📋 【長撳此處】貼上電話Cap圖</span>';
       tempShopImgBase64 = "";
+      
+      // 儲存後自動收埋表單
+      document.getElementById('shop-form-container').style.display = 'none';
+      document.getElementById('shop-toggle-form-btn').innerText = '+ 新增商品到購物清單';
       renderShoppingAdvanced();
     }
 
@@ -719,9 +759,8 @@
       let list = JSON.parse(localStorage.getItem('trip_shopping_adv') || '[]');
       const searchQuery = (document.getElementById('shop-search').value || '').toLowerCase();
 
-      // 過濾分類與搜尋字眼
       let filtered = list.filter(item => {
-        const matchCat = (currentFilterCategory === '全部' || item.category === currentFilterCategory);
+        const matchCat = (currentFilterCategory === 'all' || item.category === currentFilterCategory);
         const matchSearch = item.name.toLowerCase().includes(searchQuery) || (item.remark && item.remark.toLowerCase().includes(searchQuery));
         return matchCat && matchSearch;
       });
@@ -732,7 +771,6 @@
       }
 
       filtered.forEach((item) => {
-        // 搵返原陣列嘅真實 index 用於上下移動
         const realIndex = list.findIndex(i => i.id === item.id);
         const div = document.createElement('div');
         div.className = `shop-item-card ${item.purchased ? 'purchased' : ''}`;
